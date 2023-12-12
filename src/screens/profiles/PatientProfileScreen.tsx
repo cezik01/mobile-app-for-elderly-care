@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import ProfileHeader from '../../components/ProfileHeader';
 import PersonalInfo from '../../components/PersonalInfo';
 import HealthMetrics from '../../components/HealthMetrics';

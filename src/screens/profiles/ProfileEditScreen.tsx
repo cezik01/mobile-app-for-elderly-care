@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, set, onValue ,update} from 'firebase/database';
+import { getDatabase, ref, onValue ,update} from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 
 const ProfileEditScreen = () => {

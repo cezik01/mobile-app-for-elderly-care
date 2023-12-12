@@ -1,46 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import ProfileHeader from '../../components/ProfileHeader'; 
-import MenuComponent from '../../components/MenuComponent'; 
+import ProfileHeader from '../../components/ProfileHeader';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { NavigationProp } from '@react-navigation/native';
 
-const CaregiverProfileScreen = () => {
+type HealthMetric = 'Normal' | 'High' | 'Low';
+
+interface UserData {
+  name?: string;
+  city?: string;
+}
+
+const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
+  const [userData, setUserData] = useState<UserData>({});
   
-  const handleEditPress = () => {
-    // Logic for handling edit
-  };
+  useEffect(() => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const db = getDatabase();
 
+    if (user) {
+      const userRef = ref(db, `users/${user.uid}`);
+      onValue(userRef, (snapshot) => {
+        if (snapshot.exists()) {
+          setUserData(snapshot.val());
+        } else {
+          console.log("No data available");
+        }
+      });
+    }
+  }, []);
+
+  const handleEditPress = () => {
+    navigation.navigate('ProfileEditScreen');
+  };
   const handleNotificationsPress = () => {
-    // Logic for handling notifications 
+    console.log('Notifications button pressed');
   };
 
   const handleMenuPress = () => {
-    // Logic for handling menu
-  };
-
-  // Define any handlers for the MenuComponent
-  const handleMedicationPress = () => {
-    // Logic for medication 
-  };
-
-  const handleAppointmentsPress = () => {
-    // Logic for appointments
+    console.log('Menu button pressed');
   };
 
   return (
     <View style={styles.screenContainer}>
       <ProfileHeader
-        name="Caregiver Name"
-        city="City Name"
+        name={userData.name || "Name not set"}
+        city={userData.city || "City not set"}
         onEditPress={handleEditPress}
         onNotificationsPress={handleNotificationsPress}
         onMenuPress={handleMenuPress}
       />
-      {}
-      <MenuComponent
-        onMedicationPress={handleMedicationPress}
-        onAppointmentsPress={handleAppointmentsPress}
-      />
-      {}
     </View>
   );
 };
@@ -49,9 +60,7 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#fff',
-    
   },
-  
 });
 
-export default CaregiverProfileScreen;
+export default PatientProfileScreen;

@@ -98,10 +98,10 @@ exports.signIn = function (email, password) { return __awaiter(void 0, void 0, P
                 snapshot = _a.sent();
                 if (snapshot.exists()) {
                     role = snapshot.val();
-                    return [2 /*return*/, { role: role, uid: uid }]; // Rolü ve kullanıcı ID'sini döndür
+                    return [2 /*return*/, { role: role, uid: uid }];
                 }
                 else {
-                    throw new Error('Role does not exist.'); // Rol bulunamazsa hata fırlat
+                    throw new Error('Role does not exist.');
                 }
                 return [3 /*break*/, 5];
             case 4:
