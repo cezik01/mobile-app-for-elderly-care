@@ -46,6 +46,7 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
     <AuthForm onSubmit={handleRegistration} buttonTitle="Sign Up">
     <View style={styles.pickerContainer}>
     <RNPickerSelect
+    placeholder={{ label: "Select a Role..."}}
   onValueChange={(value) => setRole(value)}
   items={[
     { label: "Patient", value: "patient" },
