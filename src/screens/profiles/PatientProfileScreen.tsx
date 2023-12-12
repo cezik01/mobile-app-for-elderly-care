@@ -13,13 +13,12 @@ type HealthMetric = 'Normal' | 'High' | 'Low';
 interface UserData {
   name?: string;
   city?: string;
-  age?: number;           // Yaş, kilo ve boy sayısal değerler olmalı
+  age?: number;
   weight?: number;
   height?: number;
   bloodType?: string;
-  bloodPressure?: HealthMetric;  // HealthMetric tipinde olmalı
+  bloodPressure?: HealthMetric;
   bloodSugar?: HealthMetric;
-  // ...diğer alanlar...
 }
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
@@ -43,7 +42,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   }, []);
 
   const handleEditPress = () => {
-    navigation.navigate('ProfileEditScreen');
+    navigation.navigate('Profile Edit Screen');
   };
   const handleNotificationsPress = () => {
     console.log('Notifications button pressed');

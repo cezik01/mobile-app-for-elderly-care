@@ -1,3 +1,7 @@
 {
-  "helloWorld": "Hello World!"
+  "EditProfile": "Edit Profile",
+  "LoginClick": "Already have an account? Click here to log in",
+  "helloWorld": "Hello World!",
+  "Login": "Login",
+  "SignUp": "Sign Up"
 }

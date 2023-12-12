@@ -4,6 +4,7 @@ import { Formik, FormikProps } from 'formik';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
 import { emailPasswordValidationSchema } from 'helpers/validationSchemas/emailPasswordLoginValidationSchema';
+import i18n from 'common/i18n/i18n';
 
 interface FormFields {
   email: string;
@@ -59,20 +60,19 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, buttonTitle, children }) 
           </View>
           {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
-          {/* Submit Button */}
           <TouchableOpacity 
             style={styles.button} 
             onPress={() => handleSubmit()}
           >
-            <Text style={styles.buttonText}>{buttonTitle}</Text>
+            <Text style={styles.buttonText}>{i18n.t(buttonTitle)}</Text>
           </TouchableOpacity>
 
-          {/* Additional Children */}
           {children}
         </View>
       )}
     </Formik>
   );
 };
+
 
 export default AuthForm;

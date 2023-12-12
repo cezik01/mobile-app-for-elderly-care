@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, TouchableOpacity, Text, View } from 'react-native';
+import { Alert, TouchableOpacity, Text, View, Platform } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import styles from '../styles';
 import AuthForm from 'components/Form/AuthForm';
@@ -7,9 +7,7 @@ import { signUp } from 'helpers/firebaseAuth/AuthService';
 import { FirebaseError } from 'firebase/app';
 import { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
-import { pickerSelectStyles } from '../styles';
-
-
+import i18n from 'common/i18n/i18n';
 
 const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [role, setRole] = useState('patient');
@@ -43,21 +41,21 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
   };
 
   return (
-    <AuthForm onSubmit={handleRegistration} buttonTitle="Sign Up">
+    <AuthForm onSubmit={handleRegistration} buttonTitle="SignUp">
     <View style={styles.pickerContainer}>
     <RNPickerSelect
+    placeholder={{ label: "Select a Role..."}}
   onValueChange={(value) => setRole(value)}
   items={[
     { label: "Patient", value: "patient" },
     { label: "Caregiver", value: "caregiver" },
   ]}
-  style={pickerSelectStyles}
   value={role}
   useNativeAndroidPickerStyle={false} 
 />
     </View>
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.linkText}>Already have an account? Click here to log in</Text>
+        <Text style={styles.linkText}>{i18n.t('LoginClick')}</Text>
       </TouchableOpacity>
     </AuthForm>
   );

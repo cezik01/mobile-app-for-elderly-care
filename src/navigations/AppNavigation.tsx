@@ -1,9 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import appRoutes from 'routes/appRoutes';
-import CaregiverProfileScreen from '../screens/profiles/CaregiverProfileScreen';
-import PatientProfileScreen from '../screens/profiles/PatientProfileScreen';
-
 
 const Stack = createNativeStackNavigator();
 

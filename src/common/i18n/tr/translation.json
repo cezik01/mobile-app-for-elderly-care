@@ -1,3 +1,7 @@
 {
-  "helloWorld": "Merhaba Dünya!"
+  "EditProfile":"Profili Düzenle",
+  "LoginClick": "Hesabınız var mı? Giriş yapmak için buraya tıklayın.",
+  "helloWorld": "Merhaba Dünya!",
+  "Login": "Giriş Yap",
+  "SignUp": "Kayıt Ol"
 }
