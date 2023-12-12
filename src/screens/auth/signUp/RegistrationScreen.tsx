@@ -7,6 +7,7 @@ import { signUp } from 'helpers/firebaseAuth/AuthService';
 import { FirebaseError } from 'firebase/app';
 import { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
+import i18n from 'common/i18n/i18n';
 
 const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [role, setRole] = useState('patient');
@@ -40,7 +41,7 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
   };
 
   return (
-    <AuthForm onSubmit={handleRegistration} buttonTitle="Sign Up">
+    <AuthForm onSubmit={handleRegistration} buttonTitle="SignUp">
     <View style={styles.pickerContainer}>
     <RNPickerSelect
     placeholder={{ label: "Select a Role..."}}
@@ -54,7 +55,7 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
 />
     </View>
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.linkText}>Already have an account? Click here to log in</Text>
+        <Text style={styles.linkText}>{i18n.t('LoginClick')}</Text>
       </TouchableOpacity>
     </AuthForm>
   );
