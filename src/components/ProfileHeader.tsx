@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import i18n from 'common/i18n/i18n';
 
 type ProfileHeaderProps = {
   name: string;
@@ -18,7 +19,7 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
   const pickImage = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert('Fotoğraf seçmek için izin gerekiyor!');
+      alert('Need permission to access photos');
       return;
     }
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
@@ -29,7 +30,6 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
   
   return (
     <View style={styles.headerContainer}>
-      {/* Menu Icon */}
       <TouchableOpacity style={styles.menuIconContainer} onPress={onMenuPress}>
         <Image source={require('../../assets/profiles/Menu.png')} style={styles.menuIcon} />
       </TouchableOpacity>
@@ -42,11 +42,14 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.city}>{city}</Text>
       <TouchableOpacity style={styles.editProfileButton} onPress={onEditPress}>
+        {/* <Text style={styles.editProfileText}>Edit Profile</Text> */}
+        <Text style={styles.editProfileText}>
+              {i18n.t('EditProfile')}
+           </Text>
         <Image
           source={require('../../assets/profiles/Edit.png')} 
           style={styles.editIcon}
         />
-        <Text style={styles.editProfileText}>Edit Profile</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.notificationIconContainer} onPress={onNotificationsPress}>
         <Image source={require('../../assets/profiles/Notifications.png')} style={styles.notificationIcon} />
@@ -93,12 +96,11 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     color: 'blue', 
     textDecorationLine: 'underline', 
+    marginRight: 7,
   },
   editIcon: {
     width: 20, 
     height: 20, 
-    marginRight: 5,
-   
   },
   menuIconContainer: {
     position: 'absolute',
