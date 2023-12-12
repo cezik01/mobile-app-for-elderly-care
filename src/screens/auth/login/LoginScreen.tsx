@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
       const { role, uid } = await signIn(values.email, values.password); 
       updateUser({ role, uid });
       if (role === 'caregiver') {
-        navigation.navigate('CaregiverProfile');
+        navigation.navigate('Caregiver Profile');
       } else if (role === 'patient') {
         navigation.navigate('PatientProfile');
       }

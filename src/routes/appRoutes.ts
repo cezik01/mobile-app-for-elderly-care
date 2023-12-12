@@ -20,7 +20,7 @@ const appRoutes = [
     component: HomeScreen,
   },
   {
-    name: 'CaregiverProfile',
+    name: 'Caregiver Profile',
     component: CaregiverProfileScreen,
   },
   {
