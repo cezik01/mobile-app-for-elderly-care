@@ -20,7 +20,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
       if (role === 'caregiver') {
         navigation.navigate('Caregiver Profile');
       } else if (role === 'patient') {
-        navigation.navigate('PatientProfile');
+        navigation.navigate('Patient Profile');
       }
       
     } catch (error) { 

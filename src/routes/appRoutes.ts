@@ -24,11 +24,11 @@ const appRoutes = [
     component: CaregiverProfileScreen,
   },
   {
-    name: 'PatientProfile',
+    name: 'Patient Profile',
     component: PatientProfileScreen,
   },
   {
-    name: 'ProfileEditScreen',
+    name: 'Profile Edit Screen',
     component: ProfileEditScreen,
   }
 ];

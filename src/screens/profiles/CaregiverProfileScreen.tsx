@@ -33,7 +33,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   }, []);
 
   const handleEditPress = () => {
-    navigation.navigate('ProfileEditScreen');
+    navigation.navigate('Profile Edit Screen');
   };
   const handleNotificationsPress = () => {
     console.log('Notifications button pressed');
