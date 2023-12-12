@@ -11,12 +11,12 @@ import { UserProvider, useUser } from '../../../context/UserContext';
 
 
 const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
-  const { updateUser } = useUser(); // Global state güncelleme fonksiyonunu al
+  const { updateUser } = useUser();
 
   const handleLogin = async (values: { email: string; password: string }) => {
     try {
-      const { role, uid } = await signIn(values.email, values.password); // signIn'den role ve uid alın
-      updateUser({ role, uid }); // Global state'i güncelle
+      const { role, uid } = await signIn(values.email, values.password); 
+      updateUser({ role, uid });
       if (role === 'caregiver') {
         navigation.navigate('CaregiverProfile');
       } else if (role === 'patient') {

@@ -31,7 +31,7 @@ const CaregiverProfileScreen = () => {
       <ProfileHeader
         name="Caregiver Name"
         city="City Name"
-        handleEditPress={handleEditPress}
+        onEditPress={handleEditPress}
         onNotificationsPress={handleNotificationsPress}
         onMenuPress={handleMenuPress}
       />

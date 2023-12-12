@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
-import { getAuth, updateProfile } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, set, onValue ,update} from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 

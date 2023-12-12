@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ProfileHeader from '../../components/ProfileHeader';
 import PersonalInfo from '../../components/PersonalInfo';
 import HealthMetrics from '../../components/HealthMetrics';
@@ -13,13 +13,12 @@ type HealthMetric = 'Normal' | 'High' | 'Low';
 interface UserData {
   name?: string;
   city?: string;
-  age?: number;           // Yaş, kilo ve boy sayısal değerler olmalı
+  age?: number;
   weight?: number;
   height?: number;
   bloodType?: string;
-  bloodPressure?: HealthMetric;  // HealthMetric tipinde olmalı
+  bloodPressure?: HealthMetric;
   bloodSugar?: HealthMetric;
-  // ...diğer alanlar...
 }
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
