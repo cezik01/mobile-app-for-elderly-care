@@ -87,21 +87,17 @@ exports.signIn = function (email, password) { return __awaiter(void 0, void 0, P
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 4, , 5]);
-                console.log("Attempting to sign in:", email);
                 return [4 /*yield*/, auth_1.signInWithEmailAndPassword(auth, email, password)];
             case 2:
                 userCredential = _a.sent();
                 uid = userCredential.user.uid;
-                console.log("User signed in:", uid);
                 db_1 = database_1.getDatabase();
                 userRef = database_1.ref(db_1, "users/" + uid + "/role");
-                console.log("Fetching role for uid:", uid);
                 return [4 /*yield*/, database_1.get(userRef)];
             case 3:
                 snapshot = _a.sent();
                 if (snapshot.exists()) {
                     role = snapshot.val();
-                    console.log("Role fetched:", role);
                     return [2 /*return*/, { role: role, uid: uid }]; // Rolü ve kullanıcı ID'sini döndür
                 }
                 else {
