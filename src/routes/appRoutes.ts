@@ -4,6 +4,7 @@ import HomeScreen from 'screens/home/HomeScreen';
 import CaregiverProfileScreen from 'screens/profiles/CaregiverProfileScreen';
 import PatientProfileScreen from 'screens/profiles/PatientProfileScreen';
 import ProfileEditScreen from 'screens/profiles/ProfileEditScreen';
+import MedicationScreen from 'screens/menu/MedicationScreen';
 
 
 const appRoutes = [
@@ -30,6 +31,10 @@ const appRoutes = [
   {
     name: 'Profile Edit Screen',
     component: ProfileEditScreen,
+  },
+  {
+    name: 'Medication Screen',
+    component: MedicationScreen,
   }
 ];
 
