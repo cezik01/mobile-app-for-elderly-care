@@ -1,94 +1,104 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert } from 'react-native';
-import { getAuth, User } from 'firebase/auth';
-import { getDatabase, ref, onValue, update, DatabaseReference } from 'firebase/database';
+import { View, TextInput, Button, Alert, Text} from 'react-native';
+import { getAuth, updateProfile } from 'firebase/auth';
+import { getDatabase, ref, set, onValue ,update} from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
-
-interface UserData {
-  name: string;
-  surname?: string;
-  city: string;
-  age?: string;
-  height?: string;
-  weight?: string;
-  bloodType?: string;
-  role?: string;
-}
+import { Menu, Provider } from 'react-native-paper';
 
 const ProfileEditScreen = () => {
+  const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'];
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [city, setCity] = useState('');
-  const [age, setAge] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
+  const [age, setAge] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
   const [bloodType, setBloodType] = useState('');
-  const [role, setRole] = useState('');
+  const [visible, setVisible] = useState(false);
+  
 
   const auth = getAuth();
-  const user: User | null = auth.currentUser;
+  const user = auth.currentUser;
   const db = getDatabase();
 
   useEffect(() => {
     if (user) {
-      const userRef: DatabaseReference = ref(db, 'users/' + user.uid);
+      const userRef = ref(db, 'users/' + user.uid);
       onValue(userRef, (snapshot) => {
-        const data: UserData = snapshot.val() as UserData;
+        const data = snapshot.val();
         setName(data.name);
-        setSurname(data.surname || '');
+        setSurname(data.surname);
         setCity(data.city);
-        setAge(data.age || '');
-        setHeight(data.height || '');
-        setWeight(data.weight || '');
-        setBloodType(data.bloodType || '');
-        setRole(data.role || '');
+        setAge(data.age);
+        setHeight(data.height);
+        setWeight(data.weight);
+        setBloodType(data.bloodType);
+        
       });
     }
-  }, [user, db]);
+  }, []);
 
   const handleSave = async () => {
-    try {
-      if (user) {
-        const updates: Record<string, any> = {};
-        updates['/users/' + user.uid + '/name'] = name;
-        updates['/users/' + user.uid + '/city'] = city;
-
-        // Only update other fields if they are not empty
-        if (surname) updates['/users/' + user.uid + '/surname'] = surname;
-        if (age) updates['/users/' + user.uid + '/age'] = age;
-        if (height) updates['/users/' + user.uid + '/height'] = height;
-        if (weight) updates['/users/' + user.uid + '/weight'] = weight;
-        if (bloodType) updates['/users/' + user.uid + '/bloodType'] = bloodType;
-
-        await update(ref(db), updates);
-        Alert.alert('Profile Updated', 'Your profile has been updated successfully.', [
-          { text: "OK", onPress: () => navigation.goBack() }
-        ]);
-      }
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Update Failed', 'There was an error updating your profile.', [
-        { text: "OK" }
+    if (user) {
+      const updates: { [key: string]: any } = {};
+      updates['/users/' + user.uid + '/name'] = name;
+      updates['/users/' + user.uid + '/surname'] = surname;
+      updates['/users/' + user.uid + '/city'] = city;
+      updates['/users/' + user.uid + '/age'] = age;
+      updates['/users/' + user.uid + '/height'] = height;
+      updates['/users/' + user.uid + '/weight'] = weight;
+      updates['/users/' + user.uid + '/bloodType'] = bloodType;
+      
+      
+  
+      await update(ref(db), updates);
+      Alert.alert('Profile Updated', 'Your profile has been updated successfully.', [
+        { text: "OK", onPress: () => navigation.goBack() } 
       ]);
+      
+      
     }
   };
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
 
   return (
+    <Provider>
+
     <View>
       <TextInput placeholder="Name" value={name} onChangeText={setName} />
+      <TextInput placeholder="Surname" value={surname} onChangeText={setSurname} />
       <TextInput placeholder="City" value={city} onChangeText={setCity} />
-      {role === 'patients' && (
-        <>
-          <TextInput placeholder="Surname" value={surname} onChangeText={setSurname} />
-          <TextInput placeholder="Age" value={age} onChangeText={setAge} />
-          <TextInput placeholder="Height" value={height} onChangeText={setHeight} />
-          <TextInput placeholder="Weight" value={weight} onChangeText={setWeight} />
-          <TextInput placeholder="Blood Type" value={bloodType} onChangeText={setBloodType} />
-        </>
-      )}
+      <TextInput 
+        placeholder="Age" 
+        value={age.toString()} 
+        onChangeText={text => setAge(parseInt(text) || 0)} 
+        keyboardType="numeric" 
+      />
+      <TextInput placeholder="Height" 
+      value={height.toString()} 
+      onChangeText={text =>setHeight(parseInt(text) || 0)}
+      keyboardType="numeric" />
+      <TextInput placeholder="Weight" 
+      value={weight.toString()} 
+      onChangeText={text =>setWeight(parseInt(text) || 0)} 
+      keyboardType="numeric" />
+       <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={<Button onPress={openMenu} title="Select Blood Type" />}
+        >
+          {bloodTypes.map((type, index) => (
+            <Menu.Item key={index} title={type} onPress={() => { setBloodType(type); closeMenu(); }} />
+          ))}
+        </Menu>
+        <Text>Selected Blood Type: {bloodType}</Text>
+        
+      
       <Button title="Save" onPress={handleSave} />
     </View>
+    </Provider>
   );
 };
 
