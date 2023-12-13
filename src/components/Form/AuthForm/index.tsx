@@ -1,5 +1,5 @@
 import React, { useState, ReactNode } from 'react';
-import { View, TextInput, Alert, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Formik, FormikProps } from 'formik';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
