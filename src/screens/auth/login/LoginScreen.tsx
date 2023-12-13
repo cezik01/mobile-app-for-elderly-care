@@ -7,6 +7,7 @@ import { signIn } from 'helpers/firebaseAuth/AuthService';
 import { FirebaseError } from 'firebase/app';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { UserProvider, useUser } from '../../../context/UserContext';
+import i18n from 'common/i18n/i18n';
 
 
 
@@ -59,12 +60,12 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   return (
     <AuthForm onSubmit={handleLogin} buttonTitle="Login">
       <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
-        <Text style={styles.linkText}>Don't have an account? Click here to sign up</Text>
+        <Text style={styles.linkText}>{i18n.t('DontHaveAccount')}</Text>
       </TouchableOpacity>
 
       <View style={{ marginTop: 20 }}>
         <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.linkText}>Forgot your password?</Text>
+          <Text style={styles.linkText}>{i18n.t('ForgotPassword')}</Text>
         </TouchableOpacity>
       </View>
     </AuthForm>
