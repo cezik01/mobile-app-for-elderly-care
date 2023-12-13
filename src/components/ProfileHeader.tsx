@@ -42,7 +42,6 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.city}>{city}</Text>
       <TouchableOpacity style={styles.editProfileButton} onPress={onEditPress}>
-        {/* <Text style={styles.editProfileText}>Edit Profile</Text> */}
         <Text style={styles.editProfileText}>
               {i18n.t('EditProfile')}
            </Text>

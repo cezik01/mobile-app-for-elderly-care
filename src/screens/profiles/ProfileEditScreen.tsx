@@ -78,7 +78,7 @@ const ProfileEditScreen = () => {
     <View>
       <TextInput placeholder="Name" value={name} onChangeText={setName} />
       <TextInput placeholder="City" value={city} onChangeText={setCity} />
-      {role === 'patients' && (
+      {role === 'patient' && (
         <>
           <TextInput placeholder="Surname" value={surname} onChangeText={setSurname} />
           <TextInput placeholder="Age" value={age} onChangeText={setAge} />
