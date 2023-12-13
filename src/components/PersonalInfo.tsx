@@ -15,11 +15,11 @@ type PersonalInfoItemProps = {
 const PersonalInfo = ({ age, weight, height, bloodType }: PersonalInfoProps) => {
   return (
     <View style={styles.container}>
-      <PersonalInfoItem icon={require('../../assets/profiles/Age.png')} label={`Age: ${age}`} />
+      <PersonalInfoItem icon={require('../../assets/profiles/Age.png')} label={`Age: ${age.toString()}`} />
       <View style={styles.divider} />
-      <PersonalInfoItem icon={require('../../assets/profiles/Weight.png')} label={`Weight: ${weight}`} />
+      <PersonalInfoItem icon={require('../../assets/profiles/Weight.png')} label={`Weight: ${weight.toString()}`} />
       <View style={styles.divider} />
-      <PersonalInfoItem icon={require('../../assets/profiles/Height.png')} label={`Height: ${height}`} />
+      <PersonalInfoItem icon={require('../../assets/profiles/Height.png')} label={`Height: ${height.toString()}`} />
       <View style={styles.divider} />
       <PersonalInfoItem icon={require('../../assets/profiles/BloodType.png')} label={`Blood Type: ${bloodType}`} />
     </View>
