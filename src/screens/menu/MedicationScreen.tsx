@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Notifications from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, push, onValue, remove } from 'firebase/database';
+import { getDatabase, ref, push, onValue, remove, update } from 'firebase/database';
 import firebaseConfig from 'config/firebaseConfig';
 
 const app = initializeApp(firebaseConfig);
@@ -15,6 +15,7 @@ interface Reminder {
   id: string;
   name: string;
   date: string;
+  notificationId?: string;
 }
 
 const MedicationScreen = () => {
@@ -43,24 +44,45 @@ const MedicationScreen = () => {
     return () => unsubscribe();
   }, []);
 
-  const addReminder = () => {
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+  }, []);
+
+    async function registerForPushNotificationsAsync() {
+    const { status } = await Notifications.requestPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Sorry, we need notification permissions to make this work!');
+    }
+  }
+
+  const addReminder = async () => {
     if (!auth.currentUser) {
       console.log('No user logged in');
       return;
     }
-
+  
     const uid = auth.currentUser.uid;
     const newReminder = {
       name: medicationName,
       date: date.toString(),
     };
-
-    push(ref(db, `users/${uid}/reminders`), newReminder);
+  
+    const reminderRef = push(ref(db, `users/${uid}/reminders`), newReminder);
+  
+    let notificationId = '';
+    try {
+      notificationId = await scheduleNotification(medicationName, date);
+      console.log(`Notification scheduled with ID: ${notificationId}`);
+    } catch (error) {
+      console.error("Failed to schedule notification", error);
+    }
+  
+    update(ref(db, `users/${uid}/reminders/${reminderRef.key}`), { notificationId });
+  
     setMedicationName('');
-    // Optionally schedule a notification here
   };
-
-  const deleteReminder = (id: string) => {
+  
+  const deleteReminder = async (id: string, notificationId?: string) => {
     if (!auth.currentUser) {
       console.log('No user logged in');
       return;
@@ -68,8 +90,21 @@ const MedicationScreen = () => {
 
     const uid = auth.currentUser.uid;
     remove(ref(db, `users/${uid}/reminders/${id}`));
-    // Optionally cancel the notification here
+
+    if (notificationId) {
+      await Notifications.cancelScheduledNotificationAsync(notificationId);
+    }
   };
+
+async function scheduleNotification(name: string, date: Date) {
+  return await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'Medication Reminder',
+      body: `Time to take your medication: ${name}`,
+    },
+    trigger: date,
+  });
+}
 
   return (
     <View style={styles.container}>
@@ -83,15 +118,16 @@ const MedicationScreen = () => {
       <Button onPress={() => setShow(true)} title="Set Reminder" />
       {show && (
         <DateTimePicker
-        testID="dateTimePicker"
-        value={date}
-        mode="datetime"
-        display="default"
-        onChange={(event, selectedDate) => {
-          setDate(selectedDate || date);
-          setShow(false);
-        }}
-      />      
+          testID="dateTimePicker"
+          value={date}
+          mode="datetime"
+          display="default"
+          onChange={(event, selectedDate) => {
+            const currentDate = selectedDate || date;
+            setShow(false);
+            setDate(currentDate);
+          }}
+        />
       )}
       <Button onPress={addReminder} title="Add Reminder" />
       <FlatList
@@ -99,8 +135,8 @@ const MedicationScreen = () => {
         renderItem={({ item }) => (
           <View style={styles.reminderItem}>
             <Text>{item.name} - {new Date(item.date).toLocaleString()}</Text>
-            <TouchableOpacity onPress={() => deleteReminder(item.id)}>
-              <Text style={styles.deleteText}> Delete</Text>
+            <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
+              <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
         )}
