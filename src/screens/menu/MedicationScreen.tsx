@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Button, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Notifications from 'expo-notifications';
+import { Notification } from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, push, onValue, remove, update } from 'firebase/database';
@@ -46,14 +47,41 @@ const MedicationScreen = () => {
 
   useEffect(() => {
     registerForPushNotificationsAsync();
+
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification: Notification) => {
+        handleNotification(notification);
+      }
+    );
+
+    return () => {
+      Notifications.removeNotificationSubscription(subscription);
+    };
   }, []);
 
-    async function registerForPushNotificationsAsync() {
+  async function registerForPushNotificationsAsync() {
     const { status } = await Notifications.requestPermissionsAsync();
     if (status !== 'granted') {
       alert('Sorry, we need notification permissions to make this work!');
     }
   }
+
+  const handleNotification = (notification: Notification) => {
+    const { title, body } = notification.request.content;
+
+    const alertTitle = title ?? 'Notification';
+    const alertBody = body ?? '';
+
+    Alert.alert(
+      alertTitle,
+      alertBody,
+      [
+        { text: "Dismiss", onPress: () => console.log("Notification dismissed") },
+        { text: "Accept", onPress: () => console.log("Notification accepted") }
+      ],
+      { cancelable: true }
+    );
+  };
 
   const addReminder = async () => {
     if (!auth.currentUser) {
@@ -81,7 +109,7 @@ const MedicationScreen = () => {
   
     setMedicationName('');
   };
-  
+
   const deleteReminder = async (id: string, notificationId?: string) => {
     if (!auth.currentUser) {
       console.log('No user logged in');
@@ -96,15 +124,15 @@ const MedicationScreen = () => {
     }
   };
 
-async function scheduleNotification(name: string, date: Date) {
-  return await Notifications.scheduleNotificationAsync({
-    content: {
-      title: 'Medication Reminder',
-      body: `Time to take your medication: ${name}`,
-    },
-    trigger: date,
-  });
-}
+  async function scheduleNotification(name: string, date: Date) {
+    return await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Medication Reminder',
+        body: `Time to take your medication: ${name}`,
+      },
+      trigger: date,
+    });
+  }
 
   return (
     <View style={styles.container}>
