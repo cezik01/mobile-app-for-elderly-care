@@ -1,12 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Button } from 'react-native';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
-import { Button } from 'react-native-paper';
 import styles from './styles';
-
-type DateParams = {
-  dates: Date[];
-};
 
 type TimeParams = {
   hours: number;
@@ -19,49 +14,49 @@ interface CustomDatePickerProps {
 }
 
 export default function CustomDatePicker({ onDateChange, onTimeChange }: CustomDatePickerProps) {
-
-  const [dates, setDates] = React.useState([new Date()]);
+  const [date, setDate] = React.useState(new Date());
   const [openDatePicker, setOpenDatePicker] = React.useState(false);
   const [time, setTime] = React.useState(new Date());
-  const [openTimePicker, setOpenTimePicker] = React.useState(false);
+  const [openTimePickerModal, setOpenTimePickerModal] = React.useState(false);
 
   const onDismissDate = React.useCallback(() => {
     setOpenDatePicker(false);
   }, []);
 
-  const onDismissTime = React.useCallback(() => {
-    setOpenTimePicker(false);
-  }, []);
-
-  const onConfirmDate = React.useCallback((params: DateParams) => {
+  const onConfirmDate = (params: { dates: Date[] }) => {
     setOpenDatePicker(false);
-    setDates(params.dates);
-    onDateChange(params.dates[0]);
-    setOpenTimePicker(true);
-  }, [onDateChange]);
+    if (params.dates.length > 0) {
+      setDate(params.dates[0]);
+      setOpenTimePickerModal(true);
+      onDateChange(params.dates[0]);
+    }
+  };
+  
 
-  const onConfirmTime = React.useCallback((params: TimeParams) => {
-    setOpenTimePicker(false);
+  const onDismissTime = () => {
+    setOpenTimePickerModal(false);
+  };
+
+  const onConfirmTime = (params: TimeParams) => {
+    setOpenTimePickerModal(false);
     const newTime = new Date(time.setHours(params.hours, params.minutes));
     setTime(newTime);
     onTimeChange(newTime);
-  }, [onTimeChange, time]);
+  };
 
   return (
     <View style={styles.container}>
-      <Button onPress={() => setOpenDatePicker(true)} uppercase={false} mode="outlined">
-        Pick Date and Time
-      </Button>
+      <Button onPress={() => setOpenDatePicker(true)} title="Pick Date and Time" />
       <DatePickerModal
         locale="en"
         mode="multiple"
         visible={openDatePicker}
         onDismiss={onDismissDate}
-        dates={dates}
+        date={date}
         onConfirm={onConfirmDate}
       />
       <TimePickerModal
-        visible={openTimePicker}
+        visible={openTimePickerModal}
         onDismiss={onDismissTime}
         onConfirm={onConfirmTime}
         hours={time.getHours()}
