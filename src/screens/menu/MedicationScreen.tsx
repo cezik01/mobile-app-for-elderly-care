@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Notifications from 'expo-notifications';
 import { Notification } from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, push, onValue, remove, update } from 'firebase/database';
 import firebaseConfig from 'config/firebaseConfig';
+import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -23,7 +23,6 @@ interface Reminder {
 const MedicationScreen = () => {
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
   const [medicationName, setMedicationName] = useState('');
   const [medicationDosage, setMedicationDosage] = useState('');
 
@@ -111,6 +110,8 @@ const MedicationScreen = () => {
     update(ref(db, `users/${uid}/reminders/${reminderRef.key}`), { notificationId });
   
     setMedicationName('');
+    setMedicationDosage('');
+    setDate(new Date());
   };
 
   const deleteReminder = async (id: string, notificationId?: string) => {
@@ -146,26 +147,16 @@ const MedicationScreen = () => {
         value={medicationName}
         placeholder="Enter medication name"
       />
-       <TextInput
+      <TextInput
         style={styles.input}
         onChangeText={setMedicationDosage}
         value={medicationDosage}
         placeholder="Enter medication dosage"
       />
-      <Button onPress={() => setShow(true)} title="Set Reminder" />
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="datetime"
-          display="default"
-          onChange={(event, selectedDate) => {
-            const currentDate = selectedDate || date;
-            setShow(false);
-            setDate(currentDate);
-          }}
-        />
-      )}
+      <CustomDatePicker 
+        onDateChange={(newDate) => setDate(newDate)}
+        onTimeChange={(newTime) => setDate(newTime)}
+      />
       <Button onPress={addReminder} title="Add Reminder" />
       <FlatList
         data={reminders}
@@ -173,7 +164,7 @@ const MedicationScreen = () => {
           <View style={styles.reminderItem}>
             <Text>Medication Name: {item.name} - Date&Time: {new Date(item.date).toLocaleString()} - Dosage: {item.dosage}</Text>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
-              <Text style={styles.deleteText}> Delete</Text>
+              <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
         )}
