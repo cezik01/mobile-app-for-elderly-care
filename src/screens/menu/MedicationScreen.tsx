@@ -25,6 +25,7 @@ const MedicationScreen = () => {
   const [date, setDate] = useState(new Date());
   const [medicationName, setMedicationName] = useState('');
   const [medicationDosage, setMedicationDosage] = useState('');
+  const [isInvalidInput, setIsInvalidInput] = useState(false);
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -138,6 +139,18 @@ const MedicationScreen = () => {
     });
   }
 
+  const validateDosage = (text: string) => {
+    if (/[^0-9]/.test(text)) {
+      setIsInvalidInput(true);
+    } else {
+      setIsInvalidInput(false);
+    }
+  
+    const validText = text.replace(/[^0-9]/g, '');
+    return validText;
+  };
+  
+
   return (
     <View style={styles.container}>
       <Text>Medication Reminder</Text>
@@ -149,10 +162,11 @@ const MedicationScreen = () => {
       />
       <TextInput
         style={styles.input}
-        onChangeText={setMedicationDosage}
+        onChangeText={(text) => setMedicationDosage(validateDosage(text))}
         value={medicationDosage}
         placeholder="Enter medication dosage"
       />
+      {isInvalidInput && <Text style={styles.warningText}>Please enter a valid number</Text>}
       <CustomDatePicker 
         onDateChange={(newDate) => setDate(newDate)}
         onTimeChange={(newTime) => setDate(newTime)}
@@ -198,6 +212,9 @@ const styles = StyleSheet.create({
     borderBottomColor: 'lightgray',
   },
   deleteText: {
+    color: 'red',
+  },
+  warningText: {
     color: 'red',
   },
 });
