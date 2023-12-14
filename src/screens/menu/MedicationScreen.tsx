@@ -16,6 +16,7 @@ interface Reminder {
   id: string;
   name: string;
   date: string;
+  dosage: string;
   notificationId?: string;
 }
 
@@ -24,6 +25,7 @@ const MedicationScreen = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [medicationName, setMedicationName] = useState('');
+  const [medicationDosage, setMedicationDosage] = useState('');
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -93,13 +95,14 @@ const MedicationScreen = () => {
     const newReminder = {
       name: medicationName,
       date: date.toString(),
+      dosage: medicationDosage,
     };
   
     const reminderRef = push(ref(db, `users/${uid}/reminders`), newReminder);
   
     let notificationId = '';
     try {
-      notificationId = await scheduleNotification(medicationName, date);
+      notificationId = await scheduleNotification(medicationName, medicationDosage, date);
       console.log(`Notification scheduled with ID: ${notificationId}`);
     } catch (error) {
       console.error("Failed to schedule notification", error);
@@ -124,11 +127,11 @@ const MedicationScreen = () => {
     }
   };
 
-  async function scheduleNotification(name: string, date: Date) {
+  async function scheduleNotification(name: string, dosage: string, date: Date) {
     return await Notifications.scheduleNotificationAsync({
       content: {
         title: 'Medication Reminder',
-        body: `Time to take your medication: ${name}`,
+        body: `Time to take your medication: ${name}, Dosage: ${dosage}`,
       },
       trigger: date,
     });
@@ -142,6 +145,12 @@ const MedicationScreen = () => {
         onChangeText={setMedicationName}
         value={medicationName}
         placeholder="Enter medication name"
+      />
+       <TextInput
+        style={styles.input}
+        onChangeText={setMedicationDosage}
+        value={medicationDosage}
+        placeholder="Enter medication dosage"
       />
       <Button onPress={() => setShow(true)} title="Set Reminder" />
       {show && (
@@ -162,9 +171,9 @@ const MedicationScreen = () => {
         data={reminders}
         renderItem={({ item }) => (
           <View style={styles.reminderItem}>
-            <Text>{item.name} - {new Date(item.date).toLocaleString()}</Text>
+            <Text>Medication Name: {item.name} - Date&Time: {new Date(item.date).toLocaleString()} - Dosage: {item.dosage}</Text>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
-              <Text style={styles.deleteText}>Delete</Text>
+              <Text style={styles.deleteText}> Delete</Text>
             </TouchableOpacity>
           </View>
         )}
