@@ -11,8 +11,16 @@
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
+    "notification": {
+      "ios": {
+        "sound": true
+      },
+      "android": {
+        "sound": true
+      }
+    },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/sounds/*"
     ],
     "ios": {
       "supportsTablet": true

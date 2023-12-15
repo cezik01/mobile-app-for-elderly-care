@@ -134,11 +134,11 @@ const MedicationScreen = () => {
       content: {
         title: 'Medication Reminder',
         body: `Time to take your medication: ${name}, Dosage: ${dosage}`,
-        sound: true,
+        sound: 'assets/sounds/reminder-sound.mp3',
       },
       trigger: date,
     });
-  }
+  }  
   
   const validateDosage = (text: string) => {
     if (/[^0-9]/.test(text)) {
