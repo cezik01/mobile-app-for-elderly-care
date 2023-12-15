@@ -7,6 +7,7 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, push, onValue, remove, update } from 'firebase/database';
 import firebaseConfig from 'config/firebaseConfig';
 import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -18,6 +19,7 @@ interface Reminder {
   date: string;
   dosage: string;
   notificationId?: string;
+  status?: 'accepted' | 'dismissed' | 'none';
 }
 
 const MedicationScreen = () => {
@@ -67,19 +69,30 @@ const MedicationScreen = () => {
       alert('Sorry, we need notification permissions to make this work!');
     }
   }
+  
+  const updateReminderStatus = (reminderId: string, status: 'accepted' | 'dismissed') => {
+    if (!auth.currentUser) {
+      console.log('No user logged in');
+      return;
+    }
+    const uid = auth.currentUser.uid;
+    update(ref(db, `users/${uid}/reminders/${reminderId}`), { status });
+  };
 
   const handleNotification = (notification: Notification) => {
     const { title, body } = notification.request.content;
-
+  
+    const reminderId = notification.request.content.data?.reminderId;
+  
     const alertTitle = title ?? 'Notification';
     const alertBody = body ?? '';
-
+  
     Alert.alert(
       alertTitle,
       alertBody,
       [
-        { text: "Dismiss", onPress: () => console.log("Notification Dismissed") },
-        { text: "Accept", onPress: () => console.log("Notification Accepted") }
+        { text: "Dismiss", onPress: () => reminderId && updateReminderStatus(reminderId, 'dismissed') },
+        { text: "Accept", onPress: () => reminderId && updateReminderStatus(reminderId, 'accepted') }
       ],
       { cancelable: true }
     );
@@ -96,25 +109,34 @@ const MedicationScreen = () => {
       name: medicationName,
       date: date.toString(),
       dosage: medicationDosage,
+      status: 'none',
     };
   
-    const reminderRef = push(ref(db, `users/${uid}/reminders`), newReminder);
+    const reminderRef = await push(ref(db, `users/${uid}/reminders`), newReminder);
+  
+    if (reminderRef.key === null) {
+      console.error("Failed to get reminder ID");
+      return;
+    }
+  
+    const reminderId = reminderRef.key; 
   
     let notificationId = '';
     try {
-      notificationId = await scheduleNotification(medicationName, medicationDosage, date);
+      notificationId = await scheduleNotification(medicationName, medicationDosage, date, reminderId);
       console.log(`Notification scheduled with ID: ${notificationId}`);
     } catch (error) {
       console.error("Failed to schedule notification", error);
     }
   
-    update(ref(db, `users/${uid}/reminders/${reminderRef.key}`), { notificationId });
+    update(ref(db, `users/${uid}/reminders/${reminderId}`), { notificationId });
   
     setMedicationName('');
     setMedicationDosage('');
     setDate(new Date());
   };
-
+  
+  
   const deleteReminder = async (id: string, notificationId?: string) => {
     if (!auth.currentUser) {
       console.log('No user logged in');
@@ -129,16 +151,17 @@ const MedicationScreen = () => {
     }
   };
 
-  async function scheduleNotification(name: string, dosage: string, date: Date) {
+  async function scheduleNotification(name: string, dosage: string, date: Date, reminderId: string) {
     return await Notifications.scheduleNotificationAsync({
       content: {
         title: 'Medication Reminder',
         body: `Time to take your medication: ${name}, Dosage: ${dosage}`,
+        data: { reminderId },
         sound: 'assets/sounds/reminder-sound.mp3',
       },
       trigger: date,
     });
-  }  
+  }
   
   const validateDosage = (text: string) => {
     if (/[^0-9]/.test(text)) {
@@ -177,6 +200,8 @@ const MedicationScreen = () => {
         data={reminders}
         renderItem={({ item }) => (
           <View style={styles.reminderItem}>
+            {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
+            {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
             <Text>Medication Name: {item.name} - Date&Time: {new Date(item.date).toLocaleString()} - Dosage: {item.dosage}</Text>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
               <Text style={styles.deleteText}>Delete</Text>
@@ -190,6 +215,14 @@ const MedicationScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  checkIcon: {
+    marginRight: 10,
+    color: '#32d56d',
+  },
+  closeIcon: {
+  marginRight: 10,
+  color: '#982419',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
