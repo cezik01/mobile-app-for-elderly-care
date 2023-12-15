@@ -78,8 +78,8 @@ const MedicationScreen = () => {
       alertTitle,
       alertBody,
       [
-        { text: "Dismiss", onPress: () => console.log("Notification dismissed") },
-        { text: "Accept", onPress: () => console.log("Notification accepted") }
+        { text: "Dismiss", onPress: () => console.log("Notification Dismissed") },
+        { text: "Accept", onPress: () => console.log("Notification Accepted") }
       ],
       { cancelable: true }
     );
