@@ -14,12 +14,12 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
 
   const handleRegistration = async (values: { email: string; password: string }) => {
     try {
-      await signUp(values.email, values.password,role);
+      await signUp(values.email, values.password, role);
       navigation.navigate('Login');
     } catch (error) {
       if (error instanceof FirebaseError) {
         let errorMessage = '';
-        switch(error.code) {
+        switch (error.code) {
           case 'auth/email-already-in-use':
             errorMessage = 'This email is already registered. Please use a different email.';
             break;
@@ -29,7 +29,7 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
           case 'auth/weak-password':
             errorMessage = 'Password should be at least 6 characters.';
             break;
-         
+
           default:
             errorMessage = 'An error occurred during registration. Please try again.';
         }
@@ -42,18 +42,18 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
 
   return (
     <AuthForm onSubmit={handleRegistration} buttonTitle="SignUp">
-    <View style={styles.pickerContainer}>
-    <RNPickerSelect
-    placeholder={{ label: "Select a Role..."}}
-  onValueChange={(value) => setRole(value)}
-  items={[
-    { label: "Patient", value: "patient" },
-    { label: "Caregiver", value: "caregiver" },
-  ]}
-  value={role}
-  useNativeAndroidPickerStyle={false} 
-/>
-    </View>
+      <View style={styles.pickerContainer}>
+        <RNPickerSelect
+          placeholder={{ label: "Select a Role..." }}
+          onValueChange={(value) => setRole(value)}
+          items={[
+            { label: "Patient", value: "patient" },
+            { label: "Caregiver", value: "caregiver" },
+          ]}
+          value={role}
+          useNativeAndroidPickerStyle={false}
+        />
+      </View>
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.linkText}>{i18n.t('LoginClick')}</Text>
       </TouchableOpacity>

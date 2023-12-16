@@ -7,22 +7,21 @@ import { getDatabase, ref, get, set } from 'firebase/database';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getDatabase(app); // Realtime Database başlatma
+const db = getDatabase(app);
 
 export const signUp = async (email: string, password: string, role: string): Promise<void> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    // Kullanıcıyı oluşturduktan sonra rol bilgisini veritabanına kaydedin
     await set(ref(db, 'users/' + user.uid), {
       email: email,
       role: role
     });
-    
+
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
-      throw error; 
+      throw error;
     } else {
       console.error('An unknown error occurred');
       throw new Error('An unknown error occurred');
@@ -30,7 +29,7 @@ export const signUp = async (email: string, password: string, role: string): Pro
   }
 };
 
-export const signIn = async (email: string, password: string): Promise<{role: string, uid: string}> => {
+export const signIn = async (email: string, password: string): Promise<{ role: string, uid: string }> => {
   const auth = getAuth();
   try {
     console.log("Attempting to sign in:", email);
@@ -38,7 +37,6 @@ export const signIn = async (email: string, password: string): Promise<{role: st
     const uid = userCredential.user.uid;
     console.log("User signed in:", uid);
 
-    // Kullanıcının rolünü almak için Realtime Database'den sorgulama yap
     const db = getDatabase();
     const userRef = ref(db, `users/${uid}/role`);
     console.log("Fetching role for uid:", uid);
@@ -46,9 +44,9 @@ export const signIn = async (email: string, password: string): Promise<{role: st
     if (snapshot.exists()) {
       const role = snapshot.val();
       console.log("Role fetched:", role);
-      return { role, uid }; // Rolü ve kullanıcı ID'sini döndür
+      return { role, uid };
     } else {
-      throw new Error('Role does not exist.'); // Rol bulunamazsa hata fırlat
+      throw new Error('Role does not exist.');
     }
   } catch (error) {
     console.error(error);

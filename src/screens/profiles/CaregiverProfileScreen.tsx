@@ -14,7 +14,7 @@ interface UserData {
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<UserData>({});
-  
+
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;

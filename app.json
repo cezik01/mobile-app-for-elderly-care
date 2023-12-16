@@ -12,7 +12,7 @@
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/sounds/*"
     ],
     "ios": {
       "supportsTablet": true
