@@ -11,9 +11,9 @@ const ProfileEditScreen = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [city, setCity] = useState('');
-  const [age, setAge] = useState(0);
-  const [height, setHeight] = useState(0);
-  const [weight, setWeight] = useState(0);
+  const [age, setAge] = useState<number | ''>('');
+  const [height, setHeight] = useState<number | ''>('');
+  const [weight, setWeight] = useState<number | ''>('');
   const [bloodType, setBloodType] = useState('');
   const [visible, setVisible] = useState(false);
 
@@ -44,9 +44,9 @@ const ProfileEditScreen = () => {
       updates['/users/' + user.uid + '/name'] = name;
       updates['/users/' + user.uid + '/surname'] = surname;
       updates['/users/' + user.uid + '/city'] = city;
-      updates['/users/' + user.uid + '/age'] = age;
-      updates['/users/' + user.uid + '/height'] = height;
-      updates['/users/' + user.uid + '/weight'] = weight;
+      updates['/users/' + user.uid + '/age'||0] = age;
+      updates['/users/' + user.uid + '/height'||0] = height;
+      updates['/users/' + user.uid + '/weight'||0] = weight;
       updates['/users/' + user.uid + '/bloodType'] = bloodType;
 
 
@@ -70,19 +70,33 @@ const ProfileEditScreen = () => {
         <TextInput placeholder="Surname" value={surname} onChangeText={setSurname} />
         <TextInput placeholder="City" value={city} onChangeText={setCity} />
         <TextInput
-          placeholder="Age"
-          value={age.toString()}
-          onChangeText={text => setAge(parseInt(text) || 0)}
-          keyboardType="numeric"
-        />
-        <TextInput placeholder="Height"
-          value={height.toString()}
-          onChangeText={text => setHeight(parseInt(text) || 0)}
-          keyboardType="numeric" />
-        <TextInput placeholder="Weight"
-          value={weight.toString()}
-          onChangeText={text => setWeight(parseInt(text) || 0)}
-          keyboardType="numeric" />
+  placeholder="Age"
+  value={age === '' ? '' : age.toString()} // age değeri boş string ise boş string olarak bırak, değilse sayıyı string'e çevir.
+  onChangeText={text => {
+    const num = parseInt(text);
+    setAge(isNaN(num) ? '' : num); // Sayıysa sayıyı, değilse boş string'i set et.
+  }}
+  keyboardType="numeric"
+/>
+<TextInput
+  placeholder="Height"
+  value={height === '' ? '' : height.toString()}
+  onChangeText={text => {
+    const num = parseInt(text);
+    setHeight(isNaN(num) ? '' : num);
+  }}
+  keyboardType="numeric"
+/>
+<TextInput
+  placeholder="Weight"
+  value={weight === '' ? '' : weight.toString()}
+  onChangeText={text => {
+    const num = parseInt(text);
+    setWeight(isNaN(num) ? '' : num);
+  }}
+  keyboardType="numeric"
+/>
+
         <Menu
           visible={visible}
           onDismiss={closeMenu}
