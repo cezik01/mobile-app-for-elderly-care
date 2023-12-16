@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 type MenuItemProps = {
   onPress: () => void;
-  iconName: any; 
+  iconName: any;
   text: string;
 };
 
@@ -33,27 +33,27 @@ const MenuComponent = ({ onMedicationPress, onAppointmentsPress }: MenuProps) =>
         iconName={require('../../assets/profiles/appointmentsIcon.png')}
         text="Appointments"
       />
-      {}
+      { }
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   menuContainer: {
-    position: 'absolute', 
-    bottom: 0, 
-    left: 0, 
-    right: 0, 
-    flexDirection: 'row', 
-    justifyContent: 'space-around', 
-    alignItems: 'center', 
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     padding: 10,
-    backgroundColor: '#fff', 
-    borderTopWidth: 1, 
-    borderTopColor: '#ddd', 
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
   },
   menuItem: {
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   menuIcon: {
     width: 30,
@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
     textAlign: 'center',
-    marginTop: 5, 
+    marginTop: 5,
   },
-  
+
 });
 
 export default MenuComponent;

@@ -40,18 +40,18 @@ const HealthMetrics: React.FC<HealthMetricsProps> = ({ bloodPressure, bloodSugar
   return (
     <View style={styles.metricsContainer}>
       <HealthMetricItem
-        icon={require('../../assets/profiles/Graph.png')} 
+        icon={require('../../assets/profiles/Graph.png')}
         label="Blood Pressure"
         value={bloodPressure}
         color={getHealthMetricColor(bloodPressure)}
       />
       <HealthMetricItem
-        icon={require('../../assets/profiles/Group.png')} 
+        icon={require('../../assets/profiles/Group.png')}
         label="Blood Sugar"
         value={bloodSugar}
         color={getHealthMetricColor(bloodSugar)}
       />
-      
+
     </View>
   );
 };
@@ -61,26 +61,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
-    marginTop: 50, 
+    marginTop: 50,
   },
   metricItem: {
     alignItems: 'center',
-    marginHorizontal: 10, 
+    marginHorizontal: 10,
   },
   icon: {
-    width: 130, 
-    height: 130, 
-    marginVertical: 4, 
+    width: 130,
+    height: 130,
+    marginVertical: 4,
   },
   metricLabel: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#000', 
+    color: '#000',
   },
   metricValue: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#000', 
+    color: '#000',
   },
 });
 

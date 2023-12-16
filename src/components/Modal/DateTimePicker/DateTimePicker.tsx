@@ -31,7 +31,7 @@ export default function CustomDatePicker({ onDateChange, onTimeChange }: CustomD
       onDateChange(params.dates[0]);
     }
   };
-  
+
 
   const onDismissTime = () => {
     setOpenTimePickerModal(false);

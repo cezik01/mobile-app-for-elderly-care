@@ -17,11 +17,11 @@ export const signUp = async (email: string, password: string, role: string): Pro
       email: email,
       role: role
     });
-    
+
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
-      throw error; 
+      throw error;
     } else {
       console.error('An unknown error occurred');
       throw new Error('An unknown error occurred');
@@ -29,7 +29,7 @@ export const signUp = async (email: string, password: string, role: string): Pro
   }
 };
 
-export const signIn = async (email: string, password: string): Promise<{role: string, uid: string}> => {
+export const signIn = async (email: string, password: string): Promise<{ role: string, uid: string }> => {
   const auth = getAuth();
   try {
     console.log("Attempting to sign in:", email);
@@ -44,9 +44,9 @@ export const signIn = async (email: string, password: string): Promise<{role: st
     if (snapshot.exists()) {
       const role = snapshot.val();
       console.log("Role fetched:", role);
-      return { role, uid }; 
+      return { role, uid };
     } else {
-      throw new Error('Role does not exist.'); 
+      throw new Error('Role does not exist.');
     }
   } catch (error) {
     console.error(error);

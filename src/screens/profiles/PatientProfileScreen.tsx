@@ -23,7 +23,7 @@ interface UserData {
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<UserData>({});
-  
+
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -54,7 +54,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   };
 
   const handleMedicationPress = () => {
-  navigation.navigate('Medication Screen');
+    navigation.navigate('Medication Screen');
   }
 
   return (
@@ -66,13 +66,13 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
         onNotificationsPress={handleNotificationsPress}
         onMenuPress={handleMenuPress}
       />
-      <PersonalInfo 
-        age={userData.age || 0} 
-        weight={userData.weight || 0} 
-        height={userData.height || 0} 
-        bloodType={userData.bloodType || "N/A"} 
+      <PersonalInfo
+        age={userData.age || 0}
+        weight={userData.weight || 0}
+        height={userData.height || 0}
+        bloodType={userData.bloodType || "N/A"}
       />
-      <HealthMetrics 
+      <HealthMetrics
         bloodPressure={userData.bloodPressure || 'Normal'}
         bloodSugar={userData.bloodSugar || 'Normal'}
       />

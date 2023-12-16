@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text} from 'react-native';
+import { View, TextInput, Button, Alert, Text } from 'react-native';
 import { getAuth, updateProfile } from 'firebase/auth';
-import { getDatabase, ref, set, onValue ,update} from 'firebase/database';
+import { getDatabase, ref, set, onValue, update } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, Provider } from 'react-native-paper';
 
@@ -16,7 +16,6 @@ const ProfileEditScreen = () => {
   const [weight, setWeight] = useState(0);
   const [bloodType, setBloodType] = useState('');
   const [visible, setVisible] = useState(false);
-  
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -34,7 +33,7 @@ const ProfileEditScreen = () => {
         setHeight(data.height);
         setWeight(data.weight);
         setBloodType(data.bloodType);
-        
+
       });
     }
   }, []);
@@ -49,15 +48,15 @@ const ProfileEditScreen = () => {
       updates['/users/' + user.uid + '/height'] = height;
       updates['/users/' + user.uid + '/weight'] = weight;
       updates['/users/' + user.uid + '/bloodType'] = bloodType;
-      
-      
-  
+
+
+
       await update(ref(db), updates);
       Alert.alert('Profile Updated', 'Your profile has been updated successfully.', [
-        { text: "OK", onPress: () => navigation.goBack() } 
+        { text: "OK", onPress: () => navigation.goBack() }
       ]);
-      
-      
+
+
     }
   };
   const openMenu = () => setVisible(true);
@@ -66,25 +65,25 @@ const ProfileEditScreen = () => {
   return (
     <Provider>
 
-    <View>
-      <TextInput placeholder="Name" value={name} onChangeText={setName} />
-      <TextInput placeholder="Surname" value={surname} onChangeText={setSurname} />
-      <TextInput placeholder="City" value={city} onChangeText={setCity} />
-      <TextInput 
-        placeholder="Age" 
-        value={age.toString()} 
-        onChangeText={text => setAge(parseInt(text) || 0)} 
-        keyboardType="numeric" 
-      />
-      <TextInput placeholder="Height" 
-      value={height.toString()} 
-      onChangeText={text =>setHeight(parseInt(text) || 0)}
-      keyboardType="numeric" />
-      <TextInput placeholder="Weight" 
-      value={weight.toString()} 
-      onChangeText={text =>setWeight(parseInt(text) || 0)} 
-      keyboardType="numeric" />
-       <Menu
+      <View>
+        <TextInput placeholder="Name" value={name} onChangeText={setName} />
+        <TextInput placeholder="Surname" value={surname} onChangeText={setSurname} />
+        <TextInput placeholder="City" value={city} onChangeText={setCity} />
+        <TextInput
+          placeholder="Age"
+          value={age.toString()}
+          onChangeText={text => setAge(parseInt(text) || 0)}
+          keyboardType="numeric"
+        />
+        <TextInput placeholder="Height"
+          value={height.toString()}
+          onChangeText={text => setHeight(parseInt(text) || 0)}
+          keyboardType="numeric" />
+        <TextInput placeholder="Weight"
+          value={weight.toString()}
+          onChangeText={text => setWeight(parseInt(text) || 0)}
+          keyboardType="numeric" />
+        <Menu
           visible={visible}
           onDismiss={closeMenu}
           anchor={<Button onPress={openMenu} title="Select Blood Type" />}
@@ -94,10 +93,10 @@ const ProfileEditScreen = () => {
           ))}
         </Menu>
         <Text>Selected Blood Type: {bloodType}</Text>
-        
-      
-      <Button title="Save" onPress={handleSave} />
-    </View>
+
+
+        <Button title="Save" onPress={handleSave} />
+      </View>
     </Provider>
   );
 };

@@ -9,26 +9,24 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { UserProvider, useUser } from '../../../context/UserContext';
 import i18n from 'common/i18n/i18n';
 
-
-
 const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const { updateUser } = useUser();
 
   const handleLogin = async (values: { email: string; password: string }) => {
     try {
-      const { role, uid } = await signIn(values.email, values.password); 
+      const { role, uid } = await signIn(values.email, values.password);
       updateUser({ role, uid });
       if (role === 'caregiver') {
         navigation.navigate('Caregiver Profile');
       } else if (role === 'patient') {
         navigation.navigate('Patient Profile');
       }
-      
-    } catch (error) { 
+
+    } catch (error) {
       let errorMessage = '';
       if (error instanceof FirebaseError) {
-        switch(error.code) {
-          case 'auth/user-not-found': 
+        switch (error.code) {
+          case 'auth/user-not-found':
             errorMessage = 'The email you have written is not registered.';
             break;
           case 'auth/invalid-credential':
@@ -45,15 +43,15 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   };
 
   const handleForgotPassword = () => {
-   /* const email = await promptForEmail(); // Implement this function to get the user's email
-    if (!email) return; // Exit if no email is provided
-  
-    try {
-      await sendPasswordResetEmail(auth, email);
-      Alert.alert('Check your email', 'A link to reset your password has been sent to your email address.');
-    } catch (error) {
-      Alert.alert('Error', 'Failed to send password reset email. Please try again.');
-    }*/
+    /* const email = await promptForEmail(); // Implement this function to get the user's email
+     if (!email) return; // Exit if no email is provided
+   
+     try {
+       await sendPasswordResetEmail(auth, email);
+       Alert.alert('Check your email', 'A link to reset your password has been sent to your email address.');
+     } catch (error) {
+       Alert.alert('Error', 'Failed to send password reset email. Please try again.');
+     }*/
     navigation.navigate('PasswordReset');
   };
 

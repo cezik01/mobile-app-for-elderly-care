@@ -8,9 +8,9 @@ type PersonalInfoProps = {
   bloodType: string;
 };
 type PersonalInfoItemProps = {
-    icon: any; 
-    label: string;
-  };
+  icon: any;
+  label: string;
+};
 
 const PersonalInfo = ({ age, weight, height, bloodType }: PersonalInfoProps) => {
   return (
@@ -35,37 +35,37 @@ const PersonalInfoItem = ({ icon, label }: PersonalInfoItemProps) => {
   );
 };
 const styles = StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 10,
-      marginTop:10
-    
-    },
-    infoItem: {
-      alignItems: 'center',
-      marginHorizontal: 8, 
-    },
-    icon: {
-      width: 30,  
-      height: 30, 
-      marginBottom: 2, 
-    },
-    infoText: {
-      fontSize: 14, 
-      textAlign: 'center',
-      paddingVertical: 10
-      
-    },
-    divider: {
-      height: 10, 
-      width: 1,
-      backgroundColor: '#000',
-      marginHorizontal: 9, 
-      
-    },
-  });
-  
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    marginTop: 10
+
+  },
+  infoItem: {
+    alignItems: 'center',
+    marginHorizontal: 8,
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    marginBottom: 2,
+  },
+  infoText: {
+    fontSize: 14,
+    textAlign: 'center',
+    paddingVertical: 10
+
+  },
+  divider: {
+    height: 10,
+    width: 1,
+    backgroundColor: '#000',
+    marginHorizontal: 9,
+
+  },
+});
+
 
 export default PersonalInfo;

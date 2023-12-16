@@ -8,7 +8,7 @@ type ProfileHeaderProps = {
   name: string;
   city: string;
   onEditPress: () => void;
-  onNotificationsPress: () => void; 
+  onNotificationsPress: () => void;
   onMenuPress: () => void;
 };
 
@@ -24,10 +24,10 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
     }
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
     if (!pickerResult.canceled) {
-       setProfileImage((pickerResult as any).uri);
-};
-  }; 
-  
+      setProfileImage((pickerResult as any).uri);
+    };
+  };
+
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity style={styles.menuIconContainer} onPress={onMenuPress}>
@@ -43,10 +43,10 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
       <Text style={styles.city}>{city}</Text>
       <TouchableOpacity style={styles.editProfileButton} onPress={onEditPress}>
         <Text style={styles.editProfileText}>
-              {i18n.t('EditProfile')}
-           </Text>
+          {i18n.t('EditProfile')}
+        </Text>
         <Image
-          source={require('../../assets/profiles/Edit.png')} 
+          source={require('../../assets/profiles/Edit.png')}
           style={styles.editIcon}
         />
       </TouchableOpacity>
@@ -61,51 +61,51 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
 
 const styles = StyleSheet.create({
   headerContainer: {
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    paddingTop: 30, 
-    paddingBottom: 20, 
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 30,
+    paddingBottom: 20,
   },
   profileImage: {
-    width: 120, 
-    height: 120, 
-    borderRadius: 60, 
-    borderWidth: 2, 
-    borderColor: 'purple', 
-    marginBottom: 10, 
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    borderWidth: 2,
+    borderColor: 'purple',
+    marginBottom: 10,
   },
   name: {
-    fontSize: 20, 
-    fontWeight: 'bold', 
-    color: 'black', 
-    marginBottom: 4, 
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 4,
   },
   city: {
-    fontSize: 16, 
-    color: 'grey', 
+    fontSize: 16,
+    color: 'grey',
   },
   editProfileButton: {
     position: 'absolute',
-    top: 40, 
-    right: 10, 
+    top: 40,
+    right: 10,
     flexDirection: 'row',
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   editProfileText: {
-    fontSize: 16, 
-    color: 'blue', 
-    textDecorationLine: 'underline', 
+    fontSize: 16,
+    color: 'blue',
+    textDecorationLine: 'underline',
     marginRight: 7,
   },
   editIcon: {
-    width: 20, 
-    height: 20, 
+    width: 20,
+    height: 20,
   },
   menuIconContainer: {
     position: 'absolute',
     top: 10,
     left: 10,
-    zIndex: 1, 
+    zIndex: 1,
   },
   menuIcon: {
     width: 20,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    zIndex: 1, 
+    zIndex: 1,
   },
   notificationIcon: {
     width: 20,
