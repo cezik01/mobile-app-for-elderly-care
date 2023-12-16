@@ -157,11 +157,35 @@ const MedicationScreen = () => {
         title: 'Medication Reminder',
         body: `Time to take your medication: ${name}, Dosage: ${dosage}`,
         data: { reminderId },
-        sound: 'assets/sounds/reminder-sound.mp3',
+        sound: 'default',
+        categoryIdentifier: 'MEDICATION_REMINDER',
       },
       trigger: date,
     });
-  }
+  }  
+
+  Notifications.setNotificationCategoryAsync('MEDICATION_REMINDER', [
+    {
+      identifier: 'accept',
+      buttonTitle: 'Accept',
+      options: { opensAppToForeground: true },
+    },
+    {
+      identifier: 'dismiss',
+      buttonTitle: 'Dismiss',
+      options: { opensAppToForeground: false },
+    },
+  ]);  
+
+  Notifications.addNotificationResponseReceivedListener(response => {
+    const actionIdentifier = response.actionIdentifier;
+    const reminderId = response.notification.request.content.data.reminderId;
+  
+    if (reminderId) {
+      const newStatus = actionIdentifier === 'accept' ? 'accepted' : 'dismissed';
+      updateReminderStatus(reminderId, newStatus);
+    }
+  });
   
   const validateDosage = (text: string) => {
     if (/[^0-9]/.test(text)) {
@@ -197,19 +221,19 @@ const MedicationScreen = () => {
       />
       <Button onPress={addReminder} title="Add Reminder" />
       <FlatList
-        data={reminders}
-        renderItem={({ item }) => (
-          <View style={styles.reminderItem}>
-            {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
-            {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
-            <Text>Medication Name: {item.name} - Date&Time: {new Date(item.date).toLocaleString()} - Dosage: {item.dosage}</Text>
-            <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
-              <Text style={styles.deleteText}>Delete</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        keyExtractor={item => item.id}
-      />
+  data={reminders}
+  renderItem={({ item }) => (
+    <View style={styles.reminderItem}>
+      {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
+      {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
+      <Text>Medication Name: {item.name} - Date&Time: {new Date(item.date).toLocaleString()} - Dosage: {item.dosage}</Text>
+      <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
+        <Text style={styles.deleteText}>Delete</Text>
+      </TouchableOpacity>
+    </View>
+  )}
+  keyExtractor={item => item.id}
+/>
     </View>
   );
 };
