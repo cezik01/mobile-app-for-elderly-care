@@ -2,8 +2,9 @@
   "DontHaveAccount": "Hesabınız yok mu?",
   "EditProfile":"Profili Düzenle",
   "ForgotPassword": "Şifrenizi mi unuttunuz?",
-  "LoginClick": "Hesabınız var mı? Giriş yapmak için buraya tıklayın.",
   "helloWorld": "Merhaba Dünya!",
+  "HomeScreen": "Ana Ekran",
+  "LoginClick": "Hesabınız var mı? Giriş yapmak için buraya tıklayın.",
   "Login": "Giriş Yap",
   "SignUp": "Kayıt Ol"
 }

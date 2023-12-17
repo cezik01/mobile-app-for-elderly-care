@@ -2,8 +2,9 @@
   "DontHaveAccount": "Don't have an account? Click here to sign up",
   "EditProfile": "Edit Profile",
   "ForgotPassword": "Forgot your password?",
-  "LoginClick": "Already have an account? Click here to log in",
   "helloWorld": "Hello World!",
+  "HomeScreen": "Home Screen",
+  "LoginClick": "Already have an account? Click here to log in",
   "Login": "Login",
   "SignUp": "Sign Up"
 }
