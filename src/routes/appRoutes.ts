@@ -5,6 +5,7 @@ import CaregiverProfileScreen from 'screens/profiles/CaregiverProfileScreen';
 import PatientProfileScreen from 'screens/profiles/PatientProfileScreen';
 import ProfileEditScreen from 'screens/profiles/ProfileEditScreen';
 import MedicationScreen from 'screens/menu/MedicationScreen';
+import NotificationsScreen from 'screens/profiles/NotificationsScreen';
 
 
 const appRoutes = [
@@ -35,7 +36,13 @@ const appRoutes = [
   {
     name: 'Medication Screen',
     component: MedicationScreen,
-  }
+  },
+  {
+    name:'NotificationsScreen',
+    component: NotificationsScreen,
+  },
+  
+
 ];
 
 export default appRoutes;

@@ -25,12 +25,12 @@ const MenuComponent = ({ onMedicationPress, onAppointmentsPress }: MenuProps) =>
     <View style={styles.menuContainer}>
       <MenuItem
         onPress={onMedicationPress}
-        iconName={require('../../assets/profiles/medicationIcon.png')}
+        iconName={require('../../../assets/profiles/medicationIcon.png')}
         text="Medication"
       />
       <MenuItem
         onPress={onAppointmentsPress}
-        iconName={require('../../assets/profiles/appointmentsIcon.png')}
+        iconName={require('../../../assets/profiles/appointmentsIcon.png')}
         text="Appointments"
       />
       { }

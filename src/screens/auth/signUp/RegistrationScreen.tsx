@@ -6,11 +6,16 @@ import AuthForm from 'components/Form/AuthForm';
 import { signUp } from 'helpers/firebaseAuth/AuthService';
 import { FirebaseError } from 'firebase/app';
 import { useState } from 'react';
-import RNPickerSelect from 'react-native-picker-select';
+import { Button, Menu, Provider } from 'react-native-paper';
+
 import i18n from 'common/i18n/i18n';
 
 const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [role, setRole] = useState('patient');
+  const [visible, setVisible] = useState(false);
+  
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
 
   const handleRegistration = async (values: { email: string; password: string }) => {
     try {
@@ -42,21 +47,22 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
 
   return (
     <AuthForm onSubmit={handleRegistration} buttonTitle="SignUp">
-      <View style={styles.pickerContainer}>
-        <RNPickerSelect
-          placeholder={{ label: "Select a Role..." }}
-          onValueChange={(value) => setRole(value)}
-          items={[
-            { label: "Patient", value: "patient" },
-            { label: "Caregiver", value: "caregiver" },
-          ]}
-          value={role}
-          useNativeAndroidPickerStyle={false}
-        />
-      </View>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.linkText}>{i18n.t('LoginClick')}</Text>
-      </TouchableOpacity>
+       <View style={styles.pickerContainer}>
+          <Menu
+            visible={visible}
+            onDismiss={closeMenu}
+            anchor={
+              <Button mode="outlined" onPress={openMenu}>
+                {role ? role : i18n.t('SelectYourRole')}
+              </Button>
+            }>
+            <Menu.Item onPress={() => { setRole('Patient'); closeMenu(); }} title={i18n.t('Patient')} />
+            <Menu.Item onPress={() => { setRole('Caregiver'); closeMenu(); }} title={i18n.t('Caregiver')} />
+          </Menu>
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.linkText}>{i18n.t('HaveAccountLogin')}</Text>
+        </TouchableOpacity>
     </AuthForm>
   );
 };

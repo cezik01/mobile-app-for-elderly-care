@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import ProfileHeader from '../../components/ProfileHeader';
+import ProfileHeader from '../../components/ProfileComponents/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
@@ -46,8 +46,8 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   return (
     <View style={styles.screenContainer}>
       <ProfileHeader
-        name={userData.name || "Name not set"}
-        city={userData.city || "City not set"}
+        name={userData.name || "Name "}
+        city={userData.city || "City "}
         onEditPress={handleEditPress}
         onNotificationsPress={handleNotificationsPress}
         onMenuPress={handleMenuPress}

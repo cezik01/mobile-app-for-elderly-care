@@ -40,13 +40,13 @@ const HealthMetrics: React.FC<HealthMetricsProps> = ({ bloodPressure, bloodSugar
   return (
     <View style={styles.metricsContainer}>
       <HealthMetricItem
-        icon={require('../../assets/profiles/Graph.png')}
+        icon={require('../../../assets/profiles/Graph.png')}
         label="Blood Pressure"
         value={bloodPressure}
         color={getHealthMetricColor(bloodPressure)}
       />
       <HealthMetricItem
-        icon={require('../../assets/profiles/Group.png')}
+        icon={require('../../../assets/profiles/Group.png')}
         label="Blood Sugar"
         value={bloodSugar}
         color={getHealthMetricColor(bloodSugar)}
