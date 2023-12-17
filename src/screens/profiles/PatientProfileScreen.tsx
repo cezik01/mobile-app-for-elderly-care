@@ -44,7 +44,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   }, []);
 
   const handleEditPress = () => {
-    navigation.navigate('ProfileEditScreen');
+    navigation.navigate('Profile Edit Screen');
   };
   const handleNotificationsPress = () => {
     navigation.navigate('NotificationsScreen');
@@ -53,6 +53,10 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   const handleMenuPress = () => {
     console.log('Menu button pressed');
   };
+  
+  const handleMedicationPress = () => {
+    navigation.navigate('Medication Screen');
+  }
   
 
   return (
@@ -75,7 +79,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
         bloodSugar={userData.bloodSugar || 'Normal'}
       />
       <MenuComponent
-        onMedicationPress={() => console.log('Medication Pressed')}
+        onMedicationPress={handleMedicationPress}
         onAppointmentsPress={() => console.log('Appointments Pressed')}
       />
     </View>

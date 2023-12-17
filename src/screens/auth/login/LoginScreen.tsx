@@ -65,7 +65,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         <TouchableOpacity onPress={handleForgotPassword}>
           <Text style={styles.linkText}>{i18n.t('ForgotPassword')}</Text>
         </TouchableOpacity>
-      </View>
+      </View>ö
     </AuthForm>
   );
 };
