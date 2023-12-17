@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import { Notification } from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, push, onValue, remove, update } from 'firebase/database';
+import { getDatabase, ref, push, onValue, remove, update, get } from 'firebase/database';
 import firebaseConfig from 'config/firebaseConfig';
 import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -81,22 +81,67 @@ const MedicationScreen = () => {
 
   const handleNotification = (notification: Notification) => {
     const { title, body } = notification.request.content;
-
     const reminderId = notification.request.content.data?.reminderId;
 
     const alertTitle = title ?? 'Notification';
     const alertBody = body ?? '';
 
+    const snoozeOptions = [
+      { text: '1 min Delay', onPress: () => snoozeReminder(reminderId, 1) },
+      { text: '2 min Delay', onPress: () => snoozeReminder(reminderId, 2) },
+      { text: '3 min Delay', onPress: () => snoozeReminder(reminderId, 3) },
+      { text: '4 min Delay', onPress: () => snoozeReminder(reminderId, 4) },
+      { text: '5 min Delay', onPress: () => snoozeReminder(reminderId, 5) },
+      { text: '6 min Delay', onPress: () => snoozeReminder(reminderId, 6) },
+      { text: '7 min Delay', onPress: () => snoozeReminder(reminderId, 7) },
+      { text: '8 min Delay', onPress: () => snoozeReminder(reminderId, 8) },
+      { text: '9 min Delay', onPress: () => snoozeReminder(reminderId, 9) },
+      { text: '10 min Delay', onPress: () => snoozeReminder(reminderId, 10) },
+    ];
+
     Alert.alert(
       alertTitle,
       alertBody,
       [
+        ...snoozeOptions,
         { text: "Dismiss", onPress: () => reminderId && updateReminderStatus(reminderId, 'dismissed') },
         { text: "Accept", onPress: () => reminderId && updateReminderStatus(reminderId, 'accepted') }
       ],
       { cancelable: true }
     );
   };
+
+  const snoozeReminder = async (reminderId: string, minutes: number) => {
+    const snoozeTime = new Date();
+    snoozeTime.setMinutes(snoozeTime.getMinutes() + minutes);
+
+    const reminderDetails = await getReminderDetails(reminderId);
+    if (reminderDetails) {
+      await scheduleNotification(reminderDetails.name, reminderDetails.dosage, snoozeTime, reminderId);
+    }
+  };
+
+  const getReminderDetails = async (reminderId: string) => {
+    if (!auth.currentUser) {
+      console.log('No user logged in');
+      return null;
+    }
+  
+    const uid = auth.currentUser.uid;
+    const reminderRef = ref(db, `users/${uid}/reminders/${reminderId}`);
+    try {
+      const snapshot = await get(reminderRef);
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        console.log('No data available');
+        return null;
+      }
+    } catch (error) {
+      console.error("Failed to fetch reminder details", error);
+      return null;
+    }
+  };  
 
   const addReminder = async () => {
     if (!auth.currentUser) {
