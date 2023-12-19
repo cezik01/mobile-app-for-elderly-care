@@ -18,9 +18,9 @@ interface UserData {
   weight?: number;
   height?: number;
   bloodType?: string;
-  bloodPressure?: HealthMetric;  // HealthMetric tipinde olmalı
+  bloodPressure?: HealthMetric;  
   bloodSugar?: HealthMetric;
-  // ...diğer alanlar...
+  
 }
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
@@ -57,6 +57,9 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   const handleMedicationPress = () => {
     navigation.navigate('Medication Screen');
   }
+  const handleAppointmentPress= ()=>{
+    navigation.navigate('Appointment Screen');
+  }
   
 
   return (
@@ -80,7 +83,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
       />
       <MenuComponent
         onMedicationPress={handleMedicationPress}
-        onAppointmentsPress={() => console.log('Appointments Pressed')}
+        onAppointmentsPress={handleAppointmentPress}
       />
     </View>
   );

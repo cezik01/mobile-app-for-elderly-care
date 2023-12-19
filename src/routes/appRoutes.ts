@@ -6,6 +6,7 @@ import PatientProfileScreen from 'screens/profiles/PatientProfileScreen';
 import ProfileEditScreen from 'screens/profiles/ProfileEditScreen';
 import MedicationScreen from 'screens/menu/MedicationScreen';
 import NotificationsScreen from 'screens/profiles/NotificationsScreen';
+import AppointmentScreen from 'screens/menu/AppointmentScreen';
 
 
 const appRoutes = [
@@ -40,6 +41,10 @@ const appRoutes = [
   {
     name:'NotificationsScreen',
     component: NotificationsScreen,
+  },
+  {
+    name: 'Appointment Screen',
+    component: AppointmentScreen,
   },
   
 
