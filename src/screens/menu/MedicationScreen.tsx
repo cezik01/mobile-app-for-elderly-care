@@ -289,7 +289,7 @@ const MedicationScreen = () => {
             <View style={styles.reminderItem}>
               {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
               {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
-              <Text>{i18n.t('MedicationName')}: {item.name} - {i18n.t('DateWithTime')}: {new Date(item.date).toLocaleString()} - {i18n.t('Dosage')}: {item.dosage}</Text>
+              <Text style={styles.reminderItemText}>{i18n.t('MedicationName')}: {item.name} - {i18n.t('DateWithTime')}: {new Date(item.date).toLocaleString()} - {i18n.t('Dosage')}: {item.dosage}</Text>
             </View>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
               <Text style={styles.deleteText}> Delete</Text>
@@ -303,6 +303,9 @@ const MedicationScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  reminderItemText: {
+    marginLeft: 10,
+  },
   itemContainer: {
     flexDirection: 'row',
     marginBottom: 20,
