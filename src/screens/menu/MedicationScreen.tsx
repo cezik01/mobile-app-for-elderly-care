@@ -8,6 +8,7 @@ import { getDatabase, ref, push, onValue, remove, update, get } from 'firebase/d
 import firebaseConfig from 'config/firebaseConfig';
 import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Image } from 'react-native';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -82,10 +83,10 @@ const MedicationScreen = () => {
   const handleNotification = (notification: Notification) => {
     const { title, body } = notification.request.content;
     const reminderId = notification.request.content.data?.reminderId;
-  
+
     const alertTitle = title ?? 'Notification';
     const alertBody = body ?? '';
-  
+
     Alert.alert(
       alertTitle,
       alertBody,
@@ -135,7 +136,7 @@ const MedicationScreen = () => {
       console.log('No user logged in');
       return null;
     }
-  
+
     const uid = auth.currentUser.uid;
     const reminderRef = ref(db, `users/${uid}/reminders/${reminderId}`);
     try {
@@ -150,7 +151,7 @@ const MedicationScreen = () => {
       console.error("Failed to fetch reminder details", error);
       return null;
     }
-  };  
+  };
 
   const addReminder = async () => {
     if (!auth.currentUser) {
@@ -255,7 +256,7 @@ const MedicationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Enter Medication Name and Dosage</Text>
+      <Text style={styles.title}>Enter Medication Name and Dosage</Text>
       <TextInput
         style={styles.input}
         onChangeText={setMedicationName}
@@ -268,11 +269,17 @@ const MedicationScreen = () => {
         value={medicationDosage}
         placeholder="Enter medication dosage"
       />
-      {isInvalidInput && <Text style={styles.warningText}>Please enter a valid number</Text>}
-      <CustomDatePicker
-        onDateChange={(newDate) => setDate(newDate)}
-        onTimeChange={(newTime) => setDate(newTime)}
-      />
+      {isInvalidInput && <Text style={styles.warningText}>Please enter a Valid Number</Text>}
+      <View style={styles.iconScheduleContainer}>
+        <Image
+          source={require('../../../assets/reminder/DateTimeSchedule.png')}
+          style={styles.scheduleIcon}
+        />
+        <CustomDatePicker
+          onDateChange={(newDate) => setDate(newDate)}
+          onTimeChange={(newTime) => setDate(newTime)}
+        />
+      </View>
       <Button onPress={addReminder} title="Add Reminder" />
       <FlatList
         data={reminders}
@@ -282,7 +289,7 @@ const MedicationScreen = () => {
             {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
             <Text>Medication Name: {item.name} - Date&Time: {new Date(item.date).toLocaleString()} - Dosage: {item.dosage}</Text>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
-              <Text style={styles.deleteText}>Delete</Text>
+              <Text style={styles.deleteText}> Delete</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -293,44 +300,66 @@ const MedicationScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  checkIcon: {
-    marginRight: 10,
-    color: '#32d56d',
-  },
-  closeIcon: {
-    marginRight: 10,
-    color: '#982419',
+  title: {
+    fontSize: 20,
+    marginBottom: 20,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#f5f5f5',
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#007bff',
     borderWidth: 1,
-    marginBottom: 10,
-    width: '100%',
+    marginBottom: 20,
+    width: '90%',
     paddingHorizontal: 10,
+    borderRadius: 5,
   },
   reminderItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
+    padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: 'lightgray',
-    width: '80%',
+    width: '97%',
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    marginVertical: 5,
   },
   deleteText: {
-    color: 'red',
-    marginLeft: 10,
+    color: '#dc3545',
+    fontWeight: 'bold',
   },
   warningText: {
     color: 'red',
+    fontSize: 12,
+    marginVertical: 5,
+  },
+  scheduleIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+  },
+  iconScheduleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  checkIcon: {
+    marginRight: 10,
+    color: '#28a745',
+  },
+  closeIcon: {
+    marginRight: 10,
+    color: '#dc3545',
   },
 });
+
 
 export default MedicationScreen;
