@@ -255,7 +255,7 @@ const MedicationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Medication Reminder</Text>
+      <Text>Enter Medication Name and Dosage</Text>
       <TextInput
         style={styles.input}
         onChangeText={setMedicationName}
