@@ -285,10 +285,12 @@ const MedicationScreen = () => {
       <FlatList
         data={reminders}
         renderItem={({ item }) => (
-          <View style={styles.reminderItem}>
-            {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
-            {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
-            <Text>{i18n.t('MedicationName')}: {item.name} - {i18n.t('DateWithTime')}: {new Date(item.date).toLocaleString()} - {i18n.t('Dosage')}: {item.dosage}</Text>
+          <View style={styles.itemContainer}>
+            <View style={styles.reminderItem}>
+              {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
+              {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
+              <Text>{i18n.t('MedicationName')}: {item.name} - {i18n.t('DateWithTime')}: {new Date(item.date).toLocaleString()} - {i18n.t('Dosage')}: {item.dosage}</Text>
+            </View>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
               <Text style={styles.deleteText}> Delete</Text>
             </TouchableOpacity>
@@ -301,6 +303,10 @@ const MedicationScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  itemContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
   title: {
     fontSize: 20,
     marginBottom: 20,
@@ -322,27 +328,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   reminderItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: 'lightgray',
-    width: '97%',
+    width: '90%',
     backgroundColor: '#ffffff',
+    height: 40,
+    justifyContent: 'center',
     borderRadius: 5,
-    marginVertical: 5,
   },
   deleteText: {
     color: '#dc3545',
     fontWeight: 'bold',
+    marginTop: 10,
   },
   warningText: {
     color: 'red',
     fontSize: 12,
     marginBottom: 20,
-    marginRight:"auto",
-    marginLeft:20,
+    marginRight: "auto",
+    marginLeft: 20,
   },
   scheduleIcon: {
     width: 30,
