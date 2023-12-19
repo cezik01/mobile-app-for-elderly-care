@@ -326,6 +326,7 @@ const styles = StyleSheet.create({
   },
   deleteText: {
     color: 'red',
+    marginLeft: 10,
   },
   warningText: {
     color: 'red',
