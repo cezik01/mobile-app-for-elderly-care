@@ -1,10 +1,15 @@
 {
+  "DateWithTime": "Tarih&Zaman",
   "DontHaveAccount": "Hesabınız yok mu?",
-  "EditProfile":"Profili Düzenle",
+  "Dosage": "Doz",
+  "EditProfile": "Profili Düzenle",
+  "EnterMedication": "İlaç Adını ve Dozunu Girin",
+  "EnterValidNumber": "Lütfen Geçerli bir Numara girin",
   "ForgotPassword": "Şifrenizi mi unuttunuz?",
   "helloWorld": "Merhaba Dünya!",
   "HomeScreen": "Ana Ekran",
   "LoginClick": "Hesabınız var mı? Giriş yapmak için buraya tıklayın.",
   "Login": "Giriş Yap",
+  "MedicationName": "İlaç Adı",
   "SignUp": "Kayıt Ol"
 }

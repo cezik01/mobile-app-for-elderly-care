@@ -9,6 +9,7 @@ import firebaseConfig from 'config/firebaseConfig';
 import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Image } from 'react-native';
+import i18n from 'common/i18n/i18n';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -256,7 +257,7 @@ const MedicationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Enter Medication Name and Dosage</Text>
+      <Text style={styles.title}>{i18n.t('EnterMedication')}</Text>
       <TextInput
         style={styles.input}
         onChangeText={setMedicationName}
@@ -269,7 +270,7 @@ const MedicationScreen = () => {
         value={medicationDosage}
         placeholder="Enter medication dosage"
       />
-      {isInvalidInput && <Text style={styles.warningText}>Please enter a Valid Number</Text>}
+      {isInvalidInput && <Text style={styles.warningText}>{i18n.t('EnterValidNumber')}</Text>}
       <View style={styles.iconScheduleContainer}>
         <Image
           source={require('../../../assets/reminder/DateTimeSchedule.png')}
@@ -287,7 +288,7 @@ const MedicationScreen = () => {
           <View style={styles.reminderItem}>
             {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
             {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
-            <Text>Medication Name: {item.name} - Date&Time: {new Date(item.date).toLocaleString()} - Dosage: {item.dosage}</Text>
+            <Text>{i18n.t('MedicationName')}: {item.name} - {i18n.t('DateWithTime')}: {new Date(item.date).toLocaleString()} - {i18n.t('Dosage')}: {item.dosage}</Text>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
               <Text style={styles.deleteText}> Delete</Text>
             </TouchableOpacity>
@@ -339,7 +340,9 @@ const styles = StyleSheet.create({
   warningText: {
     color: 'red',
     fontSize: 12,
-    marginVertical: 5,
+    marginBottom: 20,
+    marginRight:"auto",
+    marginLeft:20,
   },
   scheduleIcon: {
     width: 30,
@@ -360,6 +363,5 @@ const styles = StyleSheet.create({
     color: '#dc3545',
   },
 });
-
 
 export default MedicationScreen;

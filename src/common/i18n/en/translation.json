@@ -1,10 +1,15 @@
 {
+  "DateWithTime": "Date&Time",
   "DontHaveAccount": "Don't have an account? Click here to sign up",
+  "Dosage": "Dosage",
   "EditProfile": "Edit Profile",
+  "EnterMedication": "Enter Medication Name and Dosage",
+  "EnterValidNumber": "Please enter a Valid Number",
   "ForgotPassword": "Forgot your password?",
   "helloWorld": "Hello World!",
   "HomeScreen": "Home Screen",
   "LoginClick": "Already have an account? Click here to log in",
   "Login": "Login",
+  "MedicationName": "Medication Name",
   "SignUp": "Sign Up"
 }
