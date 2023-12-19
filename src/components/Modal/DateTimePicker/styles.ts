@@ -6,8 +6,6 @@ const { colorScheme, justify, align } = theme.components;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colorScheme.light.primary.whiteBunny,
     alignItems: align.default,
     justifyContent: justify.default,
   },

@@ -6,7 +6,7 @@ import AuthForm from 'components/Form/AuthForm';
 import { signUp } from 'helpers/firebaseAuth/AuthService';
 import { FirebaseError } from 'firebase/app';
 import { useState } from 'react';
-import { Button, Menu, Provider } from 'react-native-paper';
+import { Button, Menu } from 'react-native-paper';
 
 import i18n from 'common/i18n/i18n';
 

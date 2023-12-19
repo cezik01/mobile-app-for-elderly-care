@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Alert, Text } from 'react-native';
-import { getAuth, updateProfile } from 'firebase/auth';
-import { getDatabase, ref, set, onValue, update } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, Provider } from 'react-native-paper';
 
@@ -71,10 +71,10 @@ const ProfileEditScreen = () => {
         <TextInput placeholder="City" value={city} onChangeText={setCity} />
         <TextInput
   placeholder="Age"
-  value={age === '' ? '' : age.toString()} // age değeri boş string ise boş string olarak bırak, değilse sayıyı string'e çevir.
+  value={age === '' ? '' : age.toString()}
   onChangeText={text => {
     const num = parseInt(text);
-    setAge(isNaN(num) ? '' : num); // Sayıysa sayıyı, değilse boş string'i set et.
+    setAge(isNaN(num) ? '' : num);
   }}
   keyboardType="numeric"
 />

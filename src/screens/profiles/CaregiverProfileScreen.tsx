@@ -5,8 +5,6 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
 
-type HealthMetric = 'Normal' | 'High' | 'Low';
-
 interface UserData {
   name?: string;
   city?: string;
