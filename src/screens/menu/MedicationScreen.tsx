@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: 'lightgray',
+    width: '80%',
   },
   deleteText: {
     color: 'red',
