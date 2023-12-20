@@ -331,6 +331,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   reminderItem: {
+    flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: 'lightgray',
     width: '90%',
@@ -362,7 +363,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   checkIcon: {
-    marginRight: 10,
     color: '#28a745',
   },
   closeIcon: {
