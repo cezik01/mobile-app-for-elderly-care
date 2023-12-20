@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text } from 'react-native';
+import { View, TextInput, Button, Alert, Text, StyleSheet  } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
@@ -64,55 +64,128 @@ const ProfileEditScreen = () => {
 
   return (
     <Provider>
-
-      <View>
-        <TextInput placeholder="Name" value={name} onChangeText={setName} />
-        <TextInput placeholder="Surname" value={surname} onChangeText={setSurname} />
-        <TextInput placeholder="City" value={city} onChangeText={setCity} />
-        <TextInput
-  placeholder="Age"
-  value={age === '' ? '' : age.toString()}
-  onChangeText={text => {
-    const num = parseInt(text);
-    setAge(isNaN(num) ? '' : num);
-  }}
-  keyboardType="numeric"
-/>
-<TextInput
-  placeholder="Height"
-  value={height === '' ? '' : height.toString()}
-  onChangeText={text => {
-    const num = parseInt(text);
-    setHeight(isNaN(num) ? '' : num);
-  }}
-  keyboardType="numeric"
-/>
-<TextInput
-  placeholder="Weight"
-  value={weight === '' ? '' : weight.toString()}
-  onChangeText={text => {
-    const num = parseInt(text);
-    setWeight(isNaN(num) ? '' : num);
-  }}
-  keyboardType="numeric"
-/>
-
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<Button onPress={openMenu} title="Select Blood Type" />}
-        >
-          {bloodTypes.map((type, index) => (
-            <Menu.Item key={index} title={type} onPress={() => { setBloodType(type); closeMenu(); }} />
-          ))}
-        </Menu>
-        <Text>Selected Blood Type: {bloodType}</Text>
-
-
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Name:</Text>
+          <TextInput 
+            style={styles.input}
+            placeholder="Enter your name" 
+            value={name} 
+            onChangeText={setName} 
+          />
+        </View>
+  
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Surname:</Text>
+          <TextInput 
+            style={styles.input}
+            placeholder="Enter your surname" 
+            value={surname} 
+            onChangeText={setSurname} 
+          />
+        </View>
+  
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>City:</Text>
+          <TextInput 
+            style={styles.input}
+            placeholder="Enter your city" 
+            value={city} 
+            onChangeText={setCity} 
+          />
+        </View>
+  
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Age:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your age"
+            value={age === '' ? '' : age.toString()}
+            onChangeText={text => setAge(text ? parseInt(text, 10) : '')}
+            keyboardType="numeric"
+          />
+        </View>
+  
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Height:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your height in cm"
+            value={height === '' ? '' : height.toString()}
+            onChangeText={text => setHeight(text ? parseInt(text, 10) : '')}
+            keyboardType="numeric"
+          />
+        </View>
+  
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Weight:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your weight in kg"
+            value={weight === '' ? '' : weight.toString()}
+            onChangeText={text => setWeight(text ? parseInt(text, 10) : '')}
+            keyboardType="numeric"
+          />
+        </View>
+  
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Blood Type:</Text>
+          <Menu
+            visible={visible}
+            onDismiss={closeMenu}
+            anchor={
+              <Text onPress={openMenu} style={styles.dropdownAnchor}>
+                {bloodType || "Select Blood Type"}
+              </Text>
+            }>
+            {bloodTypes.map((type, index) => (
+              <Menu.Item 
+                key={index} 
+                title={type} 
+                onPress={() => { 
+                  setBloodType(type); 
+                  closeMenu(); 
+                }} 
+              />
+            ))}
+          </Menu>
+        </View>
+  
         <Button title="Save" onPress={handleSave} />
       </View>
     </Provider>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'stretch', // İçeriklerin genişliğini tam alması için
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'grey',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10, // İnputlar arası boşluk
+  },
+  label: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  dropdownAnchor: {
+    borderWidth: 1,
+    borderColor: 'grey',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10, // Menü anchor arası boşluk
+  },
+});
 
 export default ProfileEditScreen;
