@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, TextInput, Button, StyleSheet, ScrollView, Alert, FlatList } from 'react-native';
+import {View, Text, TextInput, Button, StyleSheet, Alert, FlatList } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Notification } from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
@@ -28,6 +28,7 @@ interface AppointmentReminder {
 const AppointmentScreen = () => {
   const [reminders, setReminders] = useState<AppointmentReminder[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState(new Date());
   const [hospitalName, setHospitalName] = useState('');
   const [department, setDepartment] = useState('');
   const [doctorName, setDoctorName] = useState('');
@@ -108,12 +109,16 @@ const AppointmentScreen = () => {
     }
   
     const uid = auth.currentUser.uid;
+    const dateTime = new Date(selectedDate);
+    dateTime.setHours(selectedTime.getHours());
+    dateTime.setMinutes(selectedTime.getMinutes());
+  
     const newAppointmentReminder = {
       hospitalName: hospitalName,
       department: department,
       doctorName: doctorName,
-      date: selectedDate.toString(),
-      hour: hour,
+      date: dateTime.toString(), // Tarih ve saat birleştirildi
+      hour: selectedTime.toLocaleTimeString(), 
     };
   
     const reminderRef = await push(ref(db, `users/${uid}/appointmentReminders`), newAppointmentReminder);
@@ -122,24 +127,37 @@ const AppointmentScreen = () => {
       console.error("Failed to get appointment reminder ID");
       return;
     }
+  
+    // Bildirimi zamanlayın ve bildirim ID'sini kaydedin
+    try {
+      const notificationId = await scheduleNotification(hospitalName, doctorName, dateTime, reminderRef.key);
+      await update(ref(db, `users/${uid}/appointmentReminders/${reminderRef.key}`), { notificationId });
+    } catch (error) {
+      console.error("Failed to schedule or update notification", error);
+    }
   };
+  
 
   const deleteAppointmentReminder = async (id: string, notificationId?: string) => {
     // Similar logic to deleteReminder, adapted for appointments
     // ...
   };
 
-  async function scheduleNotification(hospitalName: string, doctorName: string, date: Date, reminderId: string) {
-    return await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Appointment Reminder',
-        body: `Appointment at ${hospitalName} with Dr. ${doctorName} on ${date.toLocaleString()}`,
-        data: { reminderId },
-        sound: 'default',
-      },
-      trigger: date,
-    });
+  async function scheduleNotification(hospitalName: string, doctorName: string, dateTime: Date, reminderId: string) {
+    const notificationTime = new Date(dateTime);
+  notificationTime.setHours(notificationTime.getHours() - reminderAdvance);
+
+  return await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'Appointment Reminder',
+      body: `Appointment at ${hospitalName} with Dr. ${doctorName} on ${dateTime.toLocaleString()}`,
+      data: { reminderId },
+      sound: 'default',
+    },
+    trigger: notificationTime,
+  });
   }
+  const [reminderAdvance, setReminderAdvance] = useState(1);
 
   return (
     <View style={styles.container}>
@@ -167,10 +185,16 @@ const AppointmentScreen = () => {
       />
       <CustomDatePicker
         onDateChange={(newDate) => setSelectedDate(newDate)}
-        onTimeChange={(newTime) => {
-          // Handle time change if necessary
-        }}
+        onTimeChange={(newTime) => setSelectedTime(newTime)}
       />
+      <Picker
+        selectedValue={reminderAdvance}
+        onValueChange={(itemValue) => setReminderAdvance(itemValue)}
+        style={styles.picker}
+>
+       <Picker.Item label="1 hour before" value={1} />
+       <Picker.Item label="2 hours before" value={2} />
+      </Picker>
       
       <Button title="Add Reminder" onPress={addAppointmentReminder} />
       <FlatList
