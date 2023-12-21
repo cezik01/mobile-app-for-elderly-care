@@ -5,8 +5,7 @@ import styles from '../styles';
 import AuthForm from 'components/Form/AuthForm';
 import { signIn } from 'helpers/firebaseAuth/AuthService';
 import { FirebaseError } from 'firebase/app';
-import { sendPasswordResetEmail } from 'firebase/auth';
-import { UserProvider, useUser } from '../../../context/UserContext';
+import { useUser } from '../../../context/UserContext';
 import i18n from 'common/i18n/i18n';
 
 const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
