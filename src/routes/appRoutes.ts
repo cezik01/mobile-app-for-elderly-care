@@ -7,6 +7,8 @@ import ProfileEditScreen from 'screens/profiles/ProfileEditScreen';
 import MedicationScreen from 'screens/menu/MedicationScreen';
 import NotificationsScreen from 'screens/profiles/NotificationsScreen';
 import AppointmentScreen from 'screens/menu/AppointmentScreen';
+import BloodPressureScreen from 'components/ProfileComponents/BloodPressure';
+import BloodSugarScreen from 'components/ProfileComponents/BloodSuggar';
 
 
 const appRoutes = [
@@ -46,8 +48,14 @@ const appRoutes = [
     name: 'Appointment Screen',
     component: AppointmentScreen,
   },
-  
-
+  {
+    name: "Blood Pressure Screen",
+    component: BloodPressureScreen,
+  },
+  {
+    name: "Blood Sugar Screen",
+    component: BloodSugarScreen,
+  }
 ];
 
 export default appRoutes;

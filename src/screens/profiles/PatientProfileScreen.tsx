@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import ProfileHeader from 'components/ProfileComponents/ProfileHeader';
 import PersonalInfo from 'components/ProfileComponents/PersonalInfo';
-import HealthMetrics from 'components/ProfileComponents/HealthMetrics';
 import MenuComponent from 'components/ProfileComponents/MenuComponent';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
-
+import i18n from 'common/i18n/i18n';
 
 type HealthMetric = 'Normal' | 'High' | 'Low';
 
 interface UserData {
   name?: string;
   city?: string;
-  age?: number;           
+  age?: number;
   weight?: number;
   height?: number;
   bloodType?: string;
-  bloodPressure?: HealthMetric;  
-  bloodSugar?: HealthMetric;
-  
 }
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<UserData>({});
-  
+
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -46,6 +42,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   const handleEditPress = () => {
     navigation.navigate('Profile Edit Screen');
   };
+
   const handleNotificationsPress = () => {
     navigation.navigate('NotificationsScreen');
   };
@@ -53,14 +50,22 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   const handleMenuPress = () => {
     console.log('Menu button pressed');
   };
-  
+
   const handleMedicationPress = () => {
     navigation.navigate('Medication Screen');
   }
-  const handleAppointmentPress= ()=>{
+
+  const handleAppointmentPress = () => {
     navigation.navigate('Appointment Screen');
   }
-  
+
+  const handleBloodPressurePress = () => {
+    navigation.navigate('Blood Pressure Screen');
+  }
+
+  const handleBloodSugarPress = () => {
+    navigation.navigate('Blood Sugar Screen');
+  }
 
   return (
     <View style={styles.screenContainer}>
@@ -71,16 +76,22 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
         onNotificationsPress={handleNotificationsPress}
         onMenuPress={handleMenuPress}
       />
-      <PersonalInfo 
-        age={userData.age || 0} 
-        weight={userData.weight || 0} 
-        height={userData.height || 0} 
-        bloodType={userData.bloodType || "N/A"} 
+      <PersonalInfo
+        age={userData.age || 0}
+        weight={userData.weight || 0}
+        height={userData.height || 0}
+        bloodType={userData.bloodType || "N/A"}
       />
-      <HealthMetrics 
-        bloodPressure={userData.bloodPressure || 'Normal'}
-        bloodSugar={userData.bloodSugar || 'Normal'}
-      />
+      <View style={styles.bloodSugarPressure}>
+        <Pressable onPress={handleBloodPressurePress}>
+          <Image source={require('../../../assets/profiles/Graph.png')} style={styles.bloodPressureSugarImage} />
+          <Text style={styles.bloodPressureSugarTexts}>{i18n.t('BloodPressureEntrance')}</Text>
+        </Pressable>
+        <Pressable onPress={handleBloodSugarPress} style={styles.bloodSugar}>
+          <Image source={require('../../../assets/profiles/Group.png')} style={styles.bloodPressureSugarImage} />
+          <Text style={styles.bloodPressureSugarTexts}>{i18n.t('BloodSugarEntrance')}</Text>
+        </Pressable>
+      </View>
       <MenuComponent
         onMedicationPress={handleMedicationPress}
         onAppointmentsPress={handleAppointmentPress}
@@ -94,6 +105,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  bloodPressureSugarImage: {
+    alignSelf: 'center',
+  },
+  bloodSugarPressure: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 50,
+  },
+  bloodSugar: {
+    marginTop: 50,
+  },
+  bloodPressureSugarTexts: {
+    marginTop: 20,
+    color: 'blue',
+  }
 });
 
 export default PatientProfileScreen;
