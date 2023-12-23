@@ -10,6 +10,7 @@ import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Image } from 'react-native';
 import i18n from 'common/i18n/i18n';
+import { validateNumericInput } from 'helpers/validationSchemas/numericInputValidation';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -71,6 +72,12 @@ const MedicationScreen = () => {
       alert('Sorry, we need notification permissions to make this work!');
     }
   }
+
+  const handleDosageChange = (text:string) => {
+    const { validText, isValid } = validateNumericInput(text);
+    setMedicationDosage(validText);
+    setIsInvalidInput(!isValid);
+  };
 
   const updateReminderStatus = (reminderId: string, status: 'accepted' | 'dismissed') => {
     if (!auth.currentUser) {
@@ -186,7 +193,6 @@ const MedicationScreen = () => {
     }
 
     update(ref(db, `users/${uid}/reminders/${reminderId}`), { notificationId });
-
     setMedicationName('');
     setMedicationDosage('');
     setDate(new Date());
@@ -243,18 +249,6 @@ const MedicationScreen = () => {
     }
   });
 
-  const validateDosage = (text: string) => {
-    if (/[^0-9]/.test(text)) {
-      setIsInvalidInput(true);
-    } else {
-      setIsInvalidInput(false);
-    }
-
-    const validText = text.replace(/[^0-9]/g, '');
-    return validText;
-  };
-
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{i18n.t('EnterMedication')}</Text>
@@ -264,12 +258,12 @@ const MedicationScreen = () => {
         value={medicationName}
         placeholder="Enter medication name"
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setMedicationDosage(validateDosage(text))}
-        value={medicationDosage}
-        placeholder="Enter medication dosage"
-      />
+    <TextInput
+      style={styles.input}
+      onChangeText={handleDosageChange}
+      value={medicationDosage}
+      placeholder="Enter medication dosage"
+    />
       {isInvalidInput && <Text style={styles.warningText}>{i18n.t('EnterValidNumber')}</Text>}
       <View style={styles.iconScheduleContainer}>
         <Image
