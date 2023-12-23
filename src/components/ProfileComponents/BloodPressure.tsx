@@ -30,17 +30,18 @@ const BloodPressureScreen = () => {
       const data = snapshot.val();
       if (data) {
         const labels = Object.keys(data);
-        const bpValues = labels.map((label) => data[label].systolic);
+        const diastolicValues = labels.map((label) => data[label].diastolic);
         setChartData({
-          labels,
-          datasets: [{ data: bpValues }],
+          labels: diastolicValues,
+          datasets: [{ data: diastolicValues }],
         });
         setLoading(false);
       }
     });
-
+  
     return () => unsubscribe();
   }, []);
+  
 
   const handleSubmit = () => {
     const newEntry = {
@@ -88,8 +89,8 @@ const BloodPressureScreen = () => {
             data={chartData}
             width={400}
             height={250}
-            yAxisLabel={'BP '}
-            yAxisSuffix={'mmHg'}
+            yAxisLabel={''}
+            yAxisSuffix={'1'}
             chartConfig={{
               backgroundGradientFrom: '#fb8c00',
               backgroundGradientTo: '#ffa726',
