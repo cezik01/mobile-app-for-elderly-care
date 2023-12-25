@@ -4,19 +4,46 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "components/*": ["src/components/*"],
-      "screens/*": ["src/screens/*"],
-      "HomeScreen": ["src/screens/home/HomeScreen"],
-      "navigations/*": ["src/navigations/*"],
-      "helpers/*": ["src/helpers/*"],
-      "assets/*": ["assets/*"],
-      "types/*": ["src/types/*"],
-      "store/*": ["src/store/*"],
-      "routes/*": ["src/routes/*"],
-      "common/*": ["src/common/*"],
-      "config/*": ["src/config/*"],
-      "services/*": ["src/services/*"]
-    }
+      "components/*": [
+        "src/components/*"
+      ],
+      "screens/*": [
+        "src/screens/*"
+      ],
+      "HomeScreen": [
+        "src/screens/home/HomeScreen"
+      ],
+      "navigations/*": [
+        "src/navigations/*"
+      ],
+      "helpers/*": [
+        "src/helpers/*"
+      ],
+      "assets/*": [
+        "assets/*"
+      ],
+      "types/*": [
+        "src/types/*"
+      ],
+      "store/*": [
+        "src/store/*"
+      ],
+      "routes/*": [
+        "src/routes/*"
+      ],
+      "common/*": [
+        "src/common/*"
+      ],
+      "config/*": [
+        "src/config/*"
+      ],
+      "services/*": [
+        "src/services/*"
+      ]
+    },
+    "jsx": "react-native"
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
