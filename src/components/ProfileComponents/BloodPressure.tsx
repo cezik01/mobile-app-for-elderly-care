@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, onValue, update } from 'firebase/database';
+import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { Provider } from 'react-native-paper';
 import { validateNumericInput } from 'helpers/validationSchemas/numericInputValidation';
 import i18n from 'common/i18n/i18n';
@@ -20,6 +20,7 @@ const BloodPressureScreen = () => {
 
   const [isSystolicValid, setIsSystolicValid] = useState(true);
   const [isDiastolicValid, setIsDiastolicValid] = useState(true);
+  const [editingEntry, setEditingEntry] = useState<BloodPressureEntry | null>(null);
 
   useEffect(() => {
     const unsubscribe = onValue(bpRef, (snapshot) => {
@@ -37,13 +38,38 @@ const BloodPressureScreen = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleEdit = (item: BloodPressureEntry) => {
+    setSystolic(String(item.systolic));
+    setDiastolic(String(item.diastolic));
+    setEditingEntry(item);
+  };
+
+  const handleDelete = (date: string) => {
+    const deleteRef = ref(database, 'bloodPressure/' + userId + '/' + date);
+
+    remove(deleteRef).then(() => {
+      const updatedData = bloodPressureData.filter(entry => entry.date !== date);
+      setBloodPressureData(updatedData);
+    }).catch((error) => {
+      Alert.alert('Error', error.message);
+    });
+  };
+
   const handleSubmit = () => {
     const newEntry = {
       systolic: parseInt(systolic, 10),
       diastolic: parseInt(diastolic, 10),
     };
-    const newRef = ref(database, 'bloodPressure/' + userId + '/' + Date.now());
-    update(newRef, newEntry).catch((error) => {
+
+    const entryRef = editingEntry
+      ? ref(database, 'bloodPressure/' + userId + '/' + editingEntry.date)
+      : ref(database, 'bloodPressure/' + userId + '/' + Date.now());
+
+    update(entryRef, newEntry).then(() => {
+      setEditingEntry(null);
+      setSystolic('');
+      setDiastolic('');
+    }).catch((error) => {
       Alert.alert('Error', error.message);
     });
   };
@@ -53,6 +79,8 @@ const BloodPressureScreen = () => {
       <Text>Date: {item.date}</Text>
       <Text>Systolic: {item.systolic}</Text>
       <Text>Diastolic: {item.diastolic}</Text>
+      <Button title='Edit' onPress={() => handleEdit(item)} />
+      <Button title='Delete' onPress={() => handleDelete(item.date)} color='red' />
     </View>
   );
 
