@@ -6,6 +6,7 @@ import { Provider } from 'react-native-paper';
 import { validateNumericInput } from 'helpers/validationSchemas/numericInputValidation';
 import i18n from 'common/i18n/i18n';
 import BloodPressureEntry from 'types/BloodPressureEntry';
+import { BarChart } from 'react-native-chart-kit';
 
 const BloodPressureScreen = () => {
   const [systolic, setSystolic] = useState('');
@@ -79,6 +80,69 @@ const BloodPressureScreen = () => {
     });
   };
 
+  const parseDate = (timestamp: string) => {
+    return new Date(parseInt(timestamp, 10));
+  };
+
+  const prepareChartData = (days: number) => {
+    console.log('Blood Pressure Data:', bloodPressureData);
+
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+    console.log('Start Date:', startDate);
+
+    const endDate = new Date();
+    console.log('End Date:', endDate);
+
+    const filteredData = bloodPressureData.filter(entry => {
+      const entryDate = parseDate(entry.date);
+      if (isNaN(entryDate.getTime())) {
+        console.error('Invalid date format:', entry.date);
+        return false;
+      }
+      return entryDate >= startDate && entryDate <= endDate;
+    });
+
+
+    return {
+      labels: filteredData.map(entry => entry.date),
+      datasets: [{
+        data: filteredData.map(entry => entry.systolic),
+        color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
+      }, {
+        data: filteredData.map(entry => entry.diastolic),
+        color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
+      }]
+    };
+
+  };
+
+  const chartConfig = {
+    backgroundColor: '#fff',
+    backgroundGradientFrom: '#fff',
+    backgroundGradientTo: '#fff',
+    decimalPlaces: 2,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    style: {
+      borderRadius: 16,
+    },
+  };
+
+  const renderChart = (days: number) => {
+    return (
+      <BarChart
+        data={prepareChartData(days)}
+        width={300}
+        height={220}
+        yAxisLabel="Systolic: "
+        yAxisSuffix=" mmHg"
+        chartConfig={chartConfig}
+        verticalLabelRotation={30}
+      />
+    );
+  };
+
   const renderItem = ({ item }: { item: BloodPressureEntry }) => (
     <View style={styles.listItem}>
       <Text>Date: {item.date}</Text>
@@ -121,6 +185,18 @@ const BloodPressureScreen = () => {
         <Button title='Submit' onPress={handleSubmit} />
         {!loading && (
           <ScrollView style={styles.scrollView}>
+            {bloodPressureData.length >= 7 && (
+              <>
+                <Text style={styles.chartTitle}>Weekly Chart</Text>
+                {renderChart(7)}
+              </>
+            )}
+            {bloodPressureData.length >= 30 && (
+              <>
+                <Text style={styles.chartTitle}>Monthly Chart</Text>
+                {renderChart(30)}
+              </>
+            )}
             <FlatList
               data={bloodPressureData}
               renderItem={renderItem}
@@ -161,7 +237,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#ddd',
-  }
+  },
+  chartTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
+  },
 });
 
 export default BloodPressureScreen;
