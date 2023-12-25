@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { Provider } from 'react-native-paper';
-import { BarChart } from 'react-native-chart-kit';
-import ChartData from 'types/ChartDataProps';
 import { validateNumericInput } from 'helpers/validationSchemas/numericInputValidation';
 import i18n from 'common/i18n/i18n';
+import BloodPressureEntry from 'types/BloodPressureEntry';
 
 const BloodPressureScreen = () => {
   const [systolic, setSystolic] = useState('');
   const [diastolic, setDiastolic] = useState('');
-  const [chartData, setChartData] = useState<ChartData>({
-    labels: [],
-    datasets: [{ data: [] }],
-  });
   const [loading, setLoading] = useState(true);
+  const [bloodPressureData, setBloodPressureData] = useState<BloodPressureEntry[]>([]);
 
   const auth = getAuth();
   const database = getDatabase();
@@ -29,19 +25,17 @@ const BloodPressureScreen = () => {
     const unsubscribe = onValue(bpRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const labels = Object.keys(data);
-        const diastolicValues = labels.map((label) => data[label].diastolic);
-        setChartData({
-          labels: diastolicValues,
-          datasets: [{ data: diastolicValues }],
-        });
+        const formattedData = Object.keys(data).map((key) => ({
+          date: key,
+          ...data[key]
+        }));
+        setBloodPressureData(formattedData);
         setLoading(false);
       }
     });
-  
+
     return () => unsubscribe();
   }, []);
-  
 
   const handleSubmit = () => {
     const newEntry = {
@@ -53,6 +47,14 @@ const BloodPressureScreen = () => {
       Alert.alert('Error', error.message);
     });
   };
+
+  const renderItem = ({ item }: { item: BloodPressureEntry }) => (
+    <View style={styles.listItem}>
+      <Text>Date: {item.date}</Text>
+      <Text>Systolic: {item.systolic}</Text>
+      <Text>Diastolic: {item.diastolic}</Text>
+    </View>
+  );
 
   return (
     <Provider>
@@ -85,27 +87,13 @@ const BloodPressureScreen = () => {
         )}
         <Button title='Submit' onPress={handleSubmit} />
         {!loading && (
-          <BarChart
-            data={chartData}
-            width={400}
-            height={250}
-            yAxisLabel={''}
-            yAxisSuffix={'1'}
-            chartConfig={{
-              backgroundGradientFrom: '#fb8c00',
-              backgroundGradientTo: '#ffa726',
-              decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              style: {
-                borderRadius: 16,
-              },
-            }}
-            style={{
-              marginVertical: 8,
-              borderRadius: 16,
-            }}
-          />
+          <ScrollView style={styles.scrollView}>
+            <FlatList
+              data={bloodPressureData}
+              renderItem={renderItem}
+              keyExtractor={item => item.date}
+            />
+          </ScrollView>
         )}
       </View>
     </Provider>
@@ -128,7 +116,19 @@ const styles = StyleSheet.create({
   },
   warningText: {
     color: 'red',
-  }  
+  },
+  scrollView: {
+    width: '100%',
+  },
+  listItem: {
+    backgroundColor: '#fff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  }
 });
 
 export default BloodPressureScreen;
