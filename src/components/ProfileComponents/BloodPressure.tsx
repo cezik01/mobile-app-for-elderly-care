@@ -56,6 +56,11 @@ const BloodPressureScreen = () => {
   };
 
   const handleSubmit = () => {
+    if (!systolic || !diastolic) {
+      Alert.alert('Error', 'Both Systolic and Diastolic values are required.');
+      return;
+    }
+
     const newEntry = {
       systolic: parseInt(systolic, 10),
       diastolic: parseInt(diastolic, 10),
