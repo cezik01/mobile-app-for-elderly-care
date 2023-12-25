@@ -7,6 +7,7 @@ import { validateNumericInput } from 'helpers/validationSchemas/numericInputVali
 import i18n from 'common/i18n/i18n';
 import BloodPressureEntry from 'types/BloodPressureEntry';
 import { BarChart } from 'react-native-chart-kit';
+import { formatDate, parseDate } from 'helpers/date/dateHelper';
 
 const BloodPressureScreen = () => {
   const [systolic, setSystolic] = useState('');
@@ -80,19 +81,10 @@ const BloodPressureScreen = () => {
     });
   };
 
-  const parseDate = (timestamp: string) => {
-    return new Date(parseInt(timestamp, 10));
-  };
-
   const prepareChartData = (days: number) => {
-    console.log('Blood Pressure Data:', bloodPressureData);
-
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - days);
-    console.log('Start Date:', startDate);
-
     const endDate = new Date();
-    console.log('End Date:', endDate);
 
     const filteredData = bloodPressureData.filter(entry => {
       const entryDate = parseDate(entry.date);
@@ -103,18 +95,21 @@ const BloodPressureScreen = () => {
       return entryDate >= startDate && entryDate <= endDate;
     });
 
+    const formattedLabels = filteredData.map(entry => formatDate(entry.date));
 
     return {
-      labels: filteredData.map(entry => entry.date),
-      datasets: [{
-        data: filteredData.map(entry => entry.systolic),
-        color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
-      }, {
-        data: filteredData.map(entry => entry.diastolic),
-        color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
-      }]
+      labels: formattedLabels,
+      datasets: [
+        {
+          data: filteredData.map(entry => entry.systolic),
+          color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
+        },
+        {
+          data: filteredData.map(entry => entry.diastolic),
+          color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
+        },
+      ],
     };
-
   };
 
   const chartConfig = {
@@ -145,7 +140,7 @@ const BloodPressureScreen = () => {
 
   const renderItem = ({ item }: { item: BloodPressureEntry }) => (
     <View style={styles.listItem}>
-      <Text>Date: {item.date}</Text>
+      <Text>Date&Time: {formatDate(item.date)}</Text>
       <Text>Systolic: {item.systolic}</Text>
       <Text>Diastolic: {item.diastolic}</Text>
       <Button title='Edit' onPress={() => handleEdit(item)} />
