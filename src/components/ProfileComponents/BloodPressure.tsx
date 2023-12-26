@@ -10,7 +10,6 @@ import { BarChart } from 'react-native-chart-kit';
 import { formatDate, parseDate } from 'helpers/date/dateHelper';
 
 const BloodPressureScreen = () => {
-  // State declarations
   const [systolic, setSystolic] = useState('');
   const [diastolic, setDiastolic] = useState('');
   const [bloodPressureData, setBloodPressureData] = useState<BloodPressureEntry[]>([]);
@@ -87,7 +86,7 @@ const BloodPressureScreen = () => {
       return entryDate >= startDate && entryDate <= endDate;
     });
 
-    const formattedLabels = filteredData.map(entry => formatDate(entry.date));
+    const formattedLabels = filteredData.map(entry => `${entry.diastolic} mmHg`);
 
     return {
       labels: formattedLabels,
