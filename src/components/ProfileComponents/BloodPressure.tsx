@@ -86,7 +86,7 @@ const BloodPressureScreen = () => {
       return entryDate >= startDate && entryDate <= endDate;
     });
 
-    const formattedLabels = filteredData.map(entry => `${entry.diastolic} mmHg`);
+    const formattedLabels = filteredData.map(entry => `${entry.diastolic}`);
 
     return {
       labels: formattedLabels,
@@ -109,6 +109,7 @@ const BloodPressureScreen = () => {
         data={prepareChartData(days)}
         width={300}
         height={250}
+        xAxisLabel=' mmHg'
         yAxisLabel="Systolic: "
         yAxisSuffix=" mmHg"
         chartConfig={{
