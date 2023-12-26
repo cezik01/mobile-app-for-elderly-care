@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList } from 'react-native';
+import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { Provider } from 'react-native-paper';
@@ -104,14 +104,16 @@ const BloodPressureScreen = () => {
   };
 
   const renderChart = (days: number) => {
+    const screenWidth = Dimensions.get('window').width;
+
     return (
       <BarChart
         data={prepareChartData(days)}
-        width={350}
-        height={300}
+        width={screenWidth - 30}
+        height={250}
         xAxisLabel=''
-        yAxisLabel=""
-        yAxisSuffix=""
+        yAxisLabel=''
+        yAxisSuffix=''
         chartConfig={{
           backgroundGradientFrom: '#fff',
           backgroundGradientTo: 'lightgrey',
