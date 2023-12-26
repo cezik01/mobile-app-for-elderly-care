@@ -231,13 +231,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#6495ED',
   },
   chartTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 10,
+    marginVertical: 16,
   },
 });
 
