@@ -107,8 +107,8 @@ const BloodPressureScreen = () => {
     return (
       <BarChart
         data={prepareChartData(days)}
-        width={300}
-        height={250}
+        width={350}
+        height={300}
         xAxisLabel=''
         yAxisLabel=""
         yAxisSuffix=""
