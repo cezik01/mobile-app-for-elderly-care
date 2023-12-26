@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
+import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { Provider } from 'react-native-paper';
@@ -10,31 +10,27 @@ import { BarChart } from 'react-native-chart-kit';
 import { formatDate, parseDate } from 'helpers/date/dateHelper';
 
 const BloodPressureScreen = () => {
+  // State declarations
   const [systolic, setSystolic] = useState('');
   const [diastolic, setDiastolic] = useState('');
-  const [loading, setLoading] = useState(true);
   const [bloodPressureData, setBloodPressureData] = useState<BloodPressureEntry[]>([]);
+  const [isSystolicValid, setIsSystolicValid] = useState(true);
+  const [isDiastolicValid, setIsDiastolicValid] = useState(true);
+  const [editingEntry, setEditingEntry] = useState<BloodPressureEntry | null>(null);
 
   const auth = getAuth();
   const database = getDatabase();
   const userId = auth.currentUser?.uid;
   const bpRef = ref(database, 'bloodPressure/' + userId);
 
-  const [isSystolicValid, setIsSystolicValid] = useState(true);
-  const [isDiastolicValid, setIsDiastolicValid] = useState(true);
-  const [editingEntry, setEditingEntry] = useState<BloodPressureEntry | null>(null);
-
   useEffect(() => {
     const unsubscribe = onValue(bpRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const formattedData = Object.keys(data).map((key) => ({
-          date: key,
-          ...data[key]
-        }));
-        setBloodPressureData(formattedData);
-        setLoading(false);
-      }
+      const data = snapshot.val() || {};
+      const formattedData = Object.keys(data).map((key) => ({
+        date: key,
+        ...data[key]
+      }));
+      setBloodPressureData(formattedData);
     });
 
     return () => unsubscribe();
@@ -88,10 +84,6 @@ const BloodPressureScreen = () => {
 
     const filteredData = bloodPressureData.filter(entry => {
       const entryDate = parseDate(entry.date);
-      if (isNaN(entryDate.getTime())) {
-        console.error('Invalid date format:', entry.date);
-        return false;
-      }
       return entryDate >= startDate && entryDate <= endDate;
     });
 
@@ -112,18 +104,6 @@ const BloodPressureScreen = () => {
     };
   };
 
-  const chartConfig = {
-    backgroundColor: '#fff',
-    backgroundGradientFrom: '#fff',
-    backgroundGradientTo: '#fff',
-    decimalPlaces: 2,
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    style: {
-      borderRadius: 16,
-    },
-  };
-
   const renderChart = (days: number) => {
     return (
       <BarChart
@@ -132,7 +112,17 @@ const BloodPressureScreen = () => {
         height={250}
         yAxisLabel="Systolic: "
         yAxisSuffix=" mmHg"
-        chartConfig={chartConfig}
+        chartConfig={{
+          backgroundColor: '#fff',
+          backgroundGradientFrom: '#fff',
+          backgroundGradientTo: '#fff',
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
         verticalLabelRotation={30}
       />
     );
@@ -178,8 +168,8 @@ const BloodPressureScreen = () => {
           <Text style={styles.warningText}>{i18n.t('EnterValidNumber')}</Text>
         )}
         <Button title='Submit' onPress={handleSubmit} />
-        {!loading && (
-          <ScrollView style={styles.scrollView}>
+        {bloodPressureData.length > 0 && (
+          <>
             {bloodPressureData.length >= 7 && (
               <>
                 <Text style={styles.chartTitle}>Weekly Chart</Text>
@@ -197,7 +187,7 @@ const BloodPressureScreen = () => {
               renderItem={renderItem}
               keyExtractor={item => item.date}
             />
-          </ScrollView>
+          </>
         )}
       </View>
     </Provider>
@@ -208,6 +198,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    paddingTop: 10,
   },
   input: {
     width: 300,
@@ -221,13 +212,10 @@ const styles = StyleSheet.create({
   warningText: {
     color: 'red',
   },
-  scrollView: {
-    width: '100%',
-  },
   listItem: {
     backgroundColor: '#fff',
     padding: 20,
-    marginVertical: 8,
+    marginTop: 16,
     marginHorizontal: 16,
     borderRadius: 4,
     borderWidth: 1,
@@ -237,7 +225,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 16,
+    marginVertical: 10,
   },
 });
 
