@@ -129,7 +129,7 @@ const BloodPressureScreen = () => {
       <BarChart
         data={prepareChartData(days)}
         width={300}
-        height={220}
+        height={250}
         yAxisLabel="Systolic: "
         yAxisSuffix=" mmHg"
         chartConfig={chartConfig}
