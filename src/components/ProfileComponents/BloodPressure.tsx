@@ -126,9 +126,9 @@ const BloodPressureScreen = () => {
 
   const renderItem = ({ item }: { item: BloodPressureEntry }) => (
     <View style={styles.listItem}>
-      <Text>Date&Time: {formatDate(item.date)}</Text>
-      <Text>Systolic: {item.systolic}</Text>
-      <Text>Diastolic: {item.diastolic}</Text>
+      <Text>{i18n.t('DateWithTime')}: {formatDate(item.date)}</Text>
+      <Text>{i18n.t('Systolic')}: {item.systolic}</Text>
+      <Text>{i18n.t('Diastolic')}: {item.diastolic}</Text>
       <Button title='Edit' onPress={() => handleEdit(item)} />
       <Button title='Delete' onPress={() => handleDelete(item.date)} color='red' />
     </View>

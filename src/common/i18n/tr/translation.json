@@ -4,6 +4,7 @@
   "BloodPressureStatus": "Güncel Tansiyon Durumu",
   "DateWithTime": "Tarih&Zaman",
   "DontHaveAccount": "Hesabınız yok mu?",
+  "Diastolic": "Diyastolik",
   "Dosage": "Doz",
   "EditProfile": "Profili Düzenle",
   "EnterMedication": "İlaç Adını ve Dozunu Girin",
@@ -14,5 +15,6 @@
   "LoginClick": "Hesabınız var mı? Giriş yapmak için buraya tıklayın.",
   "Login": "Giriş Yap",
   "MedicationName": "İlaç Adı",
-  "SignUp": "Kayıt Ol"
+  "SignUp": "Kayıt Ol",
+  "Systolic": "Sistolik"
 }
