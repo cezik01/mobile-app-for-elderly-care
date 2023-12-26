@@ -4,14 +4,10 @@ import ProfileHeader from '../../components/ProfileComponents/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
-
-interface UserData {
-  name?: string;
-  city?: string;
-}
+import { CaregiverData } from 'types/CaregiverData';
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
-  const [userData, setUserData] = useState<UserData>({});
+  const [userData, setUserData] = useState<CaregiverData>({});
 
   useEffect(() => {
     const auth = getAuth();

@@ -7,20 +7,12 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
 import i18n from 'common/i18n/i18n';
-
-type HealthMetric = 'Normal' | 'High' | 'Low';
-
-interface UserData {
-  name?: string;
-  city?: string;
-  age?: number;
-  weight?: number;
-  height?: number;
-  bloodType?: string;
-}
+import { determineAverageBloodPressureStatus } from 'helpers/bloodPressure';
+import { PatientData } from 'types/PatientData';
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
-  const [userData, setUserData] = useState<UserData>({});
+  const [userData, setUserData] = useState<PatientData>({});
+  const [bloodPressureStatus, setBloodPressureStatus] = useState('Normal');
 
   useEffect(() => {
     const auth = getAuth();
@@ -34,6 +26,19 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
           setUserData(snapshot.val());
         } else {
           console.log("No data available");
+        }
+      });
+
+      const bpRef = ref(db, `bloodPressure/${user.uid}`);
+      onValue(bpRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const bpData = snapshot.val();
+          const latestEntryKey = Object.keys(bpData).sort().pop();
+          if (latestEntryKey !== undefined) {
+            const latestEntry = bpData[latestEntryKey];
+            const status = determineAverageBloodPressureStatus(latestEntry.systolic, latestEntry.diastolic);
+            setBloodPressureStatus(status);
+          }
         }
       });
     }
@@ -53,19 +58,19 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
 
   const handleMedicationPress = () => {
     navigation.navigate('Medication Screen');
-  }
+  };
 
   const handleAppointmentPress = () => {
     navigation.navigate('Appointment Screen');
-  }
+  };
 
   const handleBloodPressurePress = () => {
     navigation.navigate('Blood Pressure Screen');
-  }
+  };
 
   const handleBloodSugarPress = () => {
     navigation.navigate('Blood Sugar Screen');
-  }
+  };
 
   return (
     <View style={styles.screenContainer}>
@@ -86,6 +91,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
         <Pressable onPress={handleBloodPressurePress}>
           <Image source={require('../../../assets/profiles/Graph.png')} style={styles.bloodPressureSugarImage} />
           <Text style={styles.bloodPressureSugarTexts}>{i18n.t('BloodPressureEntrance')}</Text>
+          <Text style={styles.bloodPressureStatus}>{i18n.t('BloodPressureStatus')}: {bloodPressureStatus}</Text>
         </Pressable>
         <Pressable onPress={handleBloodSugarPress} style={styles.bloodSugar}>
           <Image source={require('../../../assets/profiles/Group.png')} style={styles.bloodPressureSugarImage} />
@@ -101,6 +107,10 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
 };
 
 const styles = StyleSheet.create({
+  bloodPressureStatus: {
+    marginVertical: 10,
+    color: "red"
+  },
   screenContainer: {
     flex: 1,
     backgroundColor: '#fff',
