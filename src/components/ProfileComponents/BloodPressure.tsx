@@ -8,6 +8,7 @@ import i18n from 'common/i18n/i18n';
 import BloodPressureEntry from 'types/BloodPressureEntry';
 import { BarChart } from 'react-native-chart-kit';
 import { formatDate, parseDate } from 'helpers/date/dateHelper';
+import { calculateChartWidth } from 'helpers/chart/chartHelper';
 
 const BloodPressureScreen = () => {
   const [systolic, setSystolic] = useState('');
@@ -104,12 +105,13 @@ const BloodPressureScreen = () => {
   };
 
   const renderChart = (days: number) => {
-    const screenWidth = Dimensions.get('window').width;
+    const data = prepareChartData(days);
+    const chartWidth = calculateChartWidth(data.labels.length);
 
     return (
       <BarChart
-        data={prepareChartData(days)}
-        width={screenWidth - 30}
+        data={data}
+        width={chartWidth}
         height={250}
         xAxisLabel=''
         yAxisLabel=''
@@ -125,6 +127,7 @@ const BloodPressureScreen = () => {
       />
     );
   };
+
 
   const renderItem = ({ item }: { item: BloodPressureEntry }) => (
     <View style={styles.listItem}>
