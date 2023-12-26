@@ -109,19 +109,15 @@ const BloodPressureScreen = () => {
         data={prepareChartData(days)}
         width={300}
         height={250}
-        xAxisLabel=' mmHg'
-        yAxisLabel="Systolic: "
-        yAxisSuffix=" mmHg"
+        xAxisLabel=''
+        yAxisLabel=""
+        yAxisSuffix=""
         chartConfig={{
-          backgroundColor: '#fff',
           backgroundGradientFrom: '#fff',
-          backgroundGradientTo: '#fff',
+          backgroundGradientTo: 'lightgrey',
           decimalPlaces: 2,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
         }}
         verticalLabelRotation={30}
       />
