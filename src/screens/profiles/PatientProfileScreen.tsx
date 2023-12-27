@@ -109,7 +109,8 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
 const styles = StyleSheet.create({
   bloodPressureStatus: {
     marginVertical: 10,
-    color: "red"
+    color: "red",
+    fontSize: 16,
   },
   screenContainer: {
     flex: 1,
