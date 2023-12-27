@@ -1,5 +1,7 @@
 {
   "BloodPressureEntrance": "Tansiyon Girişi İçin Tıklayınız",
+  "BloodSugar": "Kan Şekeri",
+  "BloodSugarStatus": "Güncel Kan Şekeri Durumu",
   "BloodSugarEntrance": "Kan Şekeri Girişi İçin Tıklayınız",
   "BloodPressureStatus": "Güncel Tansiyon Durumu",
   "DateWithTime": "Tarih&Zaman",

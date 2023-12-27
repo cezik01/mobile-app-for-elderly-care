@@ -171,13 +171,13 @@ const BloodPressureScreen = () => {
         <Button title='Submit' onPress={handleSubmit} />
         {bloodPressureData.length > 0 && (
           <>
-            {bloodPressureData.length >= 7 && (
+            {bloodPressureData.length == 7 && (
               <>
                 <Text style={styles.chartTitle}>Weekly Chart</Text>
                 {renderChart(7)}
               </>
             )}
-            {bloodPressureData.length >= 30 && (
+            {bloodPressureData.length == 30 && (
               <>
                 <Text style={styles.chartTitle}>Monthly Chart</Text>
                 {renderChart(30)}
