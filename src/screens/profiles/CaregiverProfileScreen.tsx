@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import ProfileHeader from '../../components/ProfileComponents/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
+import { sendInvitation } from 'helpers/firebaseInvitaitons/FirebaseInvitations';
 import { CaregiverData } from 'types/CaregiverData';
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
-  const [userData, setUserData] = useState<CaregiverData>({});
+  const [userData, setUserData] = useState<UserData>({});
 
   useEffect(() => {
     const auth = getAuth();
@@ -26,6 +27,10 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
     }
   }, []);
 
+  const onPatientSelect = (patientId: string) => {
+    setSelectedPatientId(patientId);
+  };
+
   const handleEditPress = () => {
     navigation.navigate('Profile Edit Screen');
   };
@@ -37,6 +42,18 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
     console.log('Menu button pressed');
   };
 
+  const sendInvitationToPatient = (patientId: string) => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      sendInvitation(currentUser.uid, patientId);
+    } else {
+      console.log("User not logged in");
+      // Kullanıcı giriş yapmamışsa burada uygun bir işlem yapın
+    }
+  };
+  
+
   return (
     <View style={styles.screenContainer}>
       <ProfileHeader
@@ -45,7 +62,10 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
         onEditPress={handleEditPress}
         onNotificationsPress={handleNotificationsPress}
         onMenuPress={handleMenuPress}
+        
       />
+      <Button title="Send Invitation" onPress={() => sendInvitationToPatient(selectedPatientId)} />
+
     </View>
   );
 };
