@@ -25,15 +25,14 @@ const ProfileEditScreen = () => {
     if (user) {
       const userRef = ref(db, 'users/' + user.uid);
       onValue(userRef, (snapshot) => {
-        const data = snapshot.val();
-        setName(data.name);
-        setSurname(data.surname);
-        setCity(data.city);
-        setAge(data.age);
-        setHeight(data.height);
-        setWeight(data.weight);
-        setBloodType(data.bloodType);
-
+        const data = snapshot.val() || {};
+        setName(data.name || '');
+        setSurname(data.surname || '');
+        setCity(data.city || '');
+        setAge(data.age || '');
+        setHeight(data.height || '');
+        setWeight(data.weight || '');
+        setBloodType(data.bloodType || '');
       });
     }
   }, []);

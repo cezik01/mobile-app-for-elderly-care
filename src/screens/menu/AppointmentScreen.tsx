@@ -33,10 +33,13 @@ const AppointmentScreen = () => {
   const [department, setDepartment] = useState('');
   const [doctorName, setDoctorName] = useState('');
   const [hour, setHour] = useState('');
+  const [hospitals, setHospitals] = useState<Hospital[]>([]);
+  const [selectedHospital, setSelectedHospital] = useState('');
 
   const departments = ['Cardiology', 'Dermatology', 'Neurology', 'Oncology', 'Pediatrics'];
   
   useEffect(() => {
+    
     registerForPushNotificationsAsync();
 
     const subscription = Notifications.addNotificationReceivedListener(
@@ -44,10 +47,12 @@ const AppointmentScreen = () => {
         handleNotification(notification);
       }
     );
+    fetchHospitals();
 
     return () => {
       Notifications.removeNotificationSubscription(subscription);
     };
+    
   }, []);
   useEffect(() => {
     const authStateChanged = onAuthStateChanged(auth, (user: User | null) => {
@@ -159,15 +164,52 @@ const AppointmentScreen = () => {
   }
   const [reminderAdvance, setReminderAdvance] = useState(1);
 
+  
+  const fetchHospitals = async () => {
+    try {
+      const response = await fetch("https://www.nosyapi.com/apiv2/hospital?city=izmir&county=konak", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer TV14jbWIzPNs95xbl81b1UvoicdbYKC4mKLh5BMstEiURwGzY0q7GbvTiKBP' // Buraya gerçek token'ınızı girin
+        }
+      });
+  
+      console.log(response.status); // HTTP durum kodunu logla
+      console.log(response.statusText); // HTTP durum metnini logla
+  
+      if (!response.ok) {
+        throw new Error(`API error with status code ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('Yanıt verisi:', data);
+      setHospitals(data.data);
+    } catch (error) {
+      console.error("API'den hastane listesi çekilemedi: ", error);
+    }
+  };
+  
+  interface Hospital {
+    Ad: string;
+    Adres: string;
+    
+  }
+  
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Add Appointment Reminder</Text>
-      <TextInput
-        style={styles.input}
-        value={hospitalName}
-        onChangeText={setHospitalName}
-        placeholder="Enter hospital name"
-      />
+      <Picker
+        selectedValue={selectedHospital}
+        onValueChange={(itemValue) => setSelectedHospital(itemValue)}
+        style={styles.picker}
+      >
+        {hospitals.map((hospital, index) => (
+          <Picker.Item key={index} label={hospital.Ad} value={hospital.Ad} />
+        ))}
+      </Picker>
       <Picker
         selectedValue={department}
         onValueChange={(itemValue) => setDepartment(itemValue)}
