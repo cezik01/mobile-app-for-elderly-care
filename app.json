@@ -15,7 +15,11 @@
       "assets/sounds/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "tel"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
