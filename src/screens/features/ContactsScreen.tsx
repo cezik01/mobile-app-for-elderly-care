@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, FlatList, Alert, Linking } from 'react-native';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { ContactProps } from 'types/ContactProps';
+import { setNameHandler } from 'helpers/validationSchemas/alphabeticalInputValidation';
 
 const ContactsScreen = () => {
   const [contacts, setContacts] = useState<ContactProps[]>([]);
@@ -9,6 +10,7 @@ const ContactsScreen = () => {
   const [phone, setPhone] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const db = getDatabase();
@@ -73,9 +75,11 @@ const ContactsScreen = () => {
       <TextInput
         placeholder="İsim"
         value={name}
-        onChangeText={setName}
+        onChangeText={(text) => setNameHandler(text, setIsError, setName)}
         style={styles.input}
       />
+      {isError && <Text style={styles.errorText}>Lütfen geçerli bir İsim giriniz.</Text>}
+
       <TextInput
         placeholder="Telefon Numarası"
         value={phone}
@@ -108,6 +112,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 50,
+  },
+  errorText: {
+    color: 'red',
+    marginRight: 'auto',
+    marginLeft: 40,
   },
   input: {
     borderWidth: 1,
