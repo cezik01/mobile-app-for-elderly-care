@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, FlatList } from 'react-native';
-import { Contact } from 'types/ContactType';
 import { Linking } from 'react-native';
+import { ContactProps } from 'types/ContactProps';
 
 const ContactsScreen = () => {
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [contacts, setContacts] = useState<ContactProps[]>([]);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [isEditing, setIsEditing] = useState(false);
