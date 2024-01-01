@@ -11,6 +11,11 @@ const ContactsScreen = () => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const addOrUpdateContact = () => {
+    if (name.trim() === '' || phone.trim() === '') {
+      alert('Lütfen hem İsim hem Telefon Numarası giriniz.');
+      return;
+    }
+
     if (isEditing && editingIndex !== null) {
       const updatedContacts = contacts.map((contact, index) => {
         if (index === editingIndex) {
