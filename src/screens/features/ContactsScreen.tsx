@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, FlatList } from 'react-native';
-import { Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, Button, FlatList, Alert, Linking } from 'react-native';
+import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { ContactProps } from 'types/ContactProps';
 
 const ContactsScreen = () => {
@@ -10,33 +10,42 @@ const ContactsScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    const db = getDatabase();
+    const contactsRef = ref(db, 'contacts/');
+    const unsubscribe = onValue(contactsRef, (snapshot) => {
+      const data = snapshot.val() || {};
+      setContacts(Object.values(data));
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const addOrUpdateContact = () => {
     if (name.trim() === '' || phone.trim() === '') {
-      alert('Lütfen hem İsim hem Telefon Numarası giriniz.');
+      Alert.alert('Error', 'Please enter both name and phone number.');
       return;
     }
 
+    const db = getDatabase();
+    const newContactRef = ref(db, `contacts/${editingIndex !== null ? editingIndex : contacts.length}`);
+
     if (isEditing && editingIndex !== null) {
-      const updatedContacts = contacts.map((contact, index) => {
-        if (index === editingIndex) {
-          return { name, phone };
-        }
-        return contact;
+      update(newContactRef, { name, phone }).then(() => {
+        cancelEdit();
       });
-      setContacts(updatedContacts);
-      cancelEdit();
-    } else if (contacts.length < 3) {
-      setContacts([...contacts, { name, phone }]);
-      setName('');
-      setPhone('');
     } else {
-      alert('Maksimum 3 kişi ekleyebilirsiniz.');
+      update(newContactRef, { name, phone }).then(() => {
+        setName('');
+        setPhone('');
+      });
     }
   };
 
   const deleteContact = (index: number) => {
-    const updatedContacts = contacts.filter((_, contactIndex) => contactIndex !== index);
-    setContacts(updatedContacts);
+    const db = getDatabase();
+    const contactRef = ref(db, `contacts/${index}`);
+    remove(contactRef);
   };
 
   const startEdit = (index: number) => {
@@ -62,30 +71,30 @@ const ContactsScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Contacts</Text>
       <TextInput
-        placeholder="İsim"
+        placeholder="Name"
         value={name}
         onChangeText={setName}
         style={styles.input}
       />
       <TextInput
-        placeholder="Telefon Numarası"
+        placeholder="Phone Number"
         value={phone}
-        onChangeText={setPhone}
         keyboardType="phone-pad"
+        onChangeText={setPhone}
         style={styles.input}
       />
-      <Button title={isEditing ? "Güncelle" : "Kişi Ekle"} onPress={addOrUpdateContact} />
-      {isEditing && <Button title="İptal" onPress={cancelEdit} />}
+      <Button title={isEditing ? "Update" : "Add Contact"} onPress={addOrUpdateContact} />
+      {isEditing && <Button title="Cancel" onPress={cancelEdit} />}
 
       <FlatList
         data={contacts}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => (
           <View style={styles.contactItem}>
             <Text>{item.name} - {item.phone}</Text>
-            <Button title="Düzenle" onPress={() => startEdit(index)} />
-            <Button title="Ara" onPress={() => callContact(item.phone)} />
-            <Button title="Sil" onPress={() => deleteContact(index)} />
+            <Button title="Edit" onPress={() => startEdit(index)} />
+            <Button title="Call" onPress={() => callContact(item.phone)} />
+            <Button title="Delete" onPress={() => deleteContact(index)} />
           </View>
         )}
       />
