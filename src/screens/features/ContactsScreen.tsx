@@ -23,7 +23,7 @@ const ContactsScreen = () => {
 
   const addOrUpdateContact = () => {
     if (name.trim() === '' || phone.trim() === '') {
-      Alert.alert('Error', 'Please enter both name and phone number.');
+      Alert.alert('Lütfen hem İsim hem Telefon Numarası giriniz.');
       return;
     }
 
@@ -71,20 +71,20 @@ const ContactsScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Contacts</Text>
       <TextInput
-        placeholder="Name"
+        placeholder="İsim"
         value={name}
         onChangeText={setName}
         style={styles.input}
       />
       <TextInput
-        placeholder="Phone Number"
+        placeholder="Telefon Numarası"
         value={phone}
         keyboardType="phone-pad"
         onChangeText={setPhone}
         style={styles.input}
       />
-      <Button title={isEditing ? "Update" : "Add Contact"} onPress={addOrUpdateContact} />
-      {isEditing && <Button title="Cancel" onPress={cancelEdit} />}
+      <Button title={isEditing ? "Güncelle" : "Kişi Ekle"} onPress={addOrUpdateContact} />
+      {isEditing && <Button title="İptal" onPress={cancelEdit} />}
 
       <FlatList
         data={contacts}
@@ -92,9 +92,9 @@ const ContactsScreen = () => {
         renderItem={({ item, index }) => (
           <View style={styles.contactItem}>
             <Text>{item.name} - {item.phone}</Text>
-            <Button title="Edit" onPress={() => startEdit(index)} />
-            <Button title="Call" onPress={() => callContact(item.phone)} />
-            <Button title="Delete" onPress={() => deleteContact(index)} />
+            <Button title="Düzenle" onPress={() => startEdit(index)} />
+            <Button title="Ara" onPress={() => callContact(item.phone)} />
+            <Button title="Sil" onPress={() => deleteContact(index)} />
           </View>
         )}
       />
