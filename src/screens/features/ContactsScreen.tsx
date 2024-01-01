@@ -55,7 +55,7 @@ const ContactsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Contacts Screen</Text>
+      <Text style={styles.title}>Contacts</Text>
       <TextInput
         placeholder="İsim"
         value={name}
@@ -109,6 +109,12 @@ const styles = StyleSheet.create({
     width: '80%',
     marginVertical: 5,
   },
+  title: {
+    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+  }
 });
 
 export default ContactsScreen;
