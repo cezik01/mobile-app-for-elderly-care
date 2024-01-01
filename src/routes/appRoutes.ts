@@ -7,8 +7,12 @@ import ProfileEditScreen from 'screens/profiles/ProfileEditScreen';
 import MedicationScreen from 'screens/menu/MedicationScreen';
 import NotificationsScreen from 'screens/profiles/NotificationsScreen';
 import AppointmentScreen from 'screens/menu/AppointmentScreen';
+import MenuScreen from 'screens/menu/MenuScreen'
 import BloodPressureScreen from 'components/ProfileComponents/BloodPressure';
 import BloodSugarScreen from 'components/ProfileComponents/BloodSuggar';
+import FontSettingsScreen from 'screens/features/FontSettingsScreen';
+import ContactsScreen from 'screens/features/ContactsScreen';
+
 
 
 const appRoutes = [
@@ -55,7 +59,23 @@ const appRoutes = [
   {
     name: "Blood Sugar Screen",
     component: BloodSugarScreen,
+  },
+  {
+    name: 'Menu Screen',
+    component: MenuScreen,
+  },
+  {
+    name: 'Contacts Screen',
+    component: ContactsScreen,
+  },
+  {
+    name: 'Font Settings Screen',
+    component: FontSettingsScreen,
   }
+
+
+
+
 ];
 
 export default appRoutes;

@@ -35,12 +35,16 @@ const NotificationsScreen = () => {
     }
   }, [user]);
 
-  const handleAcceptInvitation = (invitationId: string) => {
-    // Implement function to accept invitation
+  const handleAcceptInvitation =async  (invitationId: string) => {
+    const db = getDatabase();
+  const invitationRef = ref(db, `invitations/${invitationId}`);
+  await update(invitationRef, { status: 'accepted' });
   };
 
-  const handleRejectInvitation = (invitationId: string) => {
-    // Implement function to reject invitation
+  const handleRejectInvitation = async (invitationId: string) => {
+    const db = getDatabase();
+  const invitationRef = ref(db, `invitations/${invitationId}`);
+  await update(invitationRef, { status: 'rejected' });
   };
 
   return (

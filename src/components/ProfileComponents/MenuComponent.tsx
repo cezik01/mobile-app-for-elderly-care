@@ -18,15 +18,22 @@ const MenuItem = ({ onPress, iconName, text }: MenuItemProps) => (
 type MenuProps = {
   onMedicationPress: () => void;
   onAppointmentsPress: () => void;
+  onMenuPress: () => void;
 };
 
-const MenuComponent = ({ onMedicationPress, onAppointmentsPress }: MenuProps) => {
+const MenuComponent = ({ onMedicationPress, onAppointmentsPress,onMenuPress }: MenuProps) => {
+  
   return (
     <View style={styles.menuContainer}>
       <MenuItem
         onPress={onMedicationPress}
         iconName={require('../../../assets/profiles/medicationIcon.png')}
         text="Medication"
+      />
+      <MenuItem
+        onPress={onMenuPress} 
+        iconName={require('../../../assets/profiles/menuIcon1.png')} 
+        text="Menu"
       />
       <MenuItem
         onPress={onAppointmentsPress}
@@ -64,6 +71,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
   },
+  
 
 });
 
