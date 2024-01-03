@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import ProfileHeader from 'components/ProfileComponents/ProfileHeader';
 import PersonalInfo from 'components/ProfileComponents/PersonalInfo';
@@ -10,13 +10,28 @@ import i18n from 'common/i18n/i18n';
 import { determineAverageBloodPressureStatus } from 'helpers/bloodPressure';
 import { PatientData } from 'types/PatientData';
 import { determineAverageBloodSugarStatus } from 'helpers/bloodSugar';
+import FontSizeContext from '../../context/FontSizeContext';
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<PatientData>({});
   const [bloodPressureStatus, setBloodPressureStatus] = useState('Normal');
   const [bloodSugarStatus, setBloodSugarStatus] = useState('Normal');
+  const { fontSize } = useContext(FontSizeContext);
+  console.log("Current font size in context:", fontSize);
+
+  type FontSizeKey = 'small' | 'medium' | 'large';
+
+  const fontSizeMap: { [key in FontSizeKey]: number } = {
+    small: 14,
+    medium: 16,
+    large: 18,
+  };
+  
+  
+const fontSizeValue = fontSizeMap[fontSize as FontSizeKey];
 
   useEffect(() => {
+    
     const auth = getAuth();
     const user = auth.currentUser;
     const db = getDatabase();
@@ -58,6 +73,8 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
       });
     }
   }, []);
+
+ 
 
   const handleEditPress = () => {
     navigation.navigate('Profile Edit Screen');
@@ -105,12 +122,15 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
         weight={userData.weight || 0}
         height={userData.height || 0}
         bloodType={userData.bloodType || "N/A"}
+        fontSizeValue={fontSizeValue}
       />
       <View style={styles.bloodSugarPressure}>
         <Pressable onPress={handleBloodPressurePress}>
           <Image source={require('../../../assets/profiles/Graph.png')} style={styles.bloodPressureSugarImage} />
           <Text style={styles.bloodPressureSugarTexts}>{i18n.t('BloodPressureEntrance')}</Text>
-          <Text style={styles.bloodStatus}>{i18n.t('BloodPressureStatus')}: {bloodPressureStatus}</Text>
+          <Text style={[styles.bloodStatus, { fontSize: fontSizeValue }]}>
+  {i18n.t('BloodPressureStatus')}: {bloodPressureStatus}
+</Text>
         </Pressable>
         <Pressable onPress={handleBloodSugarPress} style={styles.bloodSugar}>
           <Image source={require('../../../assets/profiles/Group.png')} style={styles.bloodPressureSugarImage} />

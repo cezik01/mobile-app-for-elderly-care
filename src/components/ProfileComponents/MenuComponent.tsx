@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import FontSizeContext from '../../context/FontSizeContext';
 
 type MenuItemProps = {
   onPress: () => void;
   iconName: any;
   text: string;
+  fontSizeValue: number;
 };
 
 
-const MenuItem = ({ onPress, iconName, text }: MenuItemProps) => (
+const MenuItem = ({ onPress, iconName, text, fontSizeValue }: MenuItemProps) => (
   <TouchableOpacity style={styles.menuItem} onPress={onPress}>
     <Image source={iconName} style={styles.menuIcon} />
-    <Text style={styles.menuText}>{text}</Text>
+    <Text style={styles.menuText}>{text}</Text> 
   </TouchableOpacity>
+  
 );
 
 type MenuProps = {
@@ -22,6 +25,18 @@ type MenuProps = {
 };
 
 const MenuComponent = ({ onMedicationPress, onAppointmentsPress,onMenuPress }: MenuProps) => {
+  const { fontSize } = useContext(FontSizeContext);
+  type FontSizeKey = 'small' | 'medium' | 'large';
+
+// Then, define fontSizeMap with this type
+const fontSizeMap: { [key in FontSizeKey]: number } = {
+  small: 12,
+  medium: 14,
+  large: 16,
+};
+
+  // Get the numerical font size value from the map
+  const fontSizeValue = fontSizeMap[fontSize as FontSizeKey];
   
   return (
     <View style={styles.menuContainer}>
@@ -29,16 +44,19 @@ const MenuComponent = ({ onMedicationPress, onAppointmentsPress,onMenuPress }: M
         onPress={onMedicationPress}
         iconName={require('../../../assets/profiles/medicationIcon.png')}
         text="Medication"
+        fontSizeValue={fontSizeValue} 
       />
       <MenuItem
         onPress={onMenuPress} 
         iconName={require('../../../assets/profiles/menuIcon1.png')} 
         text="Menu"
+        fontSizeValue={fontSizeValue} 
       />
       <MenuItem
         onPress={onAppointmentsPress}
         iconName={require('../../../assets/profiles/appointmentsIcon.png')}
         text="Appointments"
+        fontSizeValue={fontSizeValue} 
       />
       { }
     </View>
@@ -67,7 +85,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   menuText: {
-    fontSize: 14,
+    fontSize: 20,
     textAlign: 'center',
     marginTop: 5,
   },

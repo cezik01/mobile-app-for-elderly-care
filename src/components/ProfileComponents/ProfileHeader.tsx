@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import i18n from 'common/i18n/i18n';
+import FontSizeContext from '../../context/FontSizeContext';
 
 type ProfileHeaderProps = {
   name: string;
@@ -11,10 +12,19 @@ type ProfileHeaderProps = {
   onNotificationsPress: () => void;
   onMenuPress: () => void;
 };
+type FontSizeKey = 'small' | 'medium' | 'large';
+const fontSizeMap: { [key in FontSizeKey]: number } = {
+  small: 14,
+  medium: 16,
+  large: 18,
+};
+
 
 const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPress }: ProfileHeaderProps) => {
+  const { fontSize } = useContext(FontSizeContext); 
   const navigation = useNavigation();
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  
 
   const pickImage = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -27,6 +37,12 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
       setProfileImage((pickerResult as any).uri);
     };
   };
+  const fontSizeMap = {
+    small: 14,
+    medium: 16,
+    large: 18,
+  };
+  const fontSizeValue = fontSizeMap[fontSize as FontSizeKey];
 
   return (
     <View style={styles.headerContainer}>
@@ -39,8 +55,9 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
           style={styles.profileImage}
         />
       </TouchableOpacity>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.city}>{city}</Text>
+      <Text style={[styles.name, { fontSize: fontSizeValue }]}>{name}</Text>
+      <Text style={[styles.city, { fontSize: fontSizeValue - 4 }]}>{city}</Text>
+      
       <TouchableOpacity style={styles.editProfileButton} onPress={onEditPress}>
         <Text style={styles.editProfileText}>
           {i18n.t('EditProfile')}

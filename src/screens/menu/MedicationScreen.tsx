@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
   },
   warningText: {
     color: 'red',
-    fontSize: 12,
+    fontSize: 18,
     marginBottom: 20,
     marginRight: "auto",
     marginLeft: 20,

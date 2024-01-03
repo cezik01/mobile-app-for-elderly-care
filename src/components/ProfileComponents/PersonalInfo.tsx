@@ -12,25 +12,26 @@ type PersonalInfoItemProps = {
   label: string;
 };
 
-const PersonalInfo = ({ age, weight, height, bloodType }: PersonalInfoProps) => {
+const PersonalInfo = ({ age, weight, height, bloodType, fontSizeValue }: PersonalInfoProps & { fontSizeValue: number }) => {
+  console.log("Font size value in PersonalInfo:", fontSizeValue);
   return (
     <View style={styles.container}>
-      <PersonalInfoItem icon={require('../../../assets/profiles/Age.png')} label={`Age: ${age.toString()}`} />
+      <PersonalInfoItem icon={require('../../../assets/profiles/Age.png')} label={`Age: ${age.toString()}`} fontSizeValue={fontSizeValue} />
       <View style={styles.divider} />
-      <PersonalInfoItem icon={require('../../../assets/profiles/Weight.png')} label={`Weight: ${weight.toString()}`} />
+      <PersonalInfoItem icon={require('../../../assets/profiles/Weight.png')} label={`Weight: ${weight.toString()}`} fontSizeValue={fontSizeValue} />
       <View style={styles.divider} />
-      <PersonalInfoItem icon={require('../../../assets/profiles/Height.png')} label={`Height: ${height.toString()}`} />
+      <PersonalInfoItem icon={require('../../../assets/profiles/Height.png')} label={`Height: ${height.toString()}`} fontSizeValue={fontSizeValue} />
       <View style={styles.divider} />
-      <PersonalInfoItem icon={require('../../../assets/profiles/BloodType.png')} label={`Blood Type: ${bloodType}`} />
+      <PersonalInfoItem icon={require('../../../assets/profiles/BloodType.png')} label={`Blood Type: ${bloodType}`} fontSizeValue={fontSizeValue} />
     </View>
   );
 };
 
-const PersonalInfoItem = ({ icon, label }: PersonalInfoItemProps) => {
+const PersonalInfoItem = ({ icon, label, fontSizeValue }: PersonalInfoItemProps & { fontSizeValue: number }) => {
   return (
     <View style={styles.infoItem}>
       <Image source={icon} style={styles.icon} resizeMode="contain" />
-      <Text style={styles.infoText}>{label}</Text>
+      <Text style={[styles.infoText, { fontSize: fontSizeValue }]}>{label}</Text>
     </View>
   );
 };
@@ -53,10 +54,9 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   infoText: {
-    fontSize: 14,
     textAlign: 'center',
     paddingVertical: 10
-
+    
   },
   divider: {
     height: 10,
