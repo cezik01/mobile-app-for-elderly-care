@@ -1,16 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-
-type PersonalInfoProps = {
-  age: number;
-  weight: number;
-  height: number;
-  bloodType: string;
-};
-type PersonalInfoItemProps = {
-  icon: any;
-  label: string;
-};
+import { PersonalInfoItemProps } from 'types/PersonalInfoItemProps';
+import { PersonalInfoProps } from 'types/PersonalInfoProps';
 
 const PersonalInfo = ({ age, weight, height, bloodType, fontSizeValue }: PersonalInfoProps & { fontSizeValue: number }) => {
   console.log("Font size value in PersonalInfo:", fontSizeValue);
