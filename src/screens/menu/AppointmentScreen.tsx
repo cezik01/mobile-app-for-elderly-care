@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, TextInput, Button, StyleSheet, Alert, FlatList } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, FlatList } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Notification } from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
-import {User, getAuth, onAuthStateChanged} from 'firebase/auth';
-import {getDatabase,ref,push,onValue,remove,update,get,} from 'firebase/database';
+import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getDatabase, ref, push, onValue, remove, update, get, } from 'firebase/database';
 import firebaseConfig from 'config/firebaseConfig';
 import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { AppointmentReminder } from 'types/AppointmentReminderProps';
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
-
-interface AppointmentReminder {
-  id: string;
-  hospitalName: string;
-  department: string;
-  doctorName: string;
-  date: string;
-  hour: string;
-  notificationId?: string;
-}
 
 const AppointmentScreen = () => {
   const [reminders, setReminders] = useState<AppointmentReminder[]>([]);
@@ -37,9 +27,9 @@ const AppointmentScreen = () => {
   const [selectedHospital, setSelectedHospital] = useState('');
 
   const departments = ['Cardiology', 'Dermatology', 'Neurology', 'Oncology', 'Pediatrics'];
-  
+
   useEffect(() => {
-    
+
     registerForPushNotificationsAsync();
 
     const subscription = Notifications.addNotificationReceivedListener(
@@ -52,7 +42,7 @@ const AppointmentScreen = () => {
     return () => {
       Notifications.removeNotificationSubscription(subscription);
     };
-    
+
   }, []);
   useEffect(() => {
     const authStateChanged = onAuthStateChanged(auth, (user: User | null) => {
@@ -93,7 +83,7 @@ const AppointmentScreen = () => {
       alertBody,
       [
         { text: "Dismiss", onPress: () => reminderId && updateReminderStatus(reminderId, 'dismissed') },
-        { text: "View", onPress: () => {/* Navigate to a specific screen or take some action */} }
+        { text: "View", onPress: () => {/* Navigate to a specific screen or take some action */ } }
       ],
       { cancelable: true }
     );
@@ -106,33 +96,33 @@ const AppointmentScreen = () => {
     const uid = auth.currentUser.uid;
     update(ref(db, `users/${uid}/appointmentReminders/${reminderId}`), { status });
   };
-  
+
   const addAppointmentReminder = async () => {
     if (!auth.currentUser) {
       console.log('No user logged in');
       return;
     }
-  
+
     const uid = auth.currentUser.uid;
     const dateTime = new Date(selectedDate);
     dateTime.setHours(selectedTime.getHours());
     dateTime.setMinutes(selectedTime.getMinutes());
-  
+
     const newAppointmentReminder = {
       hospitalName: hospitalName,
       department: department,
       doctorName: doctorName,
       date: dateTime.toString(), // Tarih ve saat birleştirildi
-      hour: selectedTime.toLocaleTimeString(), 
+      hour: selectedTime.toLocaleTimeString(),
     };
-  
+
     const reminderRef = await push(ref(db, `users/${uid}/appointmentReminders`), newAppointmentReminder);
-  
+
     if (reminderRef.key === null) {
       console.error("Failed to get appointment reminder ID");
       return;
     }
-  
+
     // Bildirimi zamanlayın ve bildirim ID'sini kaydedin
     try {
       const notificationId = await scheduleNotification(hospitalName, doctorName, dateTime, reminderRef.key);
@@ -141,7 +131,7 @@ const AppointmentScreen = () => {
       console.error("Failed to schedule or update notification", error);
     }
   };
-  
+
 
   const deleteAppointmentReminder = async (id: string, notificationId?: string) => {
     // Similar logic to deleteReminder, adapted for appointments
@@ -150,21 +140,21 @@ const AppointmentScreen = () => {
 
   async function scheduleNotification(hospitalName: string, doctorName: string, dateTime: Date, reminderId: string) {
     const notificationTime = new Date(dateTime);
-  notificationTime.setHours(notificationTime.getHours() - reminderAdvance);
+    notificationTime.setHours(notificationTime.getHours() - reminderAdvance);
 
-  return await Notifications.scheduleNotificationAsync({
-    content: {
-      title: 'Appointment Reminder',
-      body: `Appointment at ${hospitalName} with Dr. ${doctorName} on ${dateTime.toLocaleString()}`,
-      data: { reminderId },
-      sound: 'default',
-    },
-    trigger: notificationTime,
-  });
+    return await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Appointment Reminder',
+        body: `Appointment at ${hospitalName} with Dr. ${doctorName} on ${dateTime.toLocaleString()}`,
+        data: { reminderId },
+        sound: 'default',
+      },
+      trigger: notificationTime,
+    });
   }
   const [reminderAdvance, setReminderAdvance] = useState(1);
 
-  
+
   const fetchHospitals = async () => {
     try {
       const response = await fetch("https://www.nosyapi.com/apiv2/hospital?city=izmir&county=konak", {
@@ -174,14 +164,14 @@ const AppointmentScreen = () => {
           'Authorization': 'Bearer TV14jbWIzPNs95xbl81b1UvoicdbYKC4mKLh5BMstEiURwGzY0q7GbvTiKBP' // Buraya gerçek token'ınızı girin
         }
       });
-  
+
       console.log(response.status); // HTTP durum kodunu logla
       console.log(response.statusText); // HTTP durum metnini logla
-  
+
       if (!response.ok) {
         throw new Error(`API error with status code ${response.status}`);
       }
-  
+
       const data = await response.json();
       console.log('Yanıt verisi:', data);
       setHospitals(data.data);
@@ -189,13 +179,13 @@ const AppointmentScreen = () => {
       console.error("API'den hastane listesi çekilemedi: ", error);
     }
   };
-  
+
   interface Hospital {
     Ad: string;
     Adres: string;
-    
+
   }
-  
+
 
 
   return (
@@ -233,26 +223,26 @@ const AppointmentScreen = () => {
         selectedValue={reminderAdvance}
         onValueChange={(itemValue) => setReminderAdvance(itemValue)}
         style={styles.picker}
->
-       <Picker.Item label="1 hour before" value={1} />
-       <Picker.Item label="2 hours before" value={2} />
+      >
+        <Picker.Item label="1 hour before" value={1} />
+        <Picker.Item label="2 hours before" value={2} />
       </Picker>
-      
+
       <Button title="Add Reminder" onPress={addAppointmentReminder} />
       <FlatList
-      data={reminders}
-      renderItem={({ item }) => (
-        <View style={styles.reminderItem}>
-          <Text style={styles.reminderText}>Hospital: {item.hospitalName}</Text>
-          <Text style={styles.reminderText}>Department: {item.department}</Text>
-          <Text style={styles.reminderText}>Doctor: {item.doctorName}</Text>
-          <Text style={styles.reminderText}>Date: {item.date}</Text>
-          <Text style= {styles.reminderText}>Hour: {item.hour}</Text>
-          
-        </View>
-      )}
-      keyExtractor={item => item.id}
-    />
+        data={reminders}
+        renderItem={({ item }) => (
+          <View style={styles.reminderItem}>
+            <Text style={styles.reminderText}>Hospital: {item.hospitalName}</Text>
+            <Text style={styles.reminderText}>Department: {item.department}</Text>
+            <Text style={styles.reminderText}>Doctor: {item.doctorName}</Text>
+            <Text style={styles.reminderText}>Date: {item.date}</Text>
+            <Text style={styles.reminderText}>Hour: {item.hour}</Text>
+
+          </View>
+        )}
+        keyExtractor={item => item.id}
+      />
     </View>
   );
 };

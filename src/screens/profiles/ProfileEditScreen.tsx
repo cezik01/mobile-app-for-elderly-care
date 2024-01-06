@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet  } from 'react-native';
+import { View, TextInput, Button, Alert, Text, StyleSheet } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
@@ -43,9 +43,9 @@ const ProfileEditScreen = () => {
       updates['/users/' + user.uid + '/name'] = name;
       updates['/users/' + user.uid + '/surname'] = surname;
       updates['/users/' + user.uid + '/city'] = city;
-      updates['/users/' + user.uid + '/age'||0] = age;
-      updates['/users/' + user.uid + '/height'||0] = height;
-      updates['/users/' + user.uid + '/weight'||0] = weight;
+      updates['/users/' + user.uid + '/age' || 0] = age;
+      updates['/users/' + user.uid + '/height' || 0] = height;
+      updates['/users/' + user.uid + '/weight' || 0] = weight;
       updates['/users/' + user.uid + '/bloodType'] = bloodType;
 
 
@@ -66,34 +66,34 @@ const ProfileEditScreen = () => {
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Name:</Text>
-          <TextInput 
+          <TextInput
             style={styles.input}
-            placeholder="Enter your name" 
-            value={name} 
-            onChangeText={setName} 
+            placeholder="Enter your name"
+            value={name}
+            onChangeText={setName}
           />
         </View>
-  
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Surname:</Text>
-          <TextInput 
+          <TextInput
             style={styles.input}
-            placeholder="Enter your surname" 
-            value={surname} 
-            onChangeText={setSurname} 
+            placeholder="Enter your surname"
+            value={surname}
+            onChangeText={setSurname}
           />
         </View>
-  
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>City:</Text>
-          <TextInput 
+          <TextInput
             style={styles.input}
-            placeholder="Enter your city" 
-            value={city} 
-            onChangeText={setCity} 
+            placeholder="Enter your city"
+            value={city}
+            onChangeText={setCity}
           />
         </View>
-  
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Age:</Text>
           <TextInput
@@ -104,7 +104,7 @@ const ProfileEditScreen = () => {
             keyboardType="numeric"
           />
         </View>
-  
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Height:</Text>
           <TextInput
@@ -115,7 +115,7 @@ const ProfileEditScreen = () => {
             keyboardType="numeric"
           />
         </View>
-  
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Weight:</Text>
           <TextInput
@@ -126,7 +126,7 @@ const ProfileEditScreen = () => {
             keyboardType="numeric"
           />
         </View>
-  
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Blood Type:</Text>
           <Menu
@@ -138,18 +138,18 @@ const ProfileEditScreen = () => {
               </Text>
             }>
             {bloodTypes.map((type, index) => (
-              <Menu.Item 
-                key={index} 
-                title={type} 
-                onPress={() => { 
-                  setBloodType(type); 
-                  closeMenu(); 
-                }} 
+              <Menu.Item
+                key={index}
+                title={type}
+                onPress={() => {
+                  setBloodType(type);
+                  closeMenu();
+                }}
               />
             ))}
           </Menu>
         </View>
-  
+
         <Button title="Save" onPress={handleSave} />
       </View>
     </Provider>
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    alignItems: 'stretch', // İçeriklerin genişliğini tam alması için
+    alignItems: 'stretch',
   },
   inputContainer: {
     marginBottom: 20,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     padding: 10,
     borderRadius: 5,
-    marginBottom: 10, // İnputlar arası boşluk
+    marginBottom: 10,
   },
   label: {
     fontWeight: 'bold',
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     padding: 10,
     borderRadius: 5,
-    marginBottom: 10, // Menü anchor arası boşluk
+    marginBottom: 10,
   },
 });
 

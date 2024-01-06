@@ -5,17 +5,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
 import { emailPasswordValidationSchema } from 'helpers/validationSchemas/emailPasswordLoginValidationSchema';
 import i18n from 'common/i18n/i18n';
-
-interface FormFields {
-  email: string;
-  password: string;
-}
-
-interface AuthFormProps {
-  onSubmit: (values: FormFields) => void;
-  buttonTitle: string;
-  children: ReactNode;
-}
+import { FormFields } from 'types/FormFieldsProps';
+import { AuthFormProps } from 'types/AuthFormProps';
 
 const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, buttonTitle, children }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -51,7 +42,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, buttonTitle, children }) 
               secureTextEntry={!isPasswordVisible}
             />
             <TouchableOpacity onPress={togglePasswordVisibility}>
-              <MaterialIcons 
+              <MaterialIcons
                 name={isPasswordVisible ? 'visibility' : 'visibility-off'}
                 size={24}
                 style={styles.passwordVisibilityIcon}
@@ -60,8 +51,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, buttonTitle, children }) 
           </View>
           {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
-          <TouchableOpacity 
-            style={styles.button} 
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => handleSubmit()}
           >
             <Text style={styles.buttonText}>{i18n.t(buttonTitle)}</Text>
