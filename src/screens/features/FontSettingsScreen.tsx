@@ -38,7 +38,7 @@ const FontSettingsScreen = () => {
   };
 
   console.log("Current font size in context:", fontSizeContext.fontSize);
-  
+
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

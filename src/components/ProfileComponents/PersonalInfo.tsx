@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: 'center',
     paddingVertical: 10
-    
+
   },
   divider: {
     height: 10,
