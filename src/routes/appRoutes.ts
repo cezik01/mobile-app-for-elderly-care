@@ -12,6 +12,7 @@ import BloodPressureScreen from 'components/ProfileComponents/BloodPressure';
 import BloodSugarScreen from 'components/ProfileComponents/BloodSuggar';
 import FontSettingsScreen from 'screens/features/FontSettingsScreen';
 import ContactsScreen from 'screens/features/ContactsScreen';
+import PasswordReset from 'screens/auth/login/PasswordReset';
 
 
 
@@ -71,6 +72,10 @@ const appRoutes = [
   {
     name: 'Font Settings Screen',
     component: FontSettingsScreen,
+  },
+  {
+    name: 'PasswordReset',
+    component: PasswordReset,
   }
 
 

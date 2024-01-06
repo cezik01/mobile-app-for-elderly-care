@@ -19,15 +19,16 @@ const NotificationsScreen = () => {
 
   useEffect(() => {
     if (user) {
-      const invitationsRef = ref(db, `invitations/${user.uid}`);
+      const invitationsRef = ref(db, 'invitations');
       onValue(invitationsRef, (snapshot) => {
         if (snapshot.exists()) {
-          // Initialize the array with the correct type
           const invitationsData: Invitation[] = [];
           snapshot.forEach((childSnapshot) => {
-            const invitation = childSnapshot.val() as Invitation; // Typecast the data to Invitation
-            invitation.id = childSnapshot.key; // Set the id
-            invitationsData.push(invitation);
+            const invitation = childSnapshot.val() as Invitation;
+            if (invitation.to === user.uid) {
+              invitation.id = childSnapshot.key;
+              invitationsData.push(invitation);
+            }
           });
           setInvitations(invitationsData);
         }
@@ -35,16 +36,19 @@ const NotificationsScreen = () => {
     }
   }, [user]);
 
-  const handleAcceptInvitation =async  (invitationId: string) => {
+  const handleAcceptInvitation = async (invitationId: string, fromUserId: string, toUserId: string) => {
     const db = getDatabase();
-  const invitationRef = ref(db, `invitations/${invitationId}`);
-  await update(invitationRef, { status: 'accepted' });
+    await update(ref(db, `invitations/${invitationId}`), { status: 'accepted' });
+    console.log(`Accepting invitation: ${invitationId}, from: ${fromUserId}, to: ${toUserId}`);
+    
+    const accessControlRef = ref(db, `accessControl/${fromUserId}/${toUserId}`);
+    await update(accessControlRef, { hasAccess: true });
   };
+  
+  
 
   const handleRejectInvitation = async (invitationId: string) => {
-    const db = getDatabase();
-  const invitationRef = ref(db, `invitations/${invitationId}`);
-  await update(invitationRef, { status: 'rejected' });
+    await update(ref(db, `invitations/${invitationId}`), { status: 'rejected' });
   };
 
   return (
@@ -52,7 +56,7 @@ const NotificationsScreen = () => {
       {invitations.map((invitation) => (
         <View key={invitation.id}>
           <Text>{`Invitation from ${invitation.from}`}</Text>
-          <Button title="Accept" onPress={() => handleAcceptInvitation(invitation.id)} />
+          <Button title="Accept" onPress={() => handleAcceptInvitation(invitation.id, invitation.from, invitation.to)} />
           <Button title="Reject" onPress={() => handleRejectInvitation(invitation.id)} />
         </View>
       ))}

@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Alert,Modal,Text, TextInput } from 'react-native';
+import { View, StyleSheet, Button, Alert,Modal,Text, TextInput, ScrollView } from 'react-native';
 import ProfileHeader from '../../components/ProfileComponents/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
 import { sendInvitation } from 'helpers/firebaseInvitaitons/FirebaseInvitations';
 import { CaregiverData } from 'types/CaregiverData';
+import { PatientData } from 'types/PatientData';
 
-const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
+const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<CaregiverData>({});
   const [selectedPatientId, setSelectedPatientId] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [patientId, setPatientId] = useState('');
   const [invitationSent, setInvitationSent] = useState(false);
+  const [patients, setPatients] = useState<string[]>([]);
+  const [selectedPatientProfile, setSelectedPatientProfile] = useState<PatientData | null>(null);
+  const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
+
 
 
   useEffect(() => {
@@ -24,16 +29,40 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
       const userRef = ref(db, `users/${user.uid}`);
       onValue(userRef, (snapshot) => {
         if (snapshot.exists()) {
+          console.log("User data:", snapshot.val());  // Log user data
           setUserData(snapshot.val());
-        } else {
-          console.log("No data available");
+        }
+      });
+
+      const accessControlRef = ref(db, `accessControl/${user.uid}`);
+      onValue(accessControlRef, (snapshot) => {
+        if (snapshot.exists()) {
+          console.log("Access control data:", snapshot.val());  // Log access control data
+          setPatients(Object.keys(snapshot.val()));
         }
       });
     }
   }, []);
 
+  useEffect(() => {
+    const db = getDatabase();
+    if (selectedPatientId) {
+      const patientProfileRef = ref(db, `users/${selectedPatientId}`);
+      onValue(patientProfileRef, (snapshot) => {
+        if (snapshot.exists()) {
+          console.log("Selected patient profile:", snapshot.val());  // Log selected patient profile
+          setSelectedPatientProfile(snapshot.val());
+        } else {
+          setSelectedPatientProfile(null);
+        }
+      });
+    }
+  }, [selectedPatientId]);
+  
+
   const onPatientSelect = (patientId: string) => {
     setSelectedPatientId(patientId);
+    setIsProfileModalVisible(true);
   };
 
   const handleEditPress = () => {
@@ -48,8 +77,10 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   };
 
   const handleSendInvitation = () => {
-    if (patientId) {
-      sendInvitation('IBCMGJLyEaXMbnLKw7DCYtOU47D3', patientId) 
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    if (patientId && currentUser) {
+      sendInvitation(currentUser.uid, patientId)  
         .then(() => {
           setInvitationSent(true);
           setModalVisible(false);
@@ -65,23 +96,20 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   };
 
   return (
-    <View style={styles.screenContainer}>
+    <ScrollView style={styles.screenContainer}>
       <ProfileHeader
-        name={userData.name || "Name "}
-        city={userData.city || "City "}
-        onEditPress={handleEditPress}
-        onNotificationsPress={handleNotificationsPress}
-        onMenuPress={handleMenuPress}
-        
+        name={userData.name || "Name"}
+        city={userData.city || "City"}
+        onEditPress={() => navigation.navigate('Profile Edit Screen')}
+        onNotificationsPress={() => navigation.navigate('NotificationsScreen')}
+        onMenuPress={() => navigation.navigate('Menu Screen')}
       />
       <Button title="Send Invitation" onPress={() => setModalVisible(true)} />
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
+        onRequestClose={() => setModalVisible(!modalVisible)}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -98,8 +126,47 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
         </View>
       </Modal>
       {invitationSent && <Text>Invitation sent successfully!</Text>}
-
-    </View>
+      
+      {selectedPatientProfile ? (
+        <View style={styles.patientProfile}>
+          <Text>Name: {selectedPatientProfile.name}</Text>
+          {/* Diğer profil bilgileri */}
+        </View>
+      ) : (
+        <Text>Select a patient to view details.</Text>
+      )}
+      {patients.length > 0 ? (
+  <View>
+    {patients.map((patientId) => (
+      <Button key={patientId} title={`Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} />
+    ))}
+  </View>
+) : (
+  <Text>No patients found.</Text>
+)}
+<Modal
+  animationType="slide"
+  transparent={true}
+  visible={isProfileModalVisible}
+  onRequestClose={() => setIsProfileModalVisible(false)}
+>
+  <View style={styles.modalContent}>
+    {selectedPatientProfile ? (
+      <View>
+        <Text>Name: {selectedPatientProfile.name}</Text>
+        <Text>Age: {selectedPatientProfile.age}</Text>
+        <Text>Weight: {selectedPatientProfile.weight}</Text>
+        <Text>Height: {selectedPatientProfile.height}</Text>
+        
+      </View>
+    ) : (
+      <Text>Loading patient data...</Text>
+    )}
+    <Button title="Close" onPress={() => setIsProfileModalVisible(false)} />
+  </View>
+</Modal>
+      
+      </ScrollView>
   );
 };
 
@@ -136,6 +203,19 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 200,
   },
+  patientProfile: {
+    padding: 20,
+    marginTop: 10,
+    backgroundColor: "#f0f0f0"
+  }, 
+  modalContent: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 20,
+    
+  }
 });
 
-export default PatientProfileScreen;
+export default CaregiverProfileScreen;
