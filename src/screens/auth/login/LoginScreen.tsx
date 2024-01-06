@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, TouchableOpacity, Text, View } from 'react-native';
+import { Alert, TouchableOpacity, Text } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import styles from '../styles';
 import AuthForm from 'components/Form/AuthForm';
@@ -20,16 +20,15 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
       } else if (role === 'patient') {
         navigation.navigate('Patient Profile');
       }
-
     } catch (error) {
       let errorMessage = '';
       if (error instanceof FirebaseError) {
         switch (error.code) {
           case 'auth/user-not-found':
-            errorMessage = 'The email you have written is not registered.';
+            errorMessage = 'The email you have entered is not registered.';
             break;
           case 'auth/invalid-credential':
-            errorMessage = 'The e-mail or password is invalid. Please try again.';
+            errorMessage = 'The email or password is invalid. Please try again.';
             break;
           default:
             errorMessage = 'An error occurred during login. Please try again.';
@@ -41,30 +40,11 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     }
   };
 
-  const handleForgotPassword = () => {
-    /* const email = await promptForEmail(); // Implement this function to get the user's email
-     if (!email) return; // Exit if no email is provided
-   
-     try {
-       await sendPasswordResetEmail(auth, email);
-       Alert.alert('Check your email', 'A link to reset your password has been sent to your email address.');
-     } catch (error) {
-       Alert.alert('Error', 'Failed to send password reset email. Please try again.');
-     }*/
-    navigation.navigate('PasswordReset');
-  };
-
   return (
-    <AuthForm onSubmit={handleLogin} buttonTitle="Login">
+    <AuthForm onSubmit={handleLogin} buttonTitle="Login" showForgotPassword={true}>
       <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
         <Text style={styles.linkText}>{i18n.t('DontHaveAccount')}</Text>
       </TouchableOpacity>
-
-      <View style={{ marginTop: 20 }}>
-        <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.linkText}>{i18n.t('ForgotPassword')}</Text>
-        </TouchableOpacity>
-      </View>
     </AuthForm>
   );
 };

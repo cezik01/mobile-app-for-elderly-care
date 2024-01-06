@@ -5,4 +5,5 @@ export interface AuthFormProps {
     onSubmit: (values: FormFields) => void;
     buttonTitle: string;
     children: ReactNode;
+    showForgotPassword: boolean;
 }
