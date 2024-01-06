@@ -3,9 +3,8 @@ import { View, Button, Alert } from 'react-native';
 import { getDatabase, ref, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import FontSizeContext from '../../context/FontSizeContext';
-import { FontSettingsScreenProps } from 'types/FontSettingsScreenProps';
 
-const FontSettingsScreen = ({ navigation }: FontSettingsScreenProps) => {
+const FontSettingsScreen = () => {
   const fontSizeContext = useContext(FontSizeContext);
 
   if (!fontSizeContext) {
