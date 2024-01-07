@@ -13,6 +13,7 @@ import BloodSugarScreen from 'components/ProfileComponents/BloodSuggar';
 import FontSettingsScreen from 'screens/features/FontSettingsScreen';
 import ContactsScreen from 'screens/features/ContactsScreen';
 import PasswordReset from 'screens/auth/login/PasswordReset';
+import HelpScreen from 'screens/help/HelpScreen';
 
 
 
@@ -46,7 +47,7 @@ const appRoutes = [
     component: MedicationScreen,
   },
   {
-    name:'NotificationsScreen',
+    name: 'NotificationsScreen',
     component: NotificationsScreen,
   },
   {
@@ -76,11 +77,11 @@ const appRoutes = [
   {
     name: 'PasswordReset',
     component: PasswordReset,
-  }
-
-
-
-
+  },
+  {
+    name: 'Help Screen',
+    component: HelpScreen,
+  },
 ];
 
 export default appRoutes;

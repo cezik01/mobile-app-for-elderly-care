@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import firebaseConfig from 'config/firebaseConfig';
 import { getDatabase, ref, get, set } from 'firebase/database';
 
@@ -46,5 +46,10 @@ export const signIn = async (email: string, password: string): Promise<{ role: s
     console.error(error);
     throw error;
   }
+};
+
+export const handleLogout = (): Promise<void> => {
+  const auth = getAuth();
+  return auth.signOut();
 };
 

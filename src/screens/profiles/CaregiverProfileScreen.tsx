@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Alert, Modal, Text, TextInput, ScrollView } from 'react-native';
+import { View, StyleSheet, Button, Alert, Modal, Text, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import ProfileHeader from '../../components/ProfileComponents/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
@@ -7,6 +7,9 @@ import { NavigationProp } from '@react-navigation/native';
 import { sendInvitation } from 'helpers/firebaseInvitaitons/FirebaseInvitations';
 import { CaregiverData } from 'types/CaregiverData';
 import { PatientData } from 'types/PatientData';
+import { Sidebar } from 'components/Sidebar';
+import { handleLogout } from 'helpers/firebaseAuth/AuthService';
+import i18n from 'common/i18n/i18n';
 
 const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<CaregiverData>({});
@@ -17,6 +20,11 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const [patients, setPatients] = useState<string[]>([]);
   const [selectedPatientProfile, setSelectedPatientProfile] = useState<PatientData | null>(null);
   const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
+  const [isSidebarVisible, setSidebarVisible] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!isSidebarVisible);
+  };
 
   useEffect(() => {
     const auth = getAuth();
@@ -71,7 +79,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   };
 
   const handleMenuPress = () => {
-    console.log('Menu button pressed');
+    toggleSidebar();
   };
 
   const handleSendInvitation = () => {
@@ -93,15 +101,20 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     }
   };
 
+  const Backdrop = () => (
+    <TouchableOpacity style={styles.backdrop} onPress={() => setSidebarVisible(false)} />
+  );
+
   return (
     <ScrollView style={styles.screenContainer}>
+      {isSidebarVisible && <Backdrop />}
       <ProfileHeader
         name={userData.name || "Name"}
         surname={userData.surname || "Surname"}
         city={userData.city || "City"}
         onEditPress={() => navigation.navigate('Profile Edit Screen')}
         onNotificationsPress={() => navigation.navigate('NotificationsScreen')}
-        onMenuPress={() => navigation.navigate('Menu Screen')}
+        onMenuPress={handleMenuPress}
       />
       <Button title="Send Invitation" onPress={() => setModalVisible(true)} />
       <Modal
@@ -152,10 +165,10 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         <View style={styles.modalContent}>
           {selectedPatientProfile ? (
             <View>
-              <Text>Name: {selectedPatientProfile.name}</Text>
-              <Text>Age: {selectedPatientProfile.age}</Text>
-              <Text>Weight: {selectedPatientProfile.weight}</Text>
-              <Text>Height: {selectedPatientProfile.height}</Text>
+              <Text>{i18n.t('Name')}: {selectedPatientProfile.name}</Text>
+              <Text>{i18n.t('Age')}: {selectedPatientProfile.age}</Text>
+              <Text>{i18n.t('Weight')}: {selectedPatientProfile.weight}</Text>
+              <Text>{i18n.t('Height')}: {selectedPatientProfile.height}</Text>
 
             </View>
           ) : (
@@ -164,7 +177,9 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           <Button title="Close" onPress={() => setIsProfileModalVisible(false)} />
         </View>
       </Modal>
-
+      {isSidebarVisible && (
+        <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} />
+      )}
     </ScrollView>
   );
 };
@@ -173,6 +188,9 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  caregiverSidebar: {
+    height: '300%'
   },
   centeredView: {
     flex: 1,
@@ -213,8 +231,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     padding: 20,
-
-  }
+  },
+  backdrop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1,
+  },
 });
 
 export default CaregiverProfileScreen;

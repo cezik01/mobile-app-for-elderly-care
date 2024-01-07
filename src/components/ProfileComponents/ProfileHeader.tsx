@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { useNavigation } from '@react-navigation/native';
 import i18n from 'common/i18n/i18n';
 import FontSizeContext from '../../context/FontSizeContext';
 import { ProfileHeaderProps } from 'types/ProfileHeaderProps';

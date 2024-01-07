@@ -1,4 +1,6 @@
 {
+  "Age": "Yaş",
+  "AppInfo": "Giriş yaptıktan sonra karşınıza çıkan ilk ekranda kişisel bilgileriniz yer almaktadır, bu kişisel bilgileri Profili Düzenle yazısına tıklayıp çıkan sayfada düzenleyebilirsiniz. Avatar imgesine tıklayarak fotoğraf yükleyebilirsiniz. Tansiyon Girişi İçin Tıklayınız yazan yere tıklayıp, çıkan yerden tansiyon değerlerinizi, Kan Şekeri Girişi İçin Tıklayınız yazan yere tıklayıp, çıkan yerden kan şekeri değerlerinizi düzenleyebilirsiniz. Ana ekranda da girdiğiniz değerlerin durumlarını güncel olarak görebiliyorsunuz. Altta yer alan Medication yazısına tıklayarak ilaçlarınızı ve bildirimlerini düzenleyebilirsiniz, Menu yazısına tıkladığınızda çıkan ekranda ilgili yerlere gidebilirsiniz ve son olarak Appointments yazısına tıklayarak, randevularınızla ilgili işlemleri ve bildirimlerini düzenleyebilirsiniz. Ekranın sol üstünde yer alan 3 çizgiye tıklayarak, uygulama hakkında genel bilgilendirmeyi bu şekilde alabiliyorsunuz.",
   "BloodPressureEntrance": "Tansiyon Girişi İçin Tıklayınız",
   "BloodSugar": "Kan Şekeri",
   "BloodSugarStatus": "Güncel Kan Şekeri Durumu",
@@ -13,11 +15,18 @@
   "EnterValidNumber": "Lütfen Geçerli bir Numara girin",
   "ForgotPassword": "Şifrenizi mi unuttunuz?",
   "helloWorld": "Merhaba Dünya!",
+  "Help": "Yardım",
+  "HelpInfo": "Buraya tıklayarak uygulama hakkında yazılı veya sesli olarak yardım alabilirsiniz.",
+  "Height": "Boy",
   "HomeScreen": "Ana Ekran",
   "LoginClick": "Hesabınız var mı? Giriş yapmak için buraya tıklayın.",
   "Login": "Giriş Yap",
+  "Logout": "Çıkış Yap",
   "MedicationName": "İlaç Adı",
+  "Name": "İsim",
   "Send": "Gönder",
   "SignUp": "Kayıt Ol",
-  "Systolic": "Sistolik"
+  "Systolic": "Sistolik",
+  "VoiceHelp": "Sesle Uygulama Yardımı almak için buraya tıklayın",
+  "Weight": "Kilo"
 }
