@@ -28,7 +28,7 @@ export const Sidebar = ({ style, setSidebarVisible, navigation, handleLogout }: 
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
                 handleLogout().then(() => {
-                    navigation.navigate('Registration');
+                    navigation.navigate('Login');
                 }).catch((error) => {
                     console.error('Logout failed:', error);
                 });
