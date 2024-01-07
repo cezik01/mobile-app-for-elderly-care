@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     marginLeft: spacing[2]
   },
   linkText: {
-    marginTop: spacing[4],
+    marginTop: spacing[6],
     textAlign: textAlign.center,
     color: 'blue',
   },
