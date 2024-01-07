@@ -13,7 +13,7 @@ import i18n from 'common/i18n/i18n';
 const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [role, setRole] = useState('patient');
   const [visible, setVisible] = useState(false);
-  
+
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
@@ -46,23 +46,23 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
   };
 
   return (
-    <AuthForm onSubmit={handleRegistration} buttonTitle="SignUp">
-       <View style={styles.pickerContainer}>
-          <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={
-              <Button mode="outlined" onPress={openMenu}>
-                {role ? role : i18n.t('SelectYourRole')}
-              </Button>
-            }>
-            <Menu.Item onPress={() => { setRole('Patient'); closeMenu(); }} title={i18n.t('Patient')} />
-            <Menu.Item onPress={() => { setRole('Caregiver'); closeMenu(); }} title={i18n.t('Caregiver')} />
-          </Menu>
-        </View>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.linkText}>{i18n.t('LoginClick')}</Text>
-        </TouchableOpacity>
+    <AuthForm onSubmit={handleRegistration} buttonTitle="SignUp" showForgotPassword={false}>
+      <View style={styles.pickerContainer}>
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={
+            <Button mode="outlined" onPress={openMenu}>
+              {role ? role : i18n.t('SelectYourRole')}
+            </Button>
+          }>
+          <Menu.Item onPress={() => { setRole('Patient'); closeMenu(); }} title={i18n.t('Patient')} />
+          <Menu.Item onPress={() => { setRole('Caregiver'); closeMenu(); }} title={i18n.t('Caregiver')} />
+        </Menu>
+      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.linkText}>{i18n.t('LoginClick')}</Text>
+      </TouchableOpacity>
     </AuthForm>
   );
 };
