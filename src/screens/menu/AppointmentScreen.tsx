@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, FlatList } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Notification } from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
@@ -10,12 +10,15 @@ import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { AppointmentReminder } from 'types/AppointmentReminderProps';
+import i18n from 'common/i18n/i18n';
+import { ReminderScreensProps } from 'types/ReminderScreensProps';
+import { HospitalProps } from 'types/HospitalProps';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-const AppointmentScreen = () => {
+const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
   const [reminders, setReminders] = useState<AppointmentReminder[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(new Date());
@@ -23,7 +26,7 @@ const AppointmentScreen = () => {
   const [department, setDepartment] = useState('');
   const [doctorName, setDoctorName] = useState('');
   const [hour, setHour] = useState('');
-  const [hospitals, setHospitals] = useState<Hospital[]>([]);
+  const [hospitals, setHospitals] = useState<HospitalProps[]>([]);
   const [selectedHospital, setSelectedHospital] = useState('');
 
   const departments = ['Cardiology', 'Dermatology', 'Neurology', 'Oncology', 'Pediatrics'];
@@ -112,7 +115,7 @@ const AppointmentScreen = () => {
       hospitalName: hospitalName,
       department: department,
       doctorName: doctorName,
-      date: dateTime.toString(), // Tarih ve saat birleştirildi
+      date: dateTime.toString(),
       hour: selectedTime.toLocaleTimeString(),
     };
 
@@ -123,7 +126,6 @@ const AppointmentScreen = () => {
       return;
     }
 
-    // Bildirimi zamanlayın ve bildirim ID'sini kaydedin
     try {
       const notificationId = await scheduleNotification(hospitalName, doctorName, dateTime, reminderRef.key);
       await update(ref(db, `users/${uid}/appointmentReminders/${reminderRef.key}`), { notificationId });
@@ -165,8 +167,8 @@ const AppointmentScreen = () => {
         }
       });
 
-      console.log(response.status); // HTTP durum kodunu logla
-      console.log(response.statusText); // HTTP durum metnini logla
+      console.log(response.status);
+      console.log(response.statusText);
 
       if (!response.ok) {
         throw new Error(`API error with status code ${response.status}`);
@@ -180,24 +182,20 @@ const AppointmentScreen = () => {
     }
   };
 
-  interface Hospital {
-    Ad: string;
-    Adres: string;
-
-  }
-
-
+  const handleHelpPress = () => {
+    navigation.navigate('Help Screen')
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Add Appointment Reminder</Text>
+      <Text style={styles.title}>{i18n.t('AddAppointmentReminder')}</Text>
       <Picker
         selectedValue={selectedHospital}
         onValueChange={(itemValue) => setSelectedHospital(itemValue)}
         style={styles.picker}
       >
         {hospitals.map((hospital, index) => (
-          <Picker.Item key={index} label={hospital.Ad} value={hospital.Ad} />
+          <Picker.Item key={index} label={hospital.name} value={hospital.name} />
         ))}
       </Picker>
       <Picker
@@ -233,16 +231,25 @@ const AppointmentScreen = () => {
         data={reminders}
         renderItem={({ item }) => (
           <View style={styles.reminderItem}>
-            <Text style={styles.reminderText}>Hospital: {item.hospitalName}</Text>
-            <Text style={styles.reminderText}>Department: {item.department}</Text>
-            <Text style={styles.reminderText}>Doctor: {item.doctorName}</Text>
-            <Text style={styles.reminderText}>Date: {item.date}</Text>
-            <Text style={styles.reminderText}>Hour: {item.hour}</Text>
+            <Text style={styles.reminderText}>{i18n.t('Hospital')}: {item.hospitalName}</Text>
+            <Text style={styles.reminderText}>{i18n.t('Department')}: {item.department}</Text>
+            <Text style={styles.reminderText}>{i18n.t('Doctor')}: {item.doctorName}</Text>
+            <Text style={styles.reminderText}>{i18n.t('DateWithTime')}: {item.date}</Text>
+            <Text style={styles.reminderText}>{i18n.t('Hour')}: {item.hour}</Text>
 
           </View>
         )}
         keyExtractor={item => item.id}
       />
+      <TouchableOpacity onPress={handleHelpPress}
+      >
+        <View style={styles.questionMarkContainer}>
+          <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
+          <Text style={styles.helpText}>
+            {i18n.t('Help')}
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -251,6 +258,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    alignItems: 'center',
   },
   title: {
     fontSize: 22,
@@ -279,6 +287,20 @@ const styles = StyleSheet.create({
   reminderText: {
     fontSize: 16,
     marginBottom: 5,
+  },
+  questionMarkIcon: {
+    color: 'blue',
+    marginRight: 5,
+    marginBottom: 15,
+  },
+  questionMarkContainer: {
+    flexDirection: 'row',
+    marginTop: '20%',
+    marginLeft: 5,
+  },
+  helpText: {
+    fontSize: 20,
+    color: 'blue',
   },
 });
 

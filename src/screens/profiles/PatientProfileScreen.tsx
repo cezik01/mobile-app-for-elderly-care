@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
   dimmedBackground: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
+
 });
 
 export default PatientProfileScreen;

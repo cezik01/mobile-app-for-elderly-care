@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList } from 'react-native';
+import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { Provider } from 'react-native-paper';
@@ -9,8 +9,10 @@ import { BloodSugarEntry } from 'types/BloodSugarEntry';
 import { formatDate, parseDate } from 'helpers/date/dateHelper';
 import { BarChart } from 'react-native-chart-kit';
 import { calculateChartWidth } from 'helpers/chart/chartHelper';
+import { MaterialIcons } from '@expo/vector-icons';
+import { BloodEntryProps } from 'types/BloodEntryProps';
 
-const BloodSugarScreen = () => {
+const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
   const [bloodSugar, setBloodSugar] = useState('');
   const [bloodSugarData, setBloodSugarData] = useState<BloodSugarEntry[]>([]);
   const [isBloodSugarValid, setIsBloodSugarValid] = useState(true);
@@ -96,7 +98,7 @@ const BloodSugarScreen = () => {
       datasets: [
         {
           data: filteredData.map(entry => entry.level),
-          color: (opacity = 1) => `rgba(133, 105, 241, ${opacity})`, // Example color
+          color: (opacity = 1) => `rgba(133, 105, 241, ${opacity})`,
         },
       ],
     };
@@ -125,6 +127,10 @@ const BloodSugarScreen = () => {
       />
     );
   }
+
+  const handleHelpPress = () => {
+    navigation.navigate('Help Screen')
+  };
 
   return (
     <Provider>
@@ -164,10 +170,18 @@ const BloodSugarScreen = () => {
             />
           </>
         )}
+        <TouchableOpacity onPress={handleHelpPress}
+        >
+          <View style={styles.questionMarkContainer}>
+            <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
+            <Text style={styles.helpText}>
+              {i18n.t('Help')}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </Provider>
   );
-
 };
 
 const styles = StyleSheet.create({
@@ -202,6 +216,20 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#6495ED',
+  },
+  questionMarkIcon: {
+    color: 'blue',
+    marginRight: 5,
+    marginBottom: 15,
+  },
+  questionMarkContainer: {
+    flexDirection: 'row',
+    marginTop: '20%',
+    marginLeft: 5,
+  },
+  helpText: {
+    fontSize: 20,
+    color: 'blue',
   },
 });
 

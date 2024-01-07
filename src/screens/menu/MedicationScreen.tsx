@@ -11,6 +11,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Image } from 'react-native';
 import i18n from 'common/i18n/i18n';
 import { validateNumericInput } from 'helpers/validationSchemas/numericInputValidation';
+import { ReminderScreensProps } from 'types/ReminderScreensProps';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -25,7 +26,7 @@ interface Reminder {
   status?: 'accepted' | 'dismissed' | 'none';
 }
 
-const MedicationScreen = () => {
+const MedicationScreen = ({ navigation }: ReminderScreensProps) => {
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [date, setDate] = useState(new Date());
   const [medicationName, setMedicationName] = useState('');
@@ -73,7 +74,7 @@ const MedicationScreen = () => {
     }
   }
 
-  const handleDosageChange = (text:string) => {
+  const handleDosageChange = (text: string) => {
     const { validText, isValid } = validateNumericInput(text);
     setMedicationDosage(validText);
     setIsInvalidInput(!isValid);
@@ -249,6 +250,10 @@ const MedicationScreen = () => {
     }
   });
 
+  const handleHelpPress = () => {
+    navigation.navigate('Help Screen')
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{i18n.t('EnterMedication')}</Text>
@@ -258,12 +263,12 @@ const MedicationScreen = () => {
         value={medicationName}
         placeholder="Enter medication name"
       />
-    <TextInput
-      style={styles.input}
-      onChangeText={handleDosageChange}
-      value={medicationDosage}
-      placeholder="Enter medication dosage"
-    />
+      <TextInput
+        style={styles.input}
+        onChangeText={handleDosageChange}
+        value={medicationDosage}
+        placeholder="Enter medication dosage"
+      />
       {isInvalidInput && <Text style={styles.warningText}>{i18n.t('EnterValidNumber')}</Text>}
       <View style={styles.iconScheduleContainer}>
         <Image
@@ -292,6 +297,15 @@ const MedicationScreen = () => {
         )}
         keyExtractor={item => item.id}
       />
+      <TouchableOpacity onPress={handleHelpPress}
+      >
+        <View style={styles.questionMarkContainer}>
+          <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
+          <Text style={styles.helpText}>
+            {i18n.t('Help')}
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -362,6 +376,20 @@ const styles = StyleSheet.create({
   closeIcon: {
     marginRight: 10,
     color: '#dc3545',
+  },
+  questionMarkIcon: {
+    color: 'blue',
+    marginRight: 5,
+    marginBottom: 15,
+  },
+  questionMarkContainer: {
+    flexDirection: 'row',
+    marginTop: '20%',
+    marginLeft: 5,
+  },
+  helpText: {
+    fontSize: 20,
+    color: 'blue',
   },
 });
 

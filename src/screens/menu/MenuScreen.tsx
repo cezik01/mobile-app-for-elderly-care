@@ -1,3 +1,5 @@
+import { MaterialIcons } from '@expo/vector-icons';
+import i18n from 'common/i18n/i18n';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { MenuItemProps } from 'types/MenuItemProps';
@@ -31,8 +33,9 @@ const MenuScreen = ({ navigation }: MenuScreenProps) => {
     navigation.navigate('Contacts Screen');
   };
 
-
-  const placeholderPress = () => console.warn('Pressed');
+  const handleHelpPress = () => {
+    navigation.navigate('Help Screen')
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -64,6 +67,15 @@ const MenuScreen = ({ navigation }: MenuScreenProps) => {
           onPress={handleContactsPress}
         />
       </View>
+      <TouchableOpacity onPress={handleHelpPress}
+      >
+        <View style={styles.questionMarkContainer}>
+          <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
+          <Text style={styles.helpText}>
+            {i18n.t('Help')}
+          </Text>
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -104,6 +116,19 @@ const styles = StyleSheet.create({
   },
   itemText: {
     textAlign: 'center',
+  },
+  questionMarkIcon: {
+    color: 'blue',
+    marginRight: 5,
+  },
+  questionMarkContainer: {
+    flexDirection: 'row',
+    marginTop: '20%',
+    marginLeft: 5,
+  },
+  helpText: {
+    fontSize: 20,
+    color: 'blue',
   },
 });
 

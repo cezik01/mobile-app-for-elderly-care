@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, FlatList, Alert, Linking } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, FlatList, Alert, Linking, TouchableOpacity } from 'react-native';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { ContactProps } from 'types/ContactProps';
 import { setNameHandler } from 'helpers/validationSchemas/alphabeticalInputValidation';
+import { ContactsScreenProps } from 'types/ContactsScreenProps';
+import { MaterialIcons } from '@expo/vector-icons';
+import i18n from 'common/i18n/i18n';
 
-const ContactsScreen = () => {
+const ContactsScreen = ({ navigation }: ContactsScreenProps) => {
   const [contacts, setContacts] = useState<ContactProps[]>([]);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -69,6 +72,10 @@ const ContactsScreen = () => {
     Linking.openURL(url).catch((err) => console.error('Arama başlatılamadı', err));
   };
 
+  const handleHelpPress = () => {
+    navigation.navigate('Help Screen')
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Contacts</Text>
@@ -102,6 +109,15 @@ const ContactsScreen = () => {
           </View>
         )}
       />
+      <TouchableOpacity onPress={handleHelpPress}
+      >
+        <View style={styles.questionMarkContainer}>
+          <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
+          <Text style={styles.helpText}>
+            {i18n.t('Help')}
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -137,7 +153,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     fontStyle: 'italic',
-  }
+  },
+  questionMarkIcon: {
+    color: 'blue',
+    marginRight: 5,
+    marginBottom: 15,
+  },
+  questionMarkContainer: {
+    flexDirection: 'row',
+    marginTop: '20%',
+    marginLeft: 5,
+  },
+  helpText: {
+    fontSize: 20,
+    color: 'blue',
+  },
 });
 
 export default ContactsScreen;

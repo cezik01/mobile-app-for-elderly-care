@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { Provider } from 'react-native-paper';
@@ -9,8 +9,10 @@ import BloodPressureEntry from 'types/BloodPressureEntry';
 import { BarChart } from 'react-native-chart-kit';
 import { formatDate, parseDate } from 'helpers/date/dateHelper';
 import { calculateChartWidth } from 'helpers/chart/chartHelper';
+import { MaterialIcons } from '@expo/vector-icons';
+import { BloodEntryProps } from 'types/BloodEntryProps';
 
-const BloodPressureScreen = () => {
+const BloodPressureScreen = ({ navigation }: BloodEntryProps) => {
   const [systolic, setSystolic] = useState('');
   const [diastolic, setDiastolic] = useState('');
   const [bloodPressureData, setBloodPressureData] = useState<BloodPressureEntry[]>([]);
@@ -139,6 +141,10 @@ const BloodPressureScreen = () => {
     </View>
   );
 
+  const handleHelpPress = () => {
+    navigation.navigate('Help Screen')
+  };
+
   return (
     <Provider>
       <View style={styles.container}>
@@ -190,6 +196,15 @@ const BloodPressureScreen = () => {
             />
           </>
         )}
+        <TouchableOpacity onPress={handleHelpPress}
+        >
+          <View style={styles.questionMarkContainer}>
+            <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
+            <Text style={styles.helpText}>
+              {i18n.t('Help')}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </Provider>
   );
@@ -227,6 +242,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
+  },
+  questionMarkIcon: {
+    color: 'blue',
+    marginRight: 5,
+    marginBottom: 15,
+  },
+  questionMarkContainer: {
+    flexDirection: 'row',
+    marginTop: '20%',
+    marginLeft: 5,
+  },
+  helpText: {
+    fontSize: 20,
+    color: 'blue',
   },
 });
 
