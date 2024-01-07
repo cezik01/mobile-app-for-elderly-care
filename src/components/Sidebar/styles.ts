@@ -1,8 +1,4 @@
-import { theme } from 'common/theme/theme';
 import { StyleSheet } from 'react-native';
-
-const { spacing, borderRadius, fontSizes, fontWeights } =
-    theme.components;
 
 export const styles = StyleSheet.create({
     sidebar: {
