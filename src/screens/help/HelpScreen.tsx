@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 90,
         fontStyle: 'italic',
+        width: '95%',
     },
     screen: {
         flex: 1,

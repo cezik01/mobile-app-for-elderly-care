@@ -52,6 +52,7 @@ export const styles = StyleSheet.create({
     questionMarkContainer: {
         flexDirection: 'row',
         marginTop: '20%',
+        marginLeft: 5,
     },
     helpText: {
         color: '#fff',
@@ -61,5 +62,6 @@ export const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         marginTop: 20,
+        marginLeft: 5,
     },
 });
