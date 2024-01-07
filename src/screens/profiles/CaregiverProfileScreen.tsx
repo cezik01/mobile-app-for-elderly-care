@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Alert,Modal,Text, TextInput, ScrollView } from 'react-native';
+import { View, StyleSheet, Button, Alert, Modal, Text, TextInput, ScrollView } from 'react-native';
 import ProfileHeader from '../../components/ProfileComponents/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
@@ -18,8 +18,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const [selectedPatientProfile, setSelectedPatientProfile] = useState<PatientData | null>(null);
   const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
 
-
-
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -29,7 +27,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       const userRef = ref(db, `users/${user.uid}`);
       onValue(userRef, (snapshot) => {
         if (snapshot.exists()) {
-          console.log("User data:", snapshot.val());  // Log user data
+          console.log("User data:", snapshot.val());
           setUserData(snapshot.val());
         }
       });
@@ -37,7 +35,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       const accessControlRef = ref(db, `accessControl/${user.uid}`);
       onValue(accessControlRef, (snapshot) => {
         if (snapshot.exists()) {
-          console.log("Access control data:", snapshot.val());  // Log access control data
+          console.log("Access control data:", snapshot.val());
           setPatients(Object.keys(snapshot.val()));
         }
       });
@@ -50,7 +48,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       const patientProfileRef = ref(db, `users/${selectedPatientId}`);
       onValue(patientProfileRef, (snapshot) => {
         if (snapshot.exists()) {
-          console.log("Selected patient profile:", snapshot.val());  // Log selected patient profile
+          console.log("Selected patient profile:", snapshot.val());
           setSelectedPatientProfile(snapshot.val());
         } else {
           setSelectedPatientProfile(null);
@@ -58,7 +56,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       });
     }
   }, [selectedPatientId]);
-  
+
 
   const onPatientSelect = (patientId: string) => {
     setSelectedPatientId(patientId);
@@ -80,7 +78,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     const auth = getAuth();
     const currentUser = auth.currentUser;
     if (patientId && currentUser) {
-      sendInvitation(currentUser.uid, patientId)  
+      sendInvitation(currentUser.uid, patientId)
         .then(() => {
           setInvitationSent(true);
           setModalVisible(false);
@@ -99,6 +97,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     <ScrollView style={styles.screenContainer}>
       <ProfileHeader
         name={userData.name || "Name"}
+        surname={userData.surname || "Surname"}
         city={userData.city || "City"}
         onEditPress={() => navigation.navigate('Profile Edit Screen')}
         onNotificationsPress={() => navigation.navigate('NotificationsScreen')}
@@ -126,7 +125,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         </View>
       </Modal>
       {invitationSent && <Text>Invitation sent successfully!</Text>}
-      
+
       {selectedPatientProfile ? (
         <View style={styles.patientProfile}>
           <Text>Name: {selectedPatientProfile.name}</Text>
@@ -136,37 +135,37 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         <Text>Select a patient to view details.</Text>
       )}
       {patients.length > 0 ? (
-  <View>
-    {patients.map((patientId) => (
-      <Button key={patientId} title={`Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} />
-    ))}
-  </View>
-) : (
-  <Text>No patients found.</Text>
-)}
-<Modal
-  animationType="slide"
-  transparent={true}
-  visible={isProfileModalVisible}
-  onRequestClose={() => setIsProfileModalVisible(false)}
->
-  <View style={styles.modalContent}>
-    {selectedPatientProfile ? (
-      <View>
-        <Text>Name: {selectedPatientProfile.name}</Text>
-        <Text>Age: {selectedPatientProfile.age}</Text>
-        <Text>Weight: {selectedPatientProfile.weight}</Text>
-        <Text>Height: {selectedPatientProfile.height}</Text>
-        
-      </View>
-    ) : (
-      <Text>Loading patient data...</Text>
-    )}
-    <Button title="Close" onPress={() => setIsProfileModalVisible(false)} />
-  </View>
-</Modal>
-      
-      </ScrollView>
+        <View>
+          {patients.map((patientId) => (
+            <Button key={patientId} title={`Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} />
+          ))}
+        </View>
+      ) : (
+        <Text>No patients found.</Text>
+      )}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isProfileModalVisible}
+        onRequestClose={() => setIsProfileModalVisible(false)}
+      >
+        <View style={styles.modalContent}>
+          {selectedPatientProfile ? (
+            <View>
+              <Text>Name: {selectedPatientProfile.name}</Text>
+              <Text>Age: {selectedPatientProfile.age}</Text>
+              <Text>Weight: {selectedPatientProfile.weight}</Text>
+              <Text>Height: {selectedPatientProfile.height}</Text>
+
+            </View>
+          ) : (
+            <Text>Loading patient data...</Text>
+          )}
+          <Button title="Close" onPress={() => setIsProfileModalVisible(false)} />
+        </View>
+      </Modal>
+
+    </ScrollView>
   );
 };
 
@@ -207,14 +206,14 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 10,
     backgroundColor: "#f0f0f0"
-  }, 
+  },
   modalContent: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
     padding: 20,
-    
+
   }
 });
 
