@@ -109,6 +109,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
     <View style={styles.screenContainer}>
       <ProfileHeader
         name={userData.name || "Name"}
+        surname={userData.surname || "Surname"}
         city={userData.city || "City"}
         onEditPress={handleEditPress}
         onNotificationsPress={handleNotificationsPress}

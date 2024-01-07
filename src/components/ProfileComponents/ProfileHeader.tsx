@@ -4,14 +4,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import i18n from 'common/i18n/i18n';
 import FontSizeContext from '../../context/FontSizeContext';
+import { ProfileHeaderProps } from 'types/ProfileHeaderProps';
 
-type ProfileHeaderProps = {
-  name: string;
-  city: string;
-  onEditPress: () => void;
-  onNotificationsPress: () => void;
-  onMenuPress: () => void;
-};
 type FontSizeKey = 'small' | 'medium' | 'large';
 const fontSizeMap: { [key in FontSizeKey]: number } = {
   small: 14,
@@ -19,12 +13,9 @@ const fontSizeMap: { [key in FontSizeKey]: number } = {
   large: 18,
 };
 
-
-const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPress }: ProfileHeaderProps) => {
-  const { fontSize } = useContext(FontSizeContext); 
-  const navigation = useNavigation();
+const ProfileHeader = ({ name, surname, city, onEditPress, onNotificationsPress, onMenuPress }: ProfileHeaderProps) => {
+  const { fontSize } = useContext(FontSizeContext);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  
 
   const pickImage = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -55,9 +46,9 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
           style={styles.profileImage}
         />
       </TouchableOpacity>
-      <Text style={[styles.name, { fontSize: fontSizeValue }]}>{name}</Text>
+      <Text style={[styles.name, { fontSize: fontSizeValue }]}>{name} {surname}</Text>
       <Text style={[styles.city, { fontSize: fontSizeValue - 4 }]}>{city}</Text>
-      
+
       <TouchableOpacity style={styles.editProfileButton} onPress={onEditPress}>
         <Text style={styles.editProfileText}>
           {i18n.t('EditProfile')}
@@ -73,8 +64,6 @@ const ProfileHeader = ({ name, city, onEditPress, onNotificationsPress, onMenuPr
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   headerContainer: {

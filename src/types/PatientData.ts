@@ -1,5 +1,6 @@
 export interface PatientData {
     name?: string;
+    surname?: string;
     city?: string;
     age?: number;
     weight?: number;
