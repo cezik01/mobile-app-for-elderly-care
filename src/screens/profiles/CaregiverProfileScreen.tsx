@@ -36,7 +36,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       const userRef = ref(db, `users/${user.uid}`);
       onValue(userRef, (snapshot) => {
         if (snapshot.exists()) {
-          console.log("User data:", snapshot.val());
           setUserData(snapshot.val());
         }
       });
@@ -86,10 +85,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       setIsProfileModalVisible(false);
     }
   };
-
-
-
-
 
   const onPatientSelect = (patientId: string) => {
     console.log(`Patient selected: ${patientId}`); // Debug için
