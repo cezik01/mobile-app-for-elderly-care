@@ -153,7 +153,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
           onMenuPress={handleMenuIconPress}
           onAppointmentsPress={handleAppointmentPress}
         />
-        {isSidebarVisible && <Sidebar setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} />}
+        {isSidebarVisible && <Sidebar setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='patient' />}
       </View>
     </View>
   );

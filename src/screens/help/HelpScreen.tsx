@@ -4,14 +4,22 @@ import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import i18n from 'common/i18n/i18n';
 import { pauseSpeech, speak, stopSpeech } from 'helpers/voice/SpeechHelper';
+import { HelpScreenProps } from 'types/screen/HelpScreenProps';
 
-const HelpScreen = () => {
+const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
+    const { role } = route.params;
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
 
     return (
         <View style={styles.screen}>
-            <Text style={styles.appInfo}>{i18n.t('AppInfo')}</Text>
+            {role === 'patient' && (
+                <Text style={styles.appInfo}>{i18n.t('AppInfoForPatient')}</Text>
+            )}
+            {role === 'caregiver' && (
+                <Text style={styles.appInfo}>{i18n.t('AppInfoForCaregiver')}</Text>
+            )}
+
             <TouchableOpacity
                 onPress={() => speak(setIsSpeaking, setIsPaused, isSpeaking, isPaused)}
                 style={styles.helpContainer}>
@@ -27,6 +35,7 @@ const HelpScreen = () => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     appInfo: {

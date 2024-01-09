@@ -5,10 +5,13 @@ import { styles } from './styles';
 import i18n from 'common/i18n/i18n';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export const Sidebar = ({ style, setSidebarVisible, navigation, handleLogout }: SidebarProps) => {
+export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogout }: SidebarProps) => {
 
     const handleHelpPress = () => {
-        navigation.navigate('Help Screen')
+        if (role === 'caregiver')
+            navigation.navigate('Help Screen', { role: 'caregiver' })
+        else if (role === 'patient')
+            navigation.navigate('Help Screen', { role: 'patient' })
     };
 
     return (

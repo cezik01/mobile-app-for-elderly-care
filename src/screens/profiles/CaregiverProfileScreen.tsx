@@ -181,8 +181,8 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       {patients.length > 0 && (
         <View>
           {patients.map((patientId) => (
-            <Button key={patientId} title={`Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} />
-          ))}
+            <Button key={patientId} title={`Click here for access Patient Datas with Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} color="blue" />
+            ))}
         </View>
       )}
 
@@ -199,7 +199,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         </View>
       </Modal>
       {isSidebarVisible && (
-        <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} />
+        <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='caregiver' />
       )}
     </ScrollView>
   );

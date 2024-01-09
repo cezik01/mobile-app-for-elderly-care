@@ -5,4 +5,5 @@ export interface SidebarProps {
     setSidebarVisible: (visible: boolean) => void;
     navigation: NavigationProp<any>;
     handleLogout: () => Promise<void>;
+    role: string;
 };
