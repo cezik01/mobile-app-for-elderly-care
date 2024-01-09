@@ -176,7 +176,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           <Text>{i18n.t('BloodType')}: {selectedPatientProfile.bloodType}</Text>
         </View>
       ) : (
-        <Text>{i18n.t('SelectPatient')}</Text>
+        <Text style={styles.selectPatient}>{i18n.t('SelectPatient')}</Text>
       )}
       {patients.length > 0 && (
         <View>
@@ -266,8 +266,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 50,
+  },
+  selectPatient: {
+    marginVertical: 20,
+    color: "blue",
+    fontSize: 16,
   }
-
 });
 
 export default CaregiverProfileScreen;
