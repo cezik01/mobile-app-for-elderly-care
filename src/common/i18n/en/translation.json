@@ -5,8 +5,10 @@
   "BloodPressureEntrance": "Click here for Blood Pressure Entrance",
   "BloodPressureStatus": "Current Blood Pressure Status",
   "BloodSugar": "Blood Sugar",
+  "BloodType": "Blood Type",
   "BloodSugarStatus": "Current Blood Sugar Status",
   "BloodSugarEntrance": "Click here for Blood Sugar Entrance",
+  "City": "City",
   "DateWithTime": "Date&Time",
   "DontHaveAccount": "Don't have an account? Click here to sign up",
   "Diastolic": "Diastolic",
@@ -30,8 +32,11 @@
   "MedicationName": "Medication Name",
   "Name": "Name",
   "Send": "Send",
+  "SelectPatient": "Select a patient to view details.",
   "SignUp": "Sign Up",
+  "Surname": "Surname",
   "Systolic": "Systolic",
+  "InvitationSuccess": "Invitation sent successfully!",
   "VoiceHelp": "Click here for get Application Help via Voice",
   "Weight": "Weight"
 }

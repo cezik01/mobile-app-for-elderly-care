@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, Alert, Modal, Text, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import ProfileHeader from '../../components/ProfileComponents/ProfileHeader';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, onValue, get} from 'firebase/database';
+import { getDatabase, ref, onValue, get } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
 import { sendInvitation } from 'helpers/firebaseInvitaitons/FirebaseInvitations';
 import { CaregiverData } from 'types/CaregiverData';
@@ -30,7 +30,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     const auth = getAuth();
     const user = auth.currentUser;
     const db = getDatabase();
-    
+
 
     if (user) {
       const userRef = ref(db, `users/${user.uid}`);
@@ -40,7 +40,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           setUserData(snapshot.val());
         }
       });
-      
+
       const accessControlRef = ref(db, `accessControl/${user.uid}`);
       onValue(accessControlRef, (snapshot) => {
         if (snapshot.exists()) {
@@ -67,43 +67,36 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   }, [selectedPatientId]);*/
 
   const fetchPatientData = async (toUserId: string) => {
-    // Veritabanı referansını al
     const db = getDatabase();
-    // Kullanıcının ID'si ile veritabanında doğru yola eriş
     const patientRef = ref(db, `users/${toUserId}`);
-  
+
     try {
-      // Veri çekme işlemini gerçekleştir
       const snapshot = await get(patientRef);
       if (snapshot.exists()) {
-        // Eğer veri varsa, snapshot'tan verileri al
         const patientData = snapshot.val();
-        // State'i güncelle
         setSelectedPatientProfile(patientData);
         setIsProfileModalVisible(true);
       } else {
-        // Eğer kullanıcıya ait veri yoksa, hata mesajı göster
         Alert.alert("Error", "Patient data not found.");
         setIsProfileModalVisible(false);
       }
     } catch (error) {
-      // Hata oluşursa, hata mesajını logla ve kullanıcıya bildir
       console.error("Error fetching data:", error);
       Alert.alert("Error", "An error occurred while fetching patient data.");
       setIsProfileModalVisible(false);
     }
   };
-  
-  
-  
-  
-  
+
+
+
+
+
   const onPatientSelect = (patientId: string) => {
     console.log(`Patient selected: ${patientId}`); // Debug için
     setSelectedPatientId(patientId);
     fetchPatientData(patientId);
   };
-  
+
   const handleEditPress = () => {
     navigation.navigate('Profile Edit Screen');
   };
@@ -170,43 +163,41 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           </View>
         </View>
       </Modal>
-      {invitationSent && <Text>Invitation sent successfully!</Text>}
+      {invitationSent && <Text>{i18n.t('InvitationSuccess')}</Text>}
 
       {selectedPatientProfile ? (
         <View style={styles.patientProfile}>
-          <Text>Name: {selectedPatientProfile.name}</Text>
-    <Text>Surname: {selectedPatientProfile.surname}</Text>
-    <Text>City: {selectedPatientProfile.city}</Text>
-    <Text>Age: {selectedPatientProfile.age}</Text>
-    <Text>Weight: {selectedPatientProfile.weight}</Text>
-    <Text>Height: {selectedPatientProfile.height}</Text>
-    <Text>Blood Type: {selectedPatientProfile.bloodType}</Text>
+          <Text>{i18n.t('Name')}: {selectedPatientProfile.name}</Text>
+          <Text>{i18n.t('Surname')}: {selectedPatientProfile.surname}</Text>
+          <Text>{i18n.t('City')}: {selectedPatientProfile.city}</Text>
+          <Text>{i18n.t('Age')}: {selectedPatientProfile.age}</Text>
+          <Text>{i18n.t('Weight')}: {selectedPatientProfile.weight}</Text>
+          <Text>{i18n.t('Height')}: {selectedPatientProfile.height}</Text>
+          <Text>{i18n.t('BloodType')}: {selectedPatientProfile.bloodType}</Text>
         </View>
       ) : (
-        <Text>Select a patient to view details.</Text>
+        <Text>{i18n.t('SelectPatient')}</Text>
       )}
       {patients.length > 0 && (
-    <View>
-      {patients.map((patientId) => (
-        // Her patient için bir buton oluşturun
-        <Button key={patientId} title={`Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} />
-      ))}
-    </View>
-  )}
-  
-  <Modal
-  animationType="slide"
-  transparent={true}
-  visible={isProfileModalVisible}
-  onRequestClose={() => setIsProfileModalVisible(false)}
->
-  <View style={styles.centeredView}>
-    <View style={styles.modalView}>
-      <Text>Hello World</Text>
-      <Button title="Close Modal" onPress={() => setIsProfileModalVisible(false)} />
-    </View>
-  </View>
-</Modal>
+        <View>
+          {patients.map((patientId) => (
+            <Button key={patientId} title={`Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} />
+          ))}
+        </View>
+      )}
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isProfileModalVisible}
+        onRequestClose={() => setIsProfileModalVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Button title="Close Modal" onPress={() => setIsProfileModalVisible(false)} />
+          </View>
+        </View>
+      </Modal>
       {isSidebarVisible && (
         <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} />
       )}
@@ -274,9 +265,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50, // İhtiyaca göre ayarlayın
+    marginTop: 50,
   }
-  
+
 });
 
 export default CaregiverProfileScreen;
