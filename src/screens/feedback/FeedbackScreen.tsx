@@ -2,9 +2,13 @@ import i18n from 'common/i18n/i18n';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { HelpScreenProps } from 'types/screen/HelpScreenProps';
+import { ref, getDatabase, push } from 'firebase/database';
 
 const FeedbackScreen: React.FC<HelpScreenProps> = () => {
     const [feedback, setFeedback] = useState('');
+
+    const db = getDatabase();
+    const feedbacksRef = ref(db, 'feedbacks');
 
     const analyzeSentiment = async (text: string) => {
         const url = 'https://sentiment-analysis9.p.rapidapi.com/sentiment';
@@ -31,6 +35,7 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
 
             if (result && result.length > 0 && result[0].predictions && result[0].predictions.length > 0) {
                 const sentiment = result[0].predictions[0].prediction;
+                console.log('sentiment', sentiment);
 
                 return sentiment;
 
@@ -49,14 +54,31 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
 
         if (sentimentAnalysis) {
             const { sentiment, probability } = sentimentAnalysis;
+            console.log(probability);
+
+
+            const db = getDatabase();
+            const feedbacksRef = ref(db, 'feedbacks');
 
             if (probability > 0.8) {
                 if (sentiment === 'Positive') {
+                    const newFeedbackRef = push(feedbacksRef, {
+                        text: feedback,
+                        sentiment: 'Positive',
+                    });
                     Alert.alert('Thank you!', 'We appreciate your positive feedback!');
                 } else if (sentiment === 'Negative') {
+                    const newFeedbackRef = push(feedbacksRef, {
+                        text: feedback,
+                        sentiment: 'Negative',
+                    });
                     Alert.alert('Thank you!', 'We will work on your concerns.');
                 }
             } else {
+                const newFeedbackRef = push(feedbacksRef, {
+                    text: feedback,
+                    sentiment: 'Neutral',
+                });
                 Alert.alert('Thank you!', 'Feedback received.');
             }
         } else {
@@ -67,7 +89,7 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
 
     return (
         <View style={styles.screen}>
-            <Text style={styles.title}>{i18n.t('FeedbackScreen')}</Text>
+            <Text style={styles.title}>{i18n.t('EnterFeedback')}</Text>
             <TextInput
                 style={styles.input}
                 multiline
