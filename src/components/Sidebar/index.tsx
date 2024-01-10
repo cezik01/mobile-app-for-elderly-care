@@ -14,6 +14,10 @@ export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogo
             navigation.navigate('Help Screen', { role: 'patient' })
     };
 
+    const handleFeedbackPress = () => {
+        navigation.navigate('Feedback Screen')
+    };
+
     return (
         <View style={[styles.sidebar, style]}>
             <TouchableOpacity onPress={() => setSidebarVisible(false)} style={styles.menuIconContainer}>
@@ -28,6 +32,9 @@ export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogo
                     </Text>
                 </View>
                 <Text style={styles.helpInfoText}>{i18n.t('HelpInfo')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleFeedbackPress}>
+                <Text style={styles.feedbackText}>{i18n.t('Feedback')}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
                 handleLogout().then(() => {

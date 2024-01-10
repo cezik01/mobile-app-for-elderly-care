@@ -14,6 +14,7 @@ import FontSettingsScreen from 'screens/features/FontSettingsScreen';
 import ContactsScreen from 'screens/features/ContactsScreen';
 import PasswordReset from 'screens/auth/login/PasswordReset';
 import HelpScreen from 'screens/help/HelpScreen';
+import FeedbackScreen from 'screens/feedback/FeedbackScreen';
 
 
 
@@ -82,6 +83,10 @@ const appRoutes = [
     name: 'Help Screen',
     component: HelpScreen,
   },
+  {
+    name: 'Feedback Screen',
+    component: FeedbackScreen,
+  }
 ];
 
 export default appRoutes;
