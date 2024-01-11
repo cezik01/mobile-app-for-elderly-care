@@ -7,7 +7,7 @@ import { pauseSpeech, speak, stopSpeech } from 'helpers/voice/SpeechHelper';
 import { HelpScreenProps } from 'types/screen/HelpScreenProps';
 
 const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
-    const { role } = route.params;
+    const { role } = route?.params;
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
 
