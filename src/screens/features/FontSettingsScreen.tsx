@@ -23,11 +23,11 @@ const FontSettingsScreen = () => {
       const fontSizeRef = ref(db, `users/${userId}/preferences/fontSize`);
 
       set(fontSizeRef, size)
-        .then(() => {
-          setFontSize(size);
-
-          Alert.alert("Profile Updated", "Your font size preference has been saved.");
-        })
+      .then(() => {
+        setFontSize(size); 
+        console.log("Font size set to context:", size);
+        Alert.alert("Profile Updated", "Your font size preference has been saved.");
+      })
         .catch((error) => {
           Alert.alert("Update Failed", "There was a problem updating your profile.");
           console.error("Error updating font size: ", error);
@@ -38,7 +38,6 @@ const FontSettingsScreen = () => {
   };
 
   console.log("Current font size in context:", fontSizeContext.fontSize);
-
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
