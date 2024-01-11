@@ -1,3 +1,6 @@
+import { AppointmentReminder } from "./AppointmentReminderProps";
+import {Reminder} from './MedicationReminderProps';
+
 export interface PatientData {
     name?: string;
     surname?: string;
@@ -6,4 +9,7 @@ export interface PatientData {
     weight?: number;
     height?: number;
     bloodType?: string;
+    appointmentReminders?: { [key: string]: AppointmentReminder };
+    medicationReminders?: {[key: string]: Reminder};
+    
 }

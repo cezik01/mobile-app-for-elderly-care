@@ -12,19 +12,12 @@ import { Image } from 'react-native';
 import i18n from 'common/i18n/i18n';
 import { validateNumericInput } from 'helpers/validationSchemas/numericInputValidation';
 import { ReminderScreensProps } from 'types/ReminderScreensProps';
+import {Reminder} from 'types/MedicationReminderProps';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-interface Reminder {
-  id: string;
-  name: string;
-  date: string;
-  dosage: string;
-  notificationId?: string;
-  status?: 'accepted' | 'dismissed' | 'none';
-}
 
 const MedicationScreen = ({ navigation }: ReminderScreensProps) => {
   const [reminders, setReminders] = useState<Reminder[]>([]);

@@ -1,5 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import i18n from 'common/i18n/i18n';
+import MenuComponent from 'components/ProfileComponents/MenuComponent';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { MenuItemProps } from 'types/MenuItemProps';
@@ -39,6 +40,7 @@ const MenuScreen = ({ navigation }: MenuScreenProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.contentContainer}>
       <View style={styles.menuGrid}>
         <MenuItem
           icon={require('../../../assets/menu/menuProfile.png')}
@@ -76,6 +78,12 @@ const MenuScreen = ({ navigation }: MenuScreenProps) => {
           </Text>
         </View>
       </TouchableOpacity>
+      </View>
+      <MenuComponent
+        onMedicationPress={() => navigation.navigate('Medication Screen')}
+        onMenuPress={() => navigation.navigate('Menu Screen')}
+        onAppointmentsPress={() => navigation.navigate('Appointment Screen')}
+      />
     </SafeAreaView>
   );
 };
@@ -123,12 +131,16 @@ const styles = StyleSheet.create({
   },
   questionMarkContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
     marginTop: '20%',
     marginLeft: 5,
   },
   helpText: {
     fontSize: 20,
     color: 'blue',
+  },
+  contentContainer: {
+    flex: 1, 
   },
 });
 

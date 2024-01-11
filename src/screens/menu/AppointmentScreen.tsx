@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { Notification } from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getDatabase, ref, push, onValue, remove, update, get, } from 'firebase/database';
@@ -12,7 +11,7 @@ import { Picker } from '@react-native-picker/picker';
 import { AppointmentReminder } from 'types/AppointmentReminderProps';
 import i18n from 'common/i18n/i18n';
 import { ReminderScreensProps } from 'types/ReminderScreensProps';
-import { HospitalProps } from 'types/HospitalProps';
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -85,7 +84,7 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
       alertBody,
       [
         { text: "Dismiss", onPress: () => reminderId && updateReminderStatus(reminderId, 'dismissed') },
-        { text: "View", onPress: () => {/* Navigate to a specific screen or take some action */ } }
+        { text: "View", onPress: () => { } }
       ],
       { cancelable: true }
     );
