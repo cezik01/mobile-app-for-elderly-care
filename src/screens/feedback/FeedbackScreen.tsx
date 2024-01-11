@@ -54,9 +54,6 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
 
         if (sentimentAnalysis) {
             const { sentiment, probability } = sentimentAnalysis;
-            console.log(probability);
-
-
             const db = getDatabase();
             const feedbacksRef = ref(db, 'feedbacks');
 
