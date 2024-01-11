@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDVB1TlnTW510qadUbjSoMw-d9V11PVPoI",
+  apiKey: "AIzaSyDVB1TlnTW510qadUbjSoMw-d9V11PVPoI",
   authDomain: "elderly-care-mobile-app.firebaseapp.com",
   databaseURL: "https://elderly-care-mobile-app-default-rtdb.firebaseio.com",
   projectId: "elderly-care-mobile-app",
