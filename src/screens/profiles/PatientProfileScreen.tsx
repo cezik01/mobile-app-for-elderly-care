@@ -21,7 +21,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   const { fontSize } = useContext(FontSizeContext);
   const [isSidebarVisible, setSidebarVisible] = useState(false);
 
-  console.log("Current font size in context:", fontSize);
+  console.log("Current font size in patient profile:", fontSize);
 
   type FontSizeKey = 'small' | 'medium' | 'large';
 

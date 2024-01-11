@@ -1,36 +1,38 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import { FontSizeProviderProps } from 'types/FontSizeProviderProps';
 
-const FontSizeContext = createContext<{ fontSize: string; setFontSize: (fontSize: string) => void }>({
+const FontSizeContext = createContext({
   fontSize: 'large',
-  setFontSize: () => { },
+  setFontSize: (fontSize: string) => { },
 });
 
 export const FontSizeProvider = ({ children }: FontSizeProviderProps) => {
-  const [fontSize, setFontSize] = useState('large');
+  const [fontSize, _setFontSize] = useState('large');
+
+  const setFontSize = (newFontSize: string) => {
+    console.log("Setting font size to:", newFontSize);
+    _setFontSize(newFontSize);
+  };
 
   useEffect(() => {
     const auth = getAuth();
     const db = getDatabase();
-    let unsubscribe: (() => void) | null = null;
 
     if (auth.currentUser) {
       const userId = auth.currentUser.uid;
       const fontSizeRef = ref(db, `users/${userId}/preferences/fontSize`);
 
-      unsubscribe = onValue(fontSizeRef, (snapshot) => {
+      const unsubscribe = onValue(fontSizeRef, (snapshot) => {
         if (snapshot.exists()) {
           const newFontSize = snapshot.val();
           setFontSize(newFontSize);
         }
       });
-    }
 
-    return () => {
-      if (unsubscribe) unsubscribe();
-    };
+      return () => unsubscribe();
+    }
   }, []);
 
   console.log('FontSizeProvider values:', { fontSize, setFontSize });

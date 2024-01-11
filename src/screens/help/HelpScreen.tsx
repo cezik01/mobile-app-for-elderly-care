@@ -7,7 +7,7 @@ import { pauseSpeech, speak, stopSpeech } from 'helpers/voice/SpeechHelper';
 import { HelpScreenProps } from 'types/screen/HelpScreenProps';
 
 const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
-    const { role } = route.params;
+    const { role } = route?.params;
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
 
@@ -21,7 +21,7 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
             )}
 
             <TouchableOpacity
-                onPress={() => speak(setIsSpeaking, setIsPaused, isSpeaking, isPaused)}
+                onPress={() => speak(setIsSpeaking, setIsPaused, isSpeaking, isPaused, role)}
                 style={styles.helpContainer}>
                 <Text style={styles.helpText}>
                     {i18n.t('VoiceHelp')}

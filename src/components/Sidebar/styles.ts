@@ -60,4 +60,22 @@ export const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 5,
     },
+    feedbackText: {
+        color: '#fff',
+        fontSize: 20,
+    },
+    feedbackContainer: {
+        flexDirection: 'row',
+        marginTop: 100,
+    },
+    feedbackIcon: {
+        color: '#fff',
+        marginRight: 5,
+    },
+    feedbackInfoText: {
+        marginTop: 20,
+        marginLeft: 5,
+        color: '#fff',
+        fontSize: 20,
+    },
 });
