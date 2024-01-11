@@ -21,7 +21,7 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
             )}
 
             <TouchableOpacity
-                onPress={() => speak(setIsSpeaking, setIsPaused, isSpeaking, isPaused)}
+                onPress={() => speak(setIsSpeaking, setIsPaused, isSpeaking, isPaused, role)}
                 style={styles.helpContainer}>
                 <Text style={styles.helpText}>
                     {i18n.t('VoiceHelp')}
