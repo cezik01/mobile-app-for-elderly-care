@@ -25,7 +25,7 @@ const FontSettingsScreen = () => {
       set(fontSizeRef, size)
       .then(() => {
         setFontSize(size); 
-        console.log("Font size set to context:", size);
+        console.log("Font size set in settings screen:", size);
         Alert.alert("Profile Updated", "Your font size preference has been saved.");
       })
         .catch((error) => {
@@ -37,7 +37,7 @@ const FontSettingsScreen = () => {
     }
   };
 
-  console.log("Current font size in context:", fontSizeContext.fontSize);
+  console.log("Current font size in settings screen:", fontSizeContext.fontSize);
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
