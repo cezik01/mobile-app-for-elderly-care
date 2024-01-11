@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { PersonalInfoItemProps } from 'types/PersonalInfoItemProps';
 import { PersonalInfoProps } from 'types/PersonalInfoProps';
 
-const PersonalInfo = ({ age, weight, height, bloodType, fontSizeValue }: PersonalInfoProps & { fontSizeValue: number }) => {
+const PersonalInfo = ({ age, weight, height, bloodType, fontSizeValue }: PersonalInfoProps) => {
   console.log("Font size value in PersonalInfo:", fontSizeValue);
   return (
     <View style={styles.container}>
