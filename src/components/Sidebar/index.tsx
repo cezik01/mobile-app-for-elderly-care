@@ -34,7 +34,11 @@ export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogo
                 <Text style={styles.helpInfoText}>{i18n.t('HelpInfo')}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleFeedbackPress}>
-                <Text style={styles.feedbackText}>{i18n.t('Feedback')}</Text>
+                <View style={styles.feedbackContainer}>
+                    <MaterialIcons name='feedback' style={styles.feedbackIcon} size={25} />
+                    <Text style={styles.feedbackText}>{i18n.t('Feedback')}</Text>
+                </View>
+                <Text style={styles.feedbackInfoText}>{i18n.t('FeedbackInfo')}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
                 handleLogout().then(() => {
