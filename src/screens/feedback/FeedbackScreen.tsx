@@ -95,7 +95,7 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
                 value={feedback}
                 onChangeText={setFeedback}
             />
-            <Button onPress={handleFeedbackSubmit}>{i18n.t('SubmitFeedback')}</Button>
+            <Button onPress={handleFeedbackSubmit} labelStyle={styles.buttonText}>{i18n.t('SubmitFeedback')}</Button>
 
         </View>
     );
@@ -107,6 +107,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+    },
+    buttonText: {
+        fontSize: 16,
     },
     title: {
         fontSize: 20,

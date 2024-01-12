@@ -137,8 +137,8 @@ const BloodPressureScreen = ({ navigation }: BloodEntryProps) => {
       <Text>{i18n.t('DateWithTime')}: {formatDate(item.date)}</Text>
       <Text>{i18n.t('Systolic')}: {item.systolic}</Text>
       <Text>{i18n.t('Diastolic')}: {item.diastolic}</Text>
-      <Button onPress={() => handleEdit(item)}>{i18n.t('Edit')}</Button>
-      <Button onPress={() => handleDelete(item.date)} textColor='red'>{i18n.t('Delete')}</Button>
+      <Button onPress={() => handleEdit(item)} labelStyle={styles.buttonText}>{i18n.t('Edit')}</Button>
+      <Button onPress={() => handleDelete(item.date)} labelStyle={styles.buttonText} textColor='red'>{i18n.t('Delete')}</Button>
     </View>
   );
 
@@ -175,7 +175,7 @@ const BloodPressureScreen = ({ navigation }: BloodEntryProps) => {
         {!isDiastolicValid && (
           <Text style={styles.warningText}>{i18n.t('EnterValidNumber')}</Text>
         )}
-        <Button onPress={handleSubmit}>{i18n.t('Submit')}</Button>
+        <Button onPress={handleSubmit} labelStyle={styles.buttonText}>{i18n.t('Submit')}</Button>
         {bloodPressureData.length > 0 && (
           <>
             {bloodPressureData.length == 7 && (
@@ -216,6 +216,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingTop: 10,
+  },
+  buttonText: {
+    fontSize: 16,
   },
   input: {
     width: 300,

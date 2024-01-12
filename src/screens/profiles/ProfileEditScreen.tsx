@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Alert, Text, StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, Provider } from 'react-native-paper';
+import i18n from 'common/i18n/i18n';
 
 const ProfileEditScreen = () => {
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'];
@@ -150,7 +152,7 @@ const ProfileEditScreen = () => {
           </Menu>
         </View>
 
-        <Button title="Save" onPress={handleSave} />
+        <Button onPress={handleSave} labelStyle={styles.buttonText}>{i18n.t('Save')}</Button>
       </View>
     </Provider>
   );
@@ -165,6 +167,9 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 20,
+  },
+  buttonText:{
+    fontSize: 16,
   },
   input: {
     borderWidth: 1,

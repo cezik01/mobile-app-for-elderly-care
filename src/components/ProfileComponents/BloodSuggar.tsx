@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, TextInput, Alert, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { Provider } from 'react-native-paper';
@@ -11,6 +11,7 @@ import { BarChart } from 'react-native-chart-kit';
 import { calculateChartWidth } from 'helpers/chart/chartHelper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { BloodEntryProps } from 'types/BloodEntryProps';
+import { Button } from 'react-native-paper';
 
 const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
   const [bloodSugar, setBloodSugar] = useState('');
@@ -78,8 +79,8 @@ const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
     <View style={styles.listItem}>
       <Text>{i18n.t('DateWithTime')}: {formatDate(item.date)}</Text>
       <Text>{i18n.t('BloodSugar')}: {item.level}</Text>
-      <Button title='Edit' onPress={() => handleEdit(item)} />
-      <Button title='Delete' onPress={() => handleDelete(item.date)} color='red' />
+      <Button onPress={() => handleEdit(item)} labelStyle={styles.buttonText}>{i18n.t('Edit')}</Button>
+      <Button onPress={() => handleDelete(item.date)} textColor='red' labelStyle={styles.buttonText}>{i18n.t('Delete')}</Button>
     </View>
   );
 
@@ -148,7 +149,7 @@ const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
         {!isBloodSugarValid && (
           <Text style={styles.warningText}>{i18n.t('EnterValidNumber')}</Text>
         )}
-        <Button title='Submit' onPress={handleSubmit} />
+        <Button onPress={handleSubmit} labelStyle={styles.buttonText}>{i18n.t('Submit')}</Button>
         {bloodSugarData.length > 0 && (
           <>
             {bloodSugarData.length == 7 && (
@@ -185,6 +186,9 @@ const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
 };
 
 const styles = StyleSheet.create({
+  buttonText: {
+    fontSize: 16,
+  },
   chartTitle: {
     fontSize: 20,
     fontWeight: 'bold',

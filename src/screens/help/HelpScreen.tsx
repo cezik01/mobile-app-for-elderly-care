@@ -30,8 +30,8 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
                 <MaterialIcons name="mic" size={35} color="blue" style={styles.mic} />
             </TouchableOpacity>
             <View style={styles.voiceButtons}>
-                <Button onPress={() => pauseSpeech(isSpeaking, isPaused, setIsPaused)}>{i18n.t('Stop')}</Button>
-                <Button onPress={() => stopSpeech(setIsSpeaking, setIsPaused)}>{i18n.t('Pause')}</Button>
+                <Button onPress={() => pauseSpeech(isSpeaking, isPaused, setIsPaused)} labelStyle={styles.buttonText}>{i18n.t('Stop')}</Button>
+                <Button onPress={() => stopSpeech(setIsSpeaking, setIsPaused)} labelStyle={styles.buttonText}>{i18n.t('Pause')}</Button>
             </View>
         </View>
     );
@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
         marginBottom: 90,
         fontStyle: 'italic',
         width: '95%',
+    },
+    buttonText: {
+        fontSize: 16,
     },
     screen: {
         flex: 1,
