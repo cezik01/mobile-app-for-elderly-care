@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import i18n from 'common/i18n/i18n';
@@ -29,8 +30,8 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
                 <MaterialIcons name="mic" size={35} color="blue" style={styles.mic} />
             </TouchableOpacity>
             <View style={styles.voiceButtons}>
-                <Button title="Duraklat" onPress={() => pauseSpeech(isSpeaking, isPaused, setIsPaused)} />
-                <Button title="Dur" onPress={() => stopSpeech(setIsSpeaking, setIsPaused)} />
+                <Button onPress={() => pauseSpeech(isSpeaking, isPaused, setIsPaused)}>{i18n.t('Stop')}</Button>
+                <Button onPress={() => stopSpeech(setIsSpeaking, setIsPaused)}>{i18n.t('Pause')}</Button>
             </View>
         </View>
     );

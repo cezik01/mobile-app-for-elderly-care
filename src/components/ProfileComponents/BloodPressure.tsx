@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, Text, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import { View, TextInput, Alert, Text, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import { getAuth } from 'firebase/auth';
+import { Button } from 'react-native-paper';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { Provider } from 'react-native-paper';
 import { validateNumericInput } from 'helpers/validationSchemas/numericInputValidation';
@@ -136,8 +137,8 @@ const BloodPressureScreen = ({ navigation }: BloodEntryProps) => {
       <Text>{i18n.t('DateWithTime')}: {formatDate(item.date)}</Text>
       <Text>{i18n.t('Systolic')}: {item.systolic}</Text>
       <Text>{i18n.t('Diastolic')}: {item.diastolic}</Text>
-      <Button title='Edit' onPress={() => handleEdit(item)} />
-      <Button title='Delete' onPress={() => handleDelete(item.date)} color='red' />
+      <Button onPress={() => handleEdit(item)}>{i18n.t('Edit')}</Button>
+      <Button onPress={() => handleDelete(item.date)} textColor='red'>{i18n.t('Delete')}</Button>
     </View>
   );
 
@@ -174,7 +175,7 @@ const BloodPressureScreen = ({ navigation }: BloodEntryProps) => {
         {!isDiastolicValid && (
           <Text style={styles.warningText}>{i18n.t('EnterValidNumber')}</Text>
         )}
-        <Button title='Submit' onPress={handleSubmit} />
+        <Button onPress={handleSubmit}>{i18n.t('Submit')}</Button>
         {bloodPressureData.length > 0 && (
           <>
             {bloodPressureData.length == 7 && (

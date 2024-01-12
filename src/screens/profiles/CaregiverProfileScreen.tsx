@@ -35,9 +35,9 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const db = getDatabase(app);
 
   useEffect(() => {
-    
+
     const user = auth.currentUser;
-    
+
 
     if (user) {
       const userRef = ref(db, `users/${user.uid}`);
@@ -52,7 +52,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       const accessControlRef = ref(db, `accessControl/${user.uid}`);
       onValue(accessControlRef, (snapshot) => {
         if (snapshot.exists()) {
-          console.log("Access control data:", snapshot.val());
           setPatients(Object.keys(snapshot.val()));
         }
       });
@@ -65,7 +64,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     }
   };
 
-  const scheduleReminderNotification = async (reminder:AppointmentReminder) => {
+  const scheduleReminderNotification = async (reminder: AppointmentReminder) => {
     const reminderTime = new Date(reminder.date);
     const notificationTime = new Date(reminderTime);
     notificationTime.setHours(notificationTime.getHours() - 1); // Örneğin, randevudan 1 saat önce
@@ -105,21 +104,21 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const fetchPatientData = async (toUserId: string) => {
     const db = getDatabase();
     const patientRef = ref(db, `users/${toUserId}`);
-  
+
     try {
       const patientSnapshot = await get(patientRef);
       if (patientSnapshot.exists()) {
         const patientData = patientSnapshot.val();
         console.log(patientData)
-        
+
         const patientProfileWithReminders = {
           ...patientData,
           appointmentReminders: patientData.appointmentReminders || {},
           medicationReminders: patientData.medicationReminders || {}
-          
+
 
         };
-  
+
         setSelectedPatientProfile(patientProfileWithReminders);
         setIsProfileModalVisible(true);
       } else {
@@ -132,17 +131,16 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       setIsProfileModalVisible(false);
     }
   };
-  
+
   const filterUpcomingAppointments = (appointments: { [key: string]: AppointmentReminder }) => {
     const today = new Date();
     return Object.entries(appointments)
       .filter(([key, reminder]) => new Date(reminder.date) >= today)
       .reduce((acc, [key, reminder]) => ({ ...acc, [key]: reminder }), {});
   };
-  
-  
+
+
   const onPatientSelect = (patientId: string) => {
-    console.log(`Patient selected: ${patientId}`); 
     setSelectedPatientId(patientId);
     fetchPatientData(patientId);
   };
@@ -150,6 +148,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const handleEditPress = () => {
     navigation.navigate('Profile Edit Screen');
   };
+
   const handleNotificationsPress = () => {
     console.log('Notifications button pressed');
   };
@@ -225,39 +224,39 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           <Text>{i18n.t('Weight')}: {selectedPatientProfile.weight}</Text>
           <Text>{i18n.t('Height')}: {selectedPatientProfile.height}</Text>
           <Text>{i18n.t('BloodType')}: {selectedPatientProfile.bloodType}</Text>
-          
+
 
           {selectedPatientProfile.appointmentReminders && (
-      <View>
-        <Text style={styles.sectionTitle}>{i18n.t('Appointment Reminders')}:</Text>
-        {Object.entries(selectedPatientProfile.appointmentReminders).map(([key, reminder]) => (
-          <View key={key} style={styles.reminderItem}>
-            <Text>{i18n.t('Hospital Name')}: {reminder.hospitalName}</Text>
-            <Text>{i18n.t('Department')}: {reminder.department}</Text>
-            <Text>{i18n.t('Doctor Name')}: {reminder.doctorName}</Text>
-            <Text>{i18n.t('Date')}: {reminder.date}</Text>
-            <Text>{i18n.t('Hour')}: {reminder.hour}</Text>
-          </View>
-        ))}
-      </View>
-    )}
-    
-         {selectedPatientProfile.medicationReminders && (
-          <View>
-        
-        <Text style={styles.sectionTitle}>{i18n.t('Medication Reminders')}:</Text>
-        {Object.entries(selectedPatientProfile.medicationReminders).map(([key, reminder]) => (
-          
-          <View key={key} style={styles.reminderItem}>
-            <Text>{i18n.t('Medication Name')}: {reminder.name}</Text>
-            <Text>{i18n.t('Dosage')}: {reminder.dosage}</Text>
-            <Text>{i18n.t('Date')}: {reminder.date}</Text>
-            <Text>{i18n.t('Status')}: {reminder.status}</Text>
-          </View>
-        ))}
-      </View>
-    )}
-     </View>
+            <View>
+              <Text style={styles.sectionTitle}>{i18n.t('Appointment Reminders')}:</Text>
+              {Object.entries(selectedPatientProfile.appointmentReminders).map(([key, reminder]) => (
+                <View key={key} style={styles.reminderItem}>
+                  <Text>{i18n.t('Hospital Name')}: {reminder.hospitalName}</Text>
+                  <Text>{i18n.t('Department')}: {reminder.department}</Text>
+                  <Text>{i18n.t('Doctor Name')}: {reminder.doctorName}</Text>
+                  <Text>{i18n.t('Date')}: {reminder.date}</Text>
+                  <Text>{i18n.t('Hour')}: {reminder.hour}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+
+          {selectedPatientProfile.medicationReminders && (
+            <View>
+
+              <Text style={styles.sectionTitle}>{i18n.t('Medication Reminders')}:</Text>
+              {Object.entries(selectedPatientProfile.medicationReminders).map(([key, reminder]) => (
+
+                <View key={key} style={styles.reminderItem}>
+                  <Text>{i18n.t('Medication Name')}: {reminder.name}</Text>
+                  <Text>{i18n.t('Dosage')}: {reminder.dosage}</Text>
+                  <Text>{i18n.t('Date')}: {reminder.date}</Text>
+                  <Text>{i18n.t('Status')}: {reminder.status}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
       ) : (
         <Text style={styles.selectPatient}>{i18n.t('SelectPatient')}</Text>
       )}
@@ -265,11 +264,11 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         <View>
           {patients.map((patientId) => (
             <Button key={patientId} title={`Click here for access Patient Datas with Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} color="blue" />
-            ))}
+          ))}
         </View>
       )}
 
-      
+
       {isSidebarVisible && (
         <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='caregiver' />
       )}
@@ -354,7 +353,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     color: "blue",
     fontSize: 16,
-  },sectionTitle: {
+  }, sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 10,
@@ -364,7 +363,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#f0f0f0',
     borderRadius: 5,
-  }, 
+  },
   reminderText: {
     fontSize: 16,
     marginBottom: 5,

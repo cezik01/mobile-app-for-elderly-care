@@ -39,7 +39,6 @@ const NotificationsScreen = () => {
   const handleAcceptInvitation = async (invitationId: string, fromUserId: string, toUserId: string) => {
     const db = getDatabase();
     await update(ref(db, `invitations/${invitationId}`), { status: 'accepted' });
-    console.log(`Accepting invitation: ${invitationId}, from: ${fromUserId}, to: ${toUserId}`);
     
     const accessControlRef = ref(db, `accessControl/${fromUserId}/${toUserId}`);
     await update(accessControlRef, { hasAccess: true });

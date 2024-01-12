@@ -181,7 +181,6 @@ const MedicationScreen = ({ navigation }: ReminderScreensProps) => {
     let notificationId = '';
     try {
       notificationId = await scheduleNotification(medicationName, medicationDosage, date, reminderId);
-      console.log(`Notification scheduled with ID: ${notificationId}`);
     } catch (error) {
       console.error("Failed to schedule notification", error);
     }

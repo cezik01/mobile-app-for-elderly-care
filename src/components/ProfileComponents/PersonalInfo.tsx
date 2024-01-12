@@ -1,10 +1,10 @@
+import { horizontalScale, verticalScale } from 'helpers/dimension/scale';
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { PersonalInfoItemProps } from 'types/PersonalInfoItemProps';
 import { PersonalInfoProps } from 'types/PersonalInfoProps';
 
 const PersonalInfo = ({ age, weight, height, bloodType, fontSizeValue }: PersonalInfoProps) => {
-  console.log("Font size value in PersonalInfo:", fontSizeValue);
   return (
     <View style={styles.container}>
       <PersonalInfoItem icon={require('../../../assets/profiles/Age.png')} label={`Age: ${age.toString()}`} fontSizeValue={fontSizeValue} />
@@ -31,13 +31,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
     marginTop: 10
-
   },
   infoItem: {
     alignItems: 'center',
-    marginHorizontal: 8,
+    width:horizontalScale(160),
   },
   icon: {
     width: 30,
@@ -47,14 +45,12 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: 'center',
     paddingVertical: 10
-
   },
   divider: {
-    height: 10,
+    height: verticalScale(30),
     width: 1,
     backgroundColor: '#000',
     marginHorizontal: 9,
-
   },
 });
 

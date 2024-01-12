@@ -12,7 +12,6 @@ export const FontSizeProvider = ({ children }: FontSizeProviderProps) => {
   const [fontSize, _setFontSize] = useState('large');
 
   const setFontSize = (newFontSize: string) => {
-    console.log("Setting font size to:", newFontSize);
     _setFontSize(newFontSize);
   };
 
@@ -34,8 +33,6 @@ export const FontSizeProvider = ({ children }: FontSizeProviderProps) => {
       return () => unsubscribe();
     }
   }, []);
-
-  console.log('FontSizeProvider values:', { fontSize, setFontSize });
 
   return (
     <FontSizeContext.Provider value={{ fontSize, setFontSize }}>

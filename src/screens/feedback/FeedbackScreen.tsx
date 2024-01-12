@@ -1,7 +1,8 @@
 import i18n from 'common/i18n/i18n';
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import { HelpScreenProps } from 'types/screen/HelpScreenProps';
+import { Button } from 'react-native-paper';
 import { ref, getDatabase, push } from 'firebase/database';
 
 const FeedbackScreen: React.FC<HelpScreenProps> = () => {
@@ -94,10 +95,8 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
                 value={feedback}
                 onChangeText={setFeedback}
             />
-            <Button
-                title="Submit Feedback"
-                onPress={handleFeedbackSubmit}
-            />
+            <Button onPress={handleFeedbackSubmit}>{i18n.t('SubmitFeedback')}</Button>
+
         </View>
     );
 };

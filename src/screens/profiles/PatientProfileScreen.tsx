@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, TouchableOpacity, ScrollView } from 'react-native';
 import ProfileHeader from 'components/ProfileComponents/ProfileHeader';
 import PersonalInfo from 'components/ProfileComponents/PersonalInfo';
 import MenuComponent from 'components/ProfileComponents/MenuComponent';
@@ -13,6 +13,7 @@ import { determineAverageBloodSugarStatus } from 'helpers/bloodSugar';
 import FontSizeContext from '../../context/FontSizeContext';
 import { handleLogout } from 'helpers/firebaseAuth/AuthService';
 import { Sidebar } from 'components/Sidebar';
+import { heightPercentageToDP } from 'helpers/dimension';
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<PatientData>({});
@@ -117,44 +118,46 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   return (
     <View style={styles.screenContainer}>
       {isSidebarVisible && <Backdrop />}
-      <View style={[styles.screenContainer, isSidebarVisible ? styles.dimmedBackground : null]}>
+      <ScrollView scrollEnabled showsVerticalScrollIndicator style={styles.scrollView}>
+        <View style={[styles.screenContainer, isSidebarVisible ? styles.dimmedBackground : null]}>
+          <ProfileHeader
+            name={userData.name || ""}
+            surname={userData.surname || ""}
+            city={userData.city || ""}
+            onEditPress={handleEditPress}
+            onNotificationsPress={handleNotificationsPress}
+            onMenuPress={handleMenuPress}
+          />
+          <PersonalInfo
+            age={userData.age || 0}
+            weight={userData.weight || 0}
+            height={userData.height || 0}
+            bloodType={userData.bloodType || "N/A"}
+            fontSizeValue={fontSizeValue}
+          />
+          <View style={styles.bloodSugarPressure}>
+            <Pressable onPress={handleBloodPressurePress}>
+              <Image source={require('../../../assets/profiles/Graph.png')} style={styles.bloodPressureSugarImage} />
+              <Text style={[styles.bloodPressureSugarTexts, { fontSize: fontSizeValue }]}>{i18n.t('BloodPressureEntrance')}</Text>
+              <Text style={[styles.bloodStatus, { fontSize: fontSizeValue }]}>
+                {i18n.t('BloodPressureStatus')}: {bloodPressureStatus}
+              </Text>
+            </Pressable>
+            <Pressable onPress={handleBloodSugarPress} style={styles.bloodSugar}>
+              <Image source={require('../../../assets/profiles/Group.png')} style={styles.bloodPressureSugarImage} />
+              <Text style={[styles.bloodPressureSugarTexts, { fontSize: fontSizeValue }]}>{i18n.t('BloodSugarEntrance')}</Text>
+              <Text style={[styles.bloodStatus, { fontSize: fontSizeValue }]}>{i18n.t('BloodSugarStatus')}: {bloodSugarStatus}</Text>
+            </Pressable>
+          </View>
 
-        <ProfileHeader
-          name={userData.name || ""}
-          surname={userData.surname || ""}
-          city={userData.city || ""}
-          onEditPress={handleEditPress}
-          onNotificationsPress={handleNotificationsPress}
-          onMenuPress={handleMenuPress}
-        />
-        <PersonalInfo
-          age={userData.age || 0}
-          weight={userData.weight || 0}
-          height={userData.height || 0}
-          bloodType={userData.bloodType || "N/A"}
-          fontSizeValue={fontSizeValue}
-        />
-        <View style={styles.bloodSugarPressure}>
-          <Pressable onPress={handleBloodPressurePress}>
-            <Image source={require('../../../assets/profiles/Graph.png')} style={styles.bloodPressureSugarImage} />
-            <Text style={[styles.bloodPressureSugarTexts, { fontSize: fontSizeValue }]}>{i18n.t('BloodPressureEntrance')}</Text>
-            <Text style={[styles.bloodStatus, { fontSize: fontSizeValue }]}>
-              {i18n.t('BloodPressureStatus')}: {bloodPressureStatus}
-            </Text>
-          </Pressable>
-          <Pressable onPress={handleBloodSugarPress} style={styles.bloodSugar}>
-            <Image source={require('../../../assets/profiles/Group.png')} style={styles.bloodPressureSugarImage} />
-            <Text style={[styles.bloodPressureSugarTexts, { fontSize: fontSizeValue }]}>{i18n.t('BloodSugarEntrance')}</Text>
-            <Text style={[styles.bloodStatus, { fontSize: fontSizeValue }]}>{i18n.t('BloodSugarStatus')}: {bloodSugarStatus}</Text>
-          </Pressable>
+          {isSidebarVisible && <Sidebar setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='patient' />}
         </View>
-        <MenuComponent
-          onMedicationPress={handleMedicationPress}
-          onMenuPress={handleMenuIconPress}
-          onAppointmentsPress={handleAppointmentPress}
-        />
-        {isSidebarVisible && <Sidebar setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='patient' />}
-      </View>
+      </ScrollView>
+      <MenuComponent
+        onMedicationPress={handleMedicationPress}
+        onMenuPress={handleMenuIconPress}
+        onAppointmentsPress={handleAppointmentPress}
+      />
     </View>
   );
 };
@@ -168,6 +171,10 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#fff',
+    zIndex: 1,
+  },
+  scrollView: {
+    maxHeight: heightPercentageToDP('80'),
     zIndex: 1,
   },
   bloodPressureSugarImage: {
