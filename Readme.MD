@@ -1,5 +1,3 @@
-# Speedy Bunny
-
 React-Native Expo Mobile App
 
 ## Yükleme
