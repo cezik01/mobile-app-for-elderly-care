@@ -6,6 +6,7 @@ import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, Provider } from 'react-native-paper';
 import i18n from 'common/i18n/i18n';
+import styles from './styles';
 
 const ProfileEditScreen = () => {
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'];
@@ -67,7 +68,7 @@ const ProfileEditScreen = () => {
     <Provider>
       <View style={styles.container}>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Name:</Text>
+          <Text style={styles.label}>{i18n.t('Name')}:</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your name"
@@ -77,7 +78,7 @@ const ProfileEditScreen = () => {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Surname:</Text>
+          <Text style={styles.label}>{i18n.t('Surname')}:</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your surname"
@@ -87,7 +88,7 @@ const ProfileEditScreen = () => {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>City:</Text>
+          <Text style={styles.label}>{i18n.t('City')}:</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your city"
@@ -97,7 +98,7 @@ const ProfileEditScreen = () => {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Age:</Text>
+          <Text style={styles.label}>{i18n.t('Age')}:</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your age"
@@ -108,7 +109,7 @@ const ProfileEditScreen = () => {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Height:</Text>
+          <Text style={styles.label}>{i18n.t('Height')}:</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your height in cm"
@@ -119,7 +120,7 @@ const ProfileEditScreen = () => {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Weight:</Text>
+          <Text style={styles.label}>{i18n.t('Weight')}:</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your weight in kg"
@@ -130,7 +131,7 @@ const ProfileEditScreen = () => {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Blood Type:</Text>
+          <Text style={styles.label}>{i18n.t('BloodType')}:</Text>
           <Menu
             visible={visible}
             onDismiss={closeMenu}
@@ -157,38 +158,5 @@ const ProfileEditScreen = () => {
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  buttonText:{
-    fontSize: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'grey',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  label: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  dropdownAnchor: {
-    borderWidth: 1,
-    borderColor: 'grey',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-});
 
 export default ProfileEditScreen;

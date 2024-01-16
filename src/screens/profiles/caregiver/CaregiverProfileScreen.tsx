@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, Alert, Modal, Text, TextInput, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import ProfileHeader from '../../components/ProfileComponents/ProfileHeader';
+import ProfileHeader from '../../../components/ProfileComponents/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, get } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
@@ -14,6 +14,7 @@ import { AppointmentReminder } from 'types/AppointmentReminderProps';
 import * as Notifications from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from 'config/firebaseConfig';
+import styles from './styles';
 
 const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<CaregiverData>({});
@@ -227,7 +228,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
 
           {selectedPatientProfile.appointmentReminders && (
             <View>
-              <Text style={styles.sectionTitle}>{i18n.t('Appointment Reminders')}:</Text>
+              <Text style={styles.sectionTitle}>{i18n.t('AppointmentReminders')}:</Text>
               {Object.entries(selectedPatientProfile.appointmentReminders).map(([key, reminder]) => (
                 <View key={key} style={styles.reminderItem}>
                   <Text>{i18n.t('Hospital Name')}: {reminder.hospitalName}</Text>
@@ -285,88 +286,5 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  caregiverSidebar: {
-    height: '300%'
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 15
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    width: 200,
-  },
-  patientProfile: {
-    padding: 20,
-    marginTop: 10,
-    backgroundColor: "#f0f0f0"
-  },
-  modalContent: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: 20,
-  },
-  backdrop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 1,
-  },
-  centeredModalView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  selectPatient: {
-    marginVertical: 20,
-    color: "blue",
-    fontSize: 16,
-  }, sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 10,
-  },
-  reminderItem: {
-    marginTop: 5,
-    padding: 10,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 5,
-  },
-  reminderText: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-});
 
 export default CaregiverProfileScreen;

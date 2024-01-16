@@ -10,10 +10,11 @@ import i18n from 'common/i18n/i18n';
 import { determineAverageBloodPressureStatus } from 'helpers/bloodPressure';
 import { PatientData } from 'types/PatientData';
 import { determineAverageBloodSugarStatus } from 'helpers/bloodSugar';
-import FontSizeContext from '../../context/FontSizeContext';
+import FontSizeContext from '../../../context/FontSizeContext';
 import { handleLogout } from 'helpers/firebaseAuth/AuthService';
 import { Sidebar } from 'components/Sidebar';
 import { heightPercentageToDP } from 'helpers/dimension';
+import styles from './styles';
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<PatientData>({});
@@ -158,49 +159,5 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  bloodStatus: {
-    marginVertical: 10,
-    color: "red",
-    fontSize: 16,
-  },
-  screenContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    zIndex: 1,
-  },
-  scrollView: {
-    maxHeight: heightPercentageToDP('80'),
-    zIndex: 1,
-  },
-  bloodPressureSugarImage: {
-    alignSelf: 'center',
-  },
-  bloodSugarPressure: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  bloodSugar: {
-    marginTop: 50,
-  },
-  bloodPressureSugarTexts: {
-    marginTop: 20,
-    color: 'blue',
-  },
-  backdrop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 1,
-  },
-  dimmedBackground: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-
-});
 
 export default PatientProfileScreen;
