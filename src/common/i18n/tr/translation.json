@@ -14,6 +14,7 @@
   "DateWithTime": "Tarih&Zaman",
   "DontHaveAccount": "Hesabınız yok mu?",
   "City": "Şehir",
+  "Contacts": "Kişiler",
   "Diastolic": "Diyastolik",
   "Department": "Bölüm",
   "Doctor": "Doktor",
@@ -24,6 +25,7 @@
   "EditProfile": "Profili Düzenle",
   "EnterMedication": "İlaç Adını ve Dozunu Girin",
   "EnterValidNumber": "Lütfen Geçerli bir Numara girin",
+  "EnterValidName": "Lütfen Geçerli bir İsim girin",
   "Feedback": "Feedback",
   "FeedbackInfo": "Feedback sağlayabilmek için buraya tıklayınız.",
   "ForgotPassword": "Şifrenizi mi unuttunuz?",
@@ -40,7 +42,10 @@
   "Login": "Giriş Yap",
   "Logout": "Çıkış Yap",
   "MedicationName": "İlaç Adı",
+  "MonthlyChart": "Aylık Grafik",
   "Name": "İsim",
+  "NoConnection": "Bağlantı Yok",
+  "NotFound": "Bulunamadı",
   "Pause": "Duraklat",
   "Save": "Kaydet",
   "Send": "Gönder",
@@ -54,5 +59,6 @@
   "Stop": "Durdur",
   "InvitationSuccess": "Davet başarıyla gönderildi!",
   "VoiceHelp": "Sesle Uygulama Yardımı almak için buraya tıklayın",
-  "Weight": "Kilo"
+  "Weight": "Kilo",
+  "WeeklyChart": "Haftalık Grafik"
 }

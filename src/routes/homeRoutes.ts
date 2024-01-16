@@ -1,4 +1,3 @@
-// Import necessary components and types
 import HomeScreen from 'screens/home/HomeScreen';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 

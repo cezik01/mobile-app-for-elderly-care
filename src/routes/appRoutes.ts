@@ -16,8 +16,6 @@ import PasswordReset from 'screens/auth/login/PasswordReset';
 import HelpScreen from 'screens/help/HelpScreen';
 import FeedbackScreen from 'screens/feedback/FeedbackScreen';
 
-
-
 const appRoutes = [
   {
     name: 'Registration',

@@ -67,5 +67,4 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
   );
 };
 
-
 export default RegistrationScreen;

@@ -37,7 +37,6 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
     );
 };
 
-
 const styles = StyleSheet.create({
     appInfo: {
         fontSize: 18,

@@ -2,16 +2,8 @@ import React from 'react';
 import { View, Button } from 'react-native';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 import styles from './styles';
-
-type TimeParams = {
-  hours: number;
-  minutes: number;
-};
-
-interface CustomDatePickerProps {
-  onDateChange: (date: Date) => void;
-  onTimeChange: (time: Date) => void;
-}
+import { TimeProps } from 'types/TimeProps';
+import { CustomDatePickerProps } from 'types/CustomDatePickerProps';
 
 export default function CustomDatePicker({ onDateChange, onTimeChange }: CustomDatePickerProps) {
   const [date, setDate] = React.useState(new Date());
@@ -32,12 +24,11 @@ export default function CustomDatePicker({ onDateChange, onTimeChange }: CustomD
     }
   };
 
-
   const onDismissTime = () => {
     setOpenTimePickerModal(false);
   };
 
-  const onConfirmTime = (params: TimeParams) => {
+  const onConfirmTime = (params: TimeProps) => {
     setOpenTimePickerModal(false);
     const newTime = new Date(time.setHours(params.hours, params.minutes));
     setTime(newTime);

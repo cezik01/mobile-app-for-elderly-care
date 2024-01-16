@@ -12,7 +12,7 @@ import { Image } from 'react-native';
 import i18n from 'common/i18n/i18n';
 import { validateNumericInput } from 'helpers/validationSchemas/numericInputValidation';
 import { ReminderScreensProps } from 'types/ReminderScreensProps';
-import {Reminder} from 'types/MedicationReminderProps';
+import { Reminder } from 'types/MedicationReminderProps';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -283,7 +283,7 @@ const MedicationScreen = ({ navigation }: ReminderScreensProps) => {
               <Text style={styles.reminderItemText}>{i18n.t('MedicationName')}: {item.name} - {i18n.t('DateWithTime')}: {new Date(item.date).toLocaleString()} - {i18n.t('Dosage')}: {item.dosage}</Text>
             </View>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
-              <Text style={styles.deleteText}> Delete</Text>
+              <Text style={styles.deleteText}>{i18n.t('Delete')}</Text>
             </TouchableOpacity>
           </View>
         )}

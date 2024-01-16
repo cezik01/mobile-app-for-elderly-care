@@ -131,7 +131,6 @@ const BloodPressureScreen = ({ navigation }: BloodEntryProps) => {
     );
   };
 
-
   const renderItem = ({ item }: { item: BloodPressureEntry }) => (
     <View style={styles.listItem}>
       <Text>{i18n.t('DateWithTime')}: {formatDate(item.date)}</Text>
@@ -180,13 +179,13 @@ const BloodPressureScreen = ({ navigation }: BloodEntryProps) => {
           <>
             {bloodPressureData.length == 7 && (
               <>
-                <Text style={styles.chartTitle}>Weekly Chart</Text>
+                <Text style={styles.chartTitle}>{i18n.t('WeeklyChart')}</Text>
                 {renderChart(7)}
               </>
             )}
             {bloodPressureData.length == 30 && (
               <>
-                <Text style={styles.chartTitle}>Monthly Chart</Text>
+                <Text style={styles.chartTitle}>{i18n.t('MonthlyChart')}</Text>
                 {renderChart(30)}
               </>
             )}

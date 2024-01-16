@@ -11,6 +11,7 @@
   "BloodSugarStatus": "Current Blood Sugar Status",
   "BloodSugarEntrance": "Click here for Blood Sugar Entrance",
   "City": "City",
+  "Contacts": "Contacts",
   "Date": "Date",
   "DateWithTime": "Date&Time",
   "DontHaveAccount": "Don't have an account? Click here to sign up",
@@ -24,6 +25,7 @@
   "EditProfile": "Edit Profile",
   "EnterMedication": "Enter Medication Name and Dosage",
   "EnterValidNumber": "Please enter a Valid Number",
+  "EnterValidName": "Please enter a Valid Name",
   "Feedback": "Feedback",
   "FeedbackInfo": "Click here for provide feedback.",
   "ForgotPassword": "Forgot your password?",
@@ -40,7 +42,10 @@
   "Login": "Login",
   "Logout": "Logout",
   "MedicationName": "Medication Name",
+  "MonthlyChart": "Monthly Chart",
   "Name": "Name",
+  "NoConnection": "No Connection",
+  "NotFound": "Not Found",
   "Pause": "Pause",
   "Save": "Save",
   "Send": "Send",
@@ -54,5 +59,6 @@
   "Stop": "Stop",
   "InvitationSuccess": "Invitation sent successfully!",
   "VoiceHelp": "Click here for get Application Help via Voice",
-  "Weight": "Weight"
+  "Weight": "Weight",
+  "WeeklyChart": "Weekly Chart"
 }

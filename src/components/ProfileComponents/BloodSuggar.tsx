@@ -154,13 +154,13 @@ const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
           <>
             {bloodSugarData.length == 7 && (
               <>
-                <Text style={styles.chartTitle}>Weekly Chart</Text>
+                <Text style={styles.chartTitle}>{i18n.t('WeeklyChart')}</Text>
                 {renderChart(7)}
               </>
             )}
             {bloodSugarData.length == 30 && (
               <>
-                <Text style={styles.chartTitle}>Monthly Chart</Text>
+                <Text style={styles.chartTitle}>{i18n.t('MonthlyChart')}</Text>
                 {renderChart(30)}
               </>
             )}

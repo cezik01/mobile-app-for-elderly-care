@@ -78,14 +78,14 @@ const ContactsScreen = ({ navigation }: ContactsScreenProps) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Contacts</Text>
+      <Text style={styles.title}>{i18n.t('Contacts')}</Text>
       <TextInput
         placeholder="İsim"
         value={name}
         onChangeText={(text) => setNameHandler(text, setIsError, setName)}
         style={styles.input}
       />
-      {isError && <Text style={styles.errorText}>Lütfen geçerli bir İsim giriniz.</Text>}
+      {isError && <Text style={styles.errorText}>{i18n.t('EnterValidName')}</Text>}
 
       <TextInput
         placeholder="Telefon Numarası"

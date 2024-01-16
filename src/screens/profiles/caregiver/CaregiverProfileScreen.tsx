@@ -113,8 +113,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           ...patientData,
           appointmentReminders: patientData.appointmentReminders || {},
           medicationReminders: patientData.medicationReminders || {}
-
-
         };
 
         setSelectedPatientProfile(patientProfileWithReminders);

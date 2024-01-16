@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   infoItem: {
     alignItems: 'center',
-    width:horizontalScale(160),
+    width: horizontalScale(160),
   },
   icon: {
     width: 30,

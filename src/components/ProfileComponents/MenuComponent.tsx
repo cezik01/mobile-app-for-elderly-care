@@ -10,7 +10,7 @@ type MenuItemProps = {
 };
 
 
-const MenuItem = ({ onPress, iconName, text, fontSizeValue }: MenuItemProps) => (
+const MenuItem = ({ onPress, iconName, text }: MenuItemProps) => (
   <TouchableOpacity style={styles.menuItem} onPress={onPress}>
     <Image source={iconName} style={styles.menuIcon} />
     <Text style={styles.menuText}>{text}</Text>
