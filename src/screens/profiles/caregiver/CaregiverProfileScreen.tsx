@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, Alert, Modal, Text, TextInput, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import ProfileHeader from '../../../components/ProfileComponents/ProfileHeader';
+import ProfileHeader from '../../../components/ProfileComponents/ProfileHeader/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, get } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';

@@ -51,14 +51,10 @@ const ProfileEditScreen = () => {
       updates['/users/' + user.uid + '/weight' || 0] = weight;
       updates['/users/' + user.uid + '/bloodType'] = bloodType;
 
-
-
       await update(ref(db), updates);
       Alert.alert('Profile Updated', 'Your profile has been updated successfully.', [
         { text: "OK", onPress: () => navigation.goBack() }
       ]);
-
-
     }
   };
   const openMenu = () => setVisible(true);

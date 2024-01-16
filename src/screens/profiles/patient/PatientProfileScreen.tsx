@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, TouchableOpacity, ScrollView } from 'react-native';
-import ProfileHeader from 'components/ProfileComponents/ProfileHeader';
-import PersonalInfo from 'components/ProfileComponents/PersonalInfo';
-import MenuComponent from 'components/ProfileComponents/MenuComponent';
+import ProfileHeader from 'components/ProfileComponents/ProfileHeader/ProfileHeader';
+import PersonalInfo from 'components/ProfileComponents/PersonalInfo/PersonalInfo';
+import MenuComponent from 'components/ProfileComponents/Menu/MenuComponent';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
@@ -13,7 +13,6 @@ import { determineAverageBloodSugarStatus } from 'helpers/bloodSugar';
 import FontSizeContext from '../../../context/FontSizeContext';
 import { handleLogout } from 'helpers/firebaseAuth/AuthService';
 import { Sidebar } from 'components/Sidebar';
-import { heightPercentageToDP } from 'helpers/dimension';
 import styles from './styles';
 
 const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {

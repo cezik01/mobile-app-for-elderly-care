@@ -12,6 +12,7 @@ import { calculateChartWidth } from 'helpers/chart/chartHelper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { BloodEntryProps } from 'types/BloodEntryProps';
 import { Button } from 'react-native-paper';
+import { styles } from './styles';
 
 const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
   const [bloodSugar, setBloodSugar] = useState('');
@@ -184,57 +185,5 @@ const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  buttonText: {
-    fontSize: 16,
-  },
-  chartTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 10,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 10,
-  },
-  input: {
-    width: 300,
-    height: 40,
-    borderColor: '#6495ED',
-    borderWidth: 1,
-    borderRadius: 4,
-    margin: 10,
-    padding: 10,
-  },
-  warningText: {
-    color: 'red',
-  },
-  listItem: {
-    backgroundColor: '#fff',
-    padding: 20,
-    marginTop: 16,
-    marginHorizontal: 16,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#6495ED',
-  },
-  questionMarkIcon: {
-    color: 'blue',
-    marginRight: 5,
-    marginBottom: 15,
-  },
-  questionMarkContainer: {
-    flexDirection: 'row',
-    marginTop: '20%',
-    marginLeft: 5,
-  },
-  helpText: {
-    fontSize: 20,
-    color: 'blue',
-  },
-});
 
 export default BloodSugarScreen;

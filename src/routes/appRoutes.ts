@@ -8,8 +8,8 @@ import MedicationScreen from 'screens/menu/MedicationScreen';
 import NotificationsScreen from 'screens/profiles/notification/NotificationsScreen';
 import AppointmentScreen from 'screens/menu/AppointmentScreen';
 import MenuScreen from 'screens/menu/MenuScreen'
-import BloodPressureScreen from 'components/ProfileComponents/BloodPressure';
-import BloodSugarScreen from 'components/ProfileComponents/BloodSuggar';
+import BloodPressureScreen from 'components/ProfileComponents/BloodPressure/BloodPressure';
+import BloodSugarScreen from 'components/ProfileComponents/BloodSuggar/BloodSuggar';
 import FontSettingsScreen from 'screens/features/FontSettingsScreen';
 import ContactsScreen from 'screens/features/ContactsScreen';
 import PasswordReset from 'screens/auth/login/PasswordReset';

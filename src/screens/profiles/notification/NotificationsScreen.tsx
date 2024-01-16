@@ -2,17 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
-
-interface Invitation {
-  id: string;
-  from: string;
-  to: string;
-  status: 'pending' | 'accepted' | 'rejected';
-  timestamp: number;
-}
+import { InvitationProps } from 'types/InvitationProps';
 
 const NotificationsScreen = () => {
-  const [invitations, setInvitations] = useState<Invitation[]>([]);
+  const [invitations, setInvitations] = useState<InvitationProps[]>([]);
   const auth = getAuth();
   const db = getDatabase();
   const user = auth.currentUser;
@@ -22,9 +15,9 @@ const NotificationsScreen = () => {
       const invitationsRef = ref(db, 'invitations');
       onValue(invitationsRef, (snapshot) => {
         if (snapshot.exists()) {
-          const invitationsData: Invitation[] = [];
+          const invitationsData: InvitationProps[] = [];
           snapshot.forEach((childSnapshot) => {
-            const invitation = childSnapshot.val() as Invitation;
+            const invitation = childSnapshot.val() as InvitationProps;
             if (invitation.to === user.uid) {
               invitation.id = childSnapshot.key;
               invitationsData.push(invitation);
@@ -39,12 +32,10 @@ const NotificationsScreen = () => {
   const handleAcceptInvitation = async (invitationId: string, fromUserId: string, toUserId: string) => {
     const db = getDatabase();
     await update(ref(db, `invitations/${invitationId}`), { status: 'accepted' });
-    
+
     const accessControlRef = ref(db, `accessControl/${fromUserId}/${toUserId}`);
     await update(accessControlRef, { hasAccess: true });
   };
-  
-  
 
   const handleRejectInvitation = async (invitationId: string) => {
     await update(ref(db, `invitations/${invitationId}`), { status: 'rejected' });

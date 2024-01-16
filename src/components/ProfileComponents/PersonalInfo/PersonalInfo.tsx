@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { PersonalInfoItemProps } from 'types/PersonalInfoItemProps';
 import { PersonalInfoProps } from 'types/PersonalInfoProps';
+import { styles } from './styles';
 
 const PersonalInfo = ({ age, weight, height, bloodType, fontSizeValue }: PersonalInfoProps) => {
   return (
@@ -26,33 +27,5 @@ const PersonalInfoItem = ({ icon, label, fontSizeValue }: PersonalInfoItemProps 
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10
-  },
-  infoItem: {
-    alignItems: 'center',
-    width: horizontalScale(160),
-  },
-  icon: {
-    width: 30,
-    height: 30,
-    marginBottom: 2,
-  },
-  infoText: {
-    textAlign: 'center',
-    paddingVertical: 10
-  },
-  divider: {
-    height: verticalScale(30),
-    width: 1,
-    backgroundColor: '#000',
-    marginHorizontal: 9,
-  },
-});
-
 
 export default PersonalInfo;
