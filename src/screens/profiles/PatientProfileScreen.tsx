@@ -22,8 +22,6 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   const { fontSize } = useContext(FontSizeContext);
   const [isSidebarVisible, setSidebarVisible] = useState(false);
 
-  console.log("Current font size in patient profile:", fontSize);
-
   type FontSizeKey = 'small' | 'medium' | 'large';
 
   const fontSizeMap: { [key in FontSizeKey]: number } = {
@@ -107,7 +105,6 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   };
 
   const handleMenuIconPress = () => {
-    console.log('Menu button pressed');
     navigation.navigate('Menu Screen')
   }
 

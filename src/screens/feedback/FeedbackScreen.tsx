@@ -36,7 +36,6 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
 
             if (result && result.length > 0 && result[0].predictions && result[0].predictions.length > 0) {
                 const sentiment = result[0].predictions[0].prediction;
-                console.log('sentiment', sentiment);
 
                 return sentiment;
 

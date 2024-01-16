@@ -109,7 +109,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       const patientSnapshot = await get(patientRef);
       if (patientSnapshot.exists()) {
         const patientData = patientSnapshot.val();
-        console.log(patientData)
 
         const patientProfileWithReminders = {
           ...patientData,
