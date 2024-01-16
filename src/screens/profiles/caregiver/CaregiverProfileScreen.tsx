@@ -68,7 +68,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const scheduleReminderNotification = async (reminder: AppointmentReminder) => {
     const reminderTime = new Date(reminder.date);
     const notificationTime = new Date(reminderTime);
-    notificationTime.setHours(notificationTime.getHours() - 1); // Örneğin, randevudan 1 saat önce
+    notificationTime.setHours(notificationTime.getHours() - 1);
 
     await Notifications.scheduleNotificationAsync({
       content: {
@@ -81,7 +81,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     });
   };
 
-
   useEffect(() => {
     if (selectedPatientId) {
       const remindersRef = ref(db, `users/${selectedPatientId}/appointmentReminders`);
@@ -92,7 +91,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           id: key
         })) : [];
         setReminders(formattedReminders);
-        // Schedule notifications for each reminder
         formattedReminders.forEach(reminder => {
           scheduleReminderNotification(reminder);
         });
@@ -231,9 +229,9 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
               <Text style={styles.sectionTitle}>{i18n.t('AppointmentReminders')}:</Text>
               {Object.entries(selectedPatientProfile.appointmentReminders).map(([key, reminder]) => (
                 <View key={key} style={styles.reminderItem}>
-                  <Text>{i18n.t('Hospital Name')}: {reminder.hospitalName}</Text>
+                  <Text>{i18n.t('HospitalName')}: {reminder.hospitalName}</Text>
                   <Text>{i18n.t('Department')}: {reminder.department}</Text>
-                  <Text>{i18n.t('Doctor Name')}: {reminder.doctorName}</Text>
+                  <Text>{i18n.t('DoctorName')}: {reminder.doctorName}</Text>
                   <Text>{i18n.t('Date')}: {reminder.date}</Text>
                   <Text>{i18n.t('Hour')}: {reminder.hour}</Text>
                 </View>
@@ -248,7 +246,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
               {Object.entries(selectedPatientProfile.medicationReminders).map(([key, reminder]) => (
 
                 <View key={key} style={styles.reminderItem}>
-                  <Text>{i18n.t('Medication Name')}: {reminder.name}</Text>
+                  <Text>{i18n.t('MedicationName')}: {reminder.name}</Text>
                   <Text>{i18n.t('Dosage')}: {reminder.dosage}</Text>
                   <Text>{i18n.t('Date')}: {reminder.date}</Text>
                   <Text>{i18n.t('Status')}: {reminder.status}</Text>
@@ -276,9 +274,9 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         data={reminders}
         renderItem={({ item }) => (
           <View style={styles.reminderItem}>
-            <Text style={styles.reminderText}>Hastane: {item.hospitalName}</Text>
-            <Text style={styles.reminderText}>Doktor: {item.doctorName}</Text>
-            <Text style={styles.reminderText}>Tarih ve Saat: {item.date}</Text>
+            <Text style={styles.reminderText}>{i18n.t('Hospital')}: {item.hospitalName}</Text>
+            <Text style={styles.reminderText}>{i18n.t('Doctor')}: {item.doctorName}</Text>
+            <Text style={styles.reminderText}>{i18n.t('DateWithTime')}: {item.date}</Text>
           </View>
         )}
         keyExtractor={item => item.id}
