@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { View, Button, Alert } from 'react-native';
 import { getDatabase, ref, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
-import FontSizeContext from '../../context/FontSizeContext';
+import FontSizeContext from '../../../context/FontSizeContext';
 
 const FontSettingsScreen = () => {
   const fontSizeContext = useContext(FontSizeContext);

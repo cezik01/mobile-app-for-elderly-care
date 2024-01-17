@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import i18n from 'common/i18n/i18n';
 import { pauseSpeech, speak, stopSpeech } from 'helpers/voice/SpeechHelper';
 import { HelpScreenProps } from 'types/screen/HelpScreenProps';
+import { styles } from './styles';
 
 const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
     const { role } = route?.params;
@@ -36,36 +37,5 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    appInfo: {
-        fontSize: 18,
-        marginBottom: 90,
-        fontStyle: 'italic',
-        width: '95%',
-    },
-    buttonText: {
-        fontSize: 16,
-    },
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    helpContainer: {
-        alignItems: 'center',
-    },
-    mic: {
-        marginTop: 20,
-    },
-    helpText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    voiceButtons: {
-        marginTop: 30,
-    }
-});
 
 export default HelpScreen;

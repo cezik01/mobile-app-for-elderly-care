@@ -4,6 +4,7 @@ import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import { HelpScreenProps } from 'types/screen/HelpScreenProps';
 import { Button } from 'react-native-paper';
 import { ref, getDatabase, push } from 'firebase/database';
+import { styles } from './styles';
 
 const FeedbackScreen: React.FC<HelpScreenProps> = () => {
     const [feedback, setFeedback] = useState('');
@@ -99,29 +100,5 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
-    buttonText: {
-        fontSize: 16,
-    },
-    title: {
-        fontSize: 20,
-        marginBottom: 25,
-    },
-    input: {
-        width: '100%',
-        borderColor: 'gray',
-        borderWidth: 1,
-        padding: 10,
-        marginBottom: 15,
-        borderRadius: 5,
-    },
-});
 
 export default FeedbackScreen;
