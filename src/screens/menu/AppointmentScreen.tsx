@@ -134,8 +134,7 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
 
 
   const deleteAppointmentReminder = async (id: string, notificationId?: string) => {
-    // Similar logic to deleteReminder, adapted for appointments
-    // ...
+ 
   };
 
   async function scheduleNotification(hospitalName: string, doctorName: string, dateTime: Date, reminderId: string) {

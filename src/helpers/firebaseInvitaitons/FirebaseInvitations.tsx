@@ -1,9 +1,6 @@
-
-
 import { getDatabase, ref, push, update } from 'firebase/database';
 
-// Yeni bir davet gönderme
-export const sendInvitation = async (fromUserId: string, toUserId: string):Promise<void> => {
+export const sendInvitation = async (fromUserId: string, toUserId: string): Promise<void> => {
   const db = getDatabase();
   try {
     const newInvitationRef = ref(db, 'invitations');
