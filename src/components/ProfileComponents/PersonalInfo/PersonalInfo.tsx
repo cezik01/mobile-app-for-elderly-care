@@ -8,13 +8,13 @@ import { styles } from './styles';
 const PersonalInfo = ({ age, weight, height, bloodType, fontSizeValue }: PersonalInfoProps) => {
   return (
     <View style={styles.container}>
-      <PersonalInfoItem icon={require('../../../assets/profiles/Age.png')} label={`Age: ${age.toString()}`} fontSizeValue={fontSizeValue} />
+      <PersonalInfoItem icon={require('../../../../assets/profiles/Age.png')} label={`Age: ${age.toString()}`} fontSizeValue={fontSizeValue} />
       <View style={styles.divider} />
-      <PersonalInfoItem icon={require('../../../assets/profiles/Weight.png')} label={`Weight: ${weight.toString()}`} fontSizeValue={fontSizeValue} />
+      <PersonalInfoItem icon={require('../../../../assets/profiles/Weight.png')} label={`Weight: ${weight.toString()}`} fontSizeValue={fontSizeValue} />
       <View style={styles.divider} />
-      <PersonalInfoItem icon={require('../../../assets/profiles/Height.png')} label={`Height: ${height.toString()}`} fontSizeValue={fontSizeValue} />
+      <PersonalInfoItem icon={require('../../../../assets/profiles/Height.png')} label={`Height: ${height.toString()}`} fontSizeValue={fontSizeValue} />
       <View style={styles.divider} />
-      <PersonalInfoItem icon={require('../../../assets/profiles/BloodType.png')} label={`Blood Type: ${bloodType}`} fontSizeValue={fontSizeValue} />
+      <PersonalInfoItem icon={require('../../../../assets/profiles/BloodType.png')} label={`Blood Type: ${bloodType}`} fontSizeValue={fontSizeValue} />
     </View>
   );
 };

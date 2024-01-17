@@ -28,19 +28,19 @@ const MenuComponent = ({ onMedicationPress, onAppointmentsPress, onMenuPress }: 
     <View style={styles.menuContainer}>
       <MenuItem
         onPress={onMedicationPress}
-        iconName={require('../../../assets/profiles/medicationIcon.png')}
+        iconName={require('../../../../assets/profiles/medicationIcon.png')}
         text="Medication"
         fontSizeValue={fontSizeValue}
       />
       <MenuItem
         onPress={onMenuPress}
-        iconName={require('../../../assets/profiles/menuIcon1.png')}
+        iconName={require('../../../../assets/profiles/menuIcon1.png')}
         text="Menu"
         fontSizeValue={fontSizeValue}
       />
       <MenuItem
         onPress={onAppointmentsPress}
-        iconName={require('../../../assets/profiles/appointmentsIcon.png')}
+        iconName={require('../../../../assets/profiles/appointmentsIcon.png')}
         text="Appointments"
         fontSizeValue={fontSizeValue}
       />
