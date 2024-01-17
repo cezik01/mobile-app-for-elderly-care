@@ -1,5 +1,5 @@
 import { theme } from 'common/theme/theme';
-import { heightPercentageToDP, widthPercentageToDP } from 'helpers/dimension';
+import { heightPercentageToDP } from 'helpers/dimension';
 import { StyleSheet } from 'react-native';
 
 const { align, fontSizes, flexDirection, spacing, colorScheme, position, justify } = theme.components;

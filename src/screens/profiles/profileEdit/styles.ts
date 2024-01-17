@@ -1,8 +1,7 @@
 import { theme } from 'common/theme/theme';
-import { heightPercentageToDP, widthPercentageToDP } from 'helpers/dimension';
 import { StyleSheet } from 'react-native';
 
-const { align, borderRadius, borderWidth, fontSizes, flexDirection, fontWeights, spacing, colorScheme, position, justify } = theme.components;
+const { align, borderRadius, borderWidth, fontSizes, fontWeights, spacing, justify } = theme.components;
 
 const styles = StyleSheet.create({
     container: {
