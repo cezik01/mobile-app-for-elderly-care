@@ -1,53 +1,56 @@
+import { theme } from 'common/theme/theme';
+import { widthPercentageToDP, heightPercentageToDP } from 'helpers/dimension';
 import { StyleSheet } from 'react-native';
+
+const { align, borderRadius, borderWidth, colorScheme, fontSizes, flexDirection, fontWeights, spacing, textAlign } = theme.components;
 
 export const styles = StyleSheet.create({
     buttonText: {
-        fontSize: 16,
+        fontSize: fontSizes.body.b2,
     },
     chartTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginVertical: 10,
+        fontSize: fontSizes.heading.h5,
+        fontWeight: fontWeights.bold,
+        textAlign: textAlign.center,
+        marginVertical: spacing[3],
     },
     container: {
         flex: 1,
-        alignItems: 'center',
-        paddingTop: 10,
+        alignItems: align.default,
+        paddingTop: spacing[3],
     },
     input: {
-        width: 300,
-        height: 40,
+        width: widthPercentageToDP('70'),
+        height: heightPercentageToDP('4'),
         borderColor: '#6495ED',
-        borderWidth: 1,
-        borderRadius: 4,
-        margin: 10,
-        padding: 10,
+        borderWidth: borderWidth[2],
+        borderRadius: borderRadius[1],
+        margin: spacing[3],
+        padding: spacing[3],
     },
     warningText: {
-        color: 'red',
+        color: colorScheme.light.ascent.Error,
     },
     listItem: {
-        backgroundColor: '#fff',
-        padding: 20,
-        marginTop: 16,
-        marginHorizontal: 16,
-        borderRadius: 4,
-        borderWidth: 1,
+        backgroundColor: colorScheme.light.primary.white,
+        padding: spacing[4],
+        marginTop: spacing[4],
+        marginHorizontal: spacing[4],
+        borderRadius: borderRadius[1],
+        borderWidth: borderWidth[2],
         borderColor: '#6495ED',
     },
     questionMarkIcon: {
         color: 'blue',
-        marginRight: 5,
-        marginBottom: 15,
+        marginRight: spacing[1],
+        marginBottom: spacing[3],
     },
     questionMarkContainer: {
-        flexDirection: 'row',
-        marginTop: '20%',
-        marginLeft: 5,
+        flexDirection: flexDirection.row,
+        marginTop: spacing[3],
     },
     helpText: {
-        fontSize: 20,
+        fontSize: fontSizes.heading.h5,
         color: 'blue',
     },
 });

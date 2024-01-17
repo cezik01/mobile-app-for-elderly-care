@@ -1,65 +1,69 @@
+import { theme } from "common/theme/theme";
+import { moderateScale } from "helpers/dimension/scale";
 import { StyleSheet } from "react-native";
+
+const { align, borderRadius, borderWidth, colorScheme, fontSizes, fontWeights, flexDirection, position, spacing, justify } = theme.components;
 
 export const styles = StyleSheet.create({
     headerContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 30,
-        paddingBottom: 20,
+        alignItems: align.default,
+        justifyContent: justify.default,
+        paddingTop: spacing[5],
+        paddingBottom: spacing[4],
     },
     profileImage: {
-        width: 120,
-        height: 120,
-        borderRadius: 60,
-        borderWidth: 2,
-        borderColor: 'purple',
-        marginBottom: 10,
+        width: moderateScale(155),
+        height: moderateScale(155),
+        borderRadius: borderRadius[12],
+        borderWidth: borderWidth[2],
+        borderColor: colorScheme.light.primary.purple[20],
+        marginBottom: spacing[3],
     },
     name: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'black',
-        marginBottom: 4,
+        fontSize: fontSizes.heading.h5,
+        fontWeight: fontWeights.bold,
+        color: colorScheme.dark,
+        marginBottom: spacing[2],
     },
     city: {
-        fontSize: 16,
+        fontSize: fontSizes.body.b2,
         color: 'grey',
     },
     editProfileButton: {
-        position: 'absolute',
-        top: 40,
-        right: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
+        position: position.absolute,
+        top: spacing[7],
+        right: spacing[3],
+        flexDirection: flexDirection.row,
+        alignItems: align.default,
     },
     editProfileText: {
-        fontSize: 16,
+        fontSize: fontSizes.body.b2,
         color: 'blue',
         textDecorationLine: 'underline',
-        marginRight: 7,
+        marginRight: spacing[2],
     },
     editIcon: {
-        width: 20,
-        height: 20,
+        width: moderateScale(25),
+        height: moderateScale(25),
     },
     menuIconContainer: {
-        position: 'absolute',
-        top: 10,
-        left: 10,
+        position: position.absolute,
+        top: spacing[3],
+        left: spacing[3],
         zIndex: 1,
     },
     menuIcon: {
-        width: 20,
-        height: 20,
+        width: moderateScale(25),
+        height: moderateScale(25),
     },
     notificationIconContainer: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
+        position: position.absolute,
+        top: spacing[2],
+        right: spacing[3],
         zIndex: 1,
     },
     notificationIcon: {
-        width: 20,
-        height: 20,
+        width: moderateScale(25),
+        height: moderateScale(25),
     },
 });
