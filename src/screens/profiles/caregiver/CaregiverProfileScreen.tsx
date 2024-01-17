@@ -185,7 +185,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         surname={userData.surname || "Surname"}
         city={userData.city || "City"}
         onEditPress={() => navigation.navigate('Profile Edit Screen')}
-        onNotificationsPress={() => navigation.navigate('NotificationsScreen')}
+        onNotificationsPress={() => navigation.navigate('Notifications Screen')}
         onMenuPress={handleMenuPress}
       />
       <Button title="Send Invitation" onPress={() => setModalVisible(true)} />

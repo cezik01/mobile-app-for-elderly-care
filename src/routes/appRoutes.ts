@@ -9,7 +9,7 @@ import NotificationsScreen from 'screens/profiles/notification/NotificationsScre
 import AppointmentScreen from 'screens/menu/appointment/AppointmentScreen';
 import MenuScreen from 'screens/menu/MenuScreen'
 import BloodPressureScreen from 'components/ProfileComponents/BloodPressure/BloodPressure';
-import BloodSugarScreen from 'components/ProfileComponents/BloodSuggar/BloodSuggar';
+import BloodSugarScreen from 'components/ProfileComponents/BloodSugar/BloodSugar';
 import FontSettingsScreen from 'screens/features/fontSettings/FontSettingsScreen';
 import ContactsScreen from 'screens/features/contacts/ContactsScreen';
 import PasswordReset from 'screens/auth/login/PasswordReset';
@@ -46,7 +46,7 @@ const appRoutes = [
     component: MedicationScreen,
   },
   {
-    name: 'NotificationsScreen',
+    name: 'Notifications Screen',
     component: NotificationsScreen,
   },
   {
