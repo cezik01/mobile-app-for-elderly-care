@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import i18n from 'common/i18n/i18n';
 import MenuComponent from 'components/ProfileComponents/Menu/MenuComponent';
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { MenuItemProps } from 'types/MenuItemProps';
 import { MenuScreenProps } from 'types/MenuScreenProps';
 import { styles } from './styles';

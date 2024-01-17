@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import i18n from 'common/i18n/i18n';
 import { pauseSpeech, speak, stopSpeech } from 'helpers/voice/SpeechHelper';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Pressable, Image, TouchableOpacity, ScrollView } from 'react-native';
 import ProfileHeader from 'components/ProfileComponents/ProfileHeader/ProfileHeader';
 import PersonalInfo from 'components/ProfileComponents/PersonalInfo/PersonalInfo';
 import MenuComponent from 'components/ProfileComponents/Menu/MenuComponent';

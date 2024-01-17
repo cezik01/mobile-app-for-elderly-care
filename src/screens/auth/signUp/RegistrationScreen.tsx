@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, TouchableOpacity, Text, View, Platform } from 'react-native';
+import { Alert, TouchableOpacity, Text, View } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import styles from '../styles';
 import AuthForm from 'components/Form/AuthForm';

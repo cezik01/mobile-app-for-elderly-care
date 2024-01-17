@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, Alert, FlatList, TouchableOpacity } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, push, onValue, remove, update, get, } from 'firebase/database';
+import { getDatabase, ref, push, onValue, update } from 'firebase/database';
 import firebaseConfig from 'config/firebaseConfig';
 import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 import { MaterialIcons } from '@expo/vector-icons';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, FlatList, Alert, Linking, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, Alert, Linking, TouchableOpacity } from 'react-native';
 import { getDatabase, ref, onValue, update, remove } from 'firebase/database';
 import { ContactProps } from 'types/ContactProps';
 import { setNameHandler } from 'helpers/validationSchemas/alphabeticalInputValidation';
