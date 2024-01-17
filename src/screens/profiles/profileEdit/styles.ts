@@ -2,36 +2,36 @@ import { theme } from 'common/theme/theme';
 import { heightPercentageToDP, widthPercentageToDP } from 'helpers/dimension';
 import { StyleSheet } from 'react-native';
 
+const { align, borderRadius, borderWidth, fontSizes, flexDirection, fontWeights, spacing, colorScheme, position, justify } = theme.components;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-        justifyContent: 'center',
-        alignItems: 'stretch',
+        padding: spacing[4],
+        justifyContent: justify.default,
+        alignItems: align.stretch,
     },
     inputContainer: {
-        marginBottom: 20,
+        marginBottom: spacing[5],
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: fontSizes.body.b2,
     },
     input: {
-        borderWidth: 1,
-        borderColor: 'grey',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
+        borderWidth: borderWidth[2],
+        padding: spacing[3],
+        borderRadius: borderRadius[1],
+        marginBottom: spacing[3],
     },
     label: {
-        fontWeight: 'bold',
-        marginBottom: 5,
+        fontWeight: fontWeights.bold,
+        marginBottom: spacing[2],
     },
     dropdownAnchor: {
-        borderWidth: 1,
-        borderColor: 'grey',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
+        borderWidth: borderWidth[2],
+        padding: spacing[3],
+        borderRadius: borderRadius[1],
+        marginBottom: spacing[3],
     },
 });
 

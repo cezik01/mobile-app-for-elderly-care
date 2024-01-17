@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
         borderBottomWidth: borderWidth[2],
         borderBottomColor: colorScheme.light.primary.canvas,
         marginRight: spacing[3],
-        width: widthPercentageToDP('80'),
+        width: widthPercentageToDP('75'),
         backgroundColor: colorScheme.light.primary.white,
         height: verticalScale(50),
         justifyContent: justify.default,

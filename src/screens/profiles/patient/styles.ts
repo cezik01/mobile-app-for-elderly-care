@@ -2,15 +2,17 @@ import { theme } from 'common/theme/theme';
 import { heightPercentageToDP, widthPercentageToDP } from 'helpers/dimension';
 import { StyleSheet } from 'react-native';
 
+const { align, fontSizes, flexDirection, spacing, colorScheme, position, justify } = theme.components;
+
 const styles = StyleSheet.create({
     bloodStatus: {
-        marginVertical: 10,
-        color: "red",
-        fontSize: 16,
+        marginVertical: spacing[2],
+        color: colorScheme.light.ascent.Error,
+        fontSize: fontSizes.body.b2,
     },
     screenContainer: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colorScheme.light.primary.white,
         zIndex: 1,
     },
     scrollView: {
@@ -18,22 +20,22 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     bloodPressureSugarImage: {
-        alignSelf: 'center',
+        alignSelf: align.default,
     },
     bloodSugarPressure: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        flexDirection: flexDirection.column,
+        justifyContent: justify.spaceBetween,
+        alignItems: align.default,
     },
     bloodSugar: {
-        marginTop: 50,
+        marginTop: spacing[7],
     },
     bloodPressureSugarTexts: {
-        marginTop: 20,
+        marginTop: spacing[5],
         color: 'blue',
     },
     backdrop: {
-        position: 'absolute',
+        position: position.absolute,
         top: 0,
         left: 0,
         right: 0,
