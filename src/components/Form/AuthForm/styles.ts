@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     height: heightPercentageToDP('5'),
-    borderColor: colorScheme.light.primary.darkBunny[30],
+    borderColor: colorScheme.light.primary.dark[30],
     borderWidth: borderWidth[1],
     borderRadius: borderRadius[1],
     paddingHorizontal: spacing[3],
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     alignItems: align.default,
   },
   buttonText: {
-    color: colorScheme.light.primary.brightBunny,
+    color: colorScheme.light.primary.bright,
     fontSize: fontSizes.body.b2,
   },
   errorText: {

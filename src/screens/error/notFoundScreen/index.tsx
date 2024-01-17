@@ -1,6 +1,7 @@
 import i18n from 'common/i18n/i18n';
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
+import { styles } from './styles';
 
 const NotFound: React.FC = () => {
   return (
@@ -9,19 +10,5 @@ const NotFound: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-});
 
 export default NotFound;

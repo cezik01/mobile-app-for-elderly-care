@@ -1,25 +1,27 @@
+import { theme } from "common/theme/theme";
 import { StyleSheet } from "react-native";
+
+const { align, borderRadius, borderWidth, fontSizes, justify, spacing } = theme.components;
 
 export const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
+        justifyContent: justify.default,
+        alignItems: align.default,
+        padding: spacing[5],
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: fontSizes.body.b2,
     },
     title: {
-        fontSize: 20,
-        marginBottom: 25,
+        fontSize: fontSizes.heading.h5,
+        marginBottom: spacing[6],
     },
     input: {
         width: '100%',
-        borderColor: 'gray',
-        borderWidth: 1,
-        padding: 10,
-        marginBottom: 15,
-        borderRadius: 5,
+        borderWidth: borderWidth[2],
+        padding: spacing[3],
+        marginBottom: spacing[4],
+        borderRadius: borderRadius[1],
     },
 });

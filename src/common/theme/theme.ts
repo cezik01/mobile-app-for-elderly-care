@@ -44,7 +44,7 @@ export const theme = {
     colorScheme: {
       light: {
         primary: {
-          purpleBunny: {
+          purple: {
             10: '#f1ecfd',
             20: '#e2dafb',
             30: '#d4c7fa',
@@ -64,7 +64,7 @@ export const theme = {
             170: '#211547',
             180: '#160e2f',
           },
-          greenBunny: {
+          green: {
             10: '#eafcf6',
             20: '#d4f9ed',
             30: '#bff6e4',
@@ -76,7 +76,7 @@ export const theme = {
             90: '#3fe5af',
             100: '#2AE2A6',
           },
-          darkBunny: {
+          dark: {
             10: '#e6e6e6',
             20: '#cccccc',
             30: '#b3b3b3',
@@ -88,9 +88,9 @@ export const theme = {
             90: '#1a1a1a',
             100: '#010101',
           },
-          canvasBunny: '#F7F7F7',
-          whiteBunny: '#FFFFFF',
-          brightBunny: '#F5F9FC',
+          canvas: '#F7F7F7',
+          white: '#FFFFFF',
+          bright: '#F5F9FC',
         },
         secondary: {
           Bubblegum: '#EA93BE',

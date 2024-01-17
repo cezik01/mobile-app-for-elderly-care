@@ -1,49 +1,49 @@
+import { theme } from "common/theme/theme";
 import { StyleSheet } from "react-native";
+
+const { align, colorScheme, fontSizes, fontWeights, flexDirection, justify, spacing } = theme.components;
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 50,
+        justifyContent: justify.default,
+        alignItems: align.default,
+        paddingTop: spacing[13],
     },
     errorText: {
-        color: 'red',
+        color: colorScheme.light.ascent.Error,
         marginRight: 'auto',
-        marginLeft: 40,
+        marginLeft: spacing[8],
     },
     input: {
         borderWidth: 1,
-        borderColor: 'gray',
         width: '80%',
-        padding: 10,
-        marginVertical: 10,
+        padding: spacing[3],
+        marginVertical: spacing[3],
     },
     contactItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '80%',
-        marginVertical: 5,
+        flexDirection: flexDirection.row,
+        justifyContent: justify.spaceBetween,
+        alignItems: align.default,
+        marginVertical: spacing[4],
     },
     title: {
-        marginBottom: 20,
-        fontSize: 20,
-        fontWeight: 'bold',
+        marginBottom: spacing[5],
+        fontSize: fontSizes.heading.h5,
+        fontWeight: fontWeights.bold,
         fontStyle: 'italic',
     },
     questionMarkIcon: {
         color: 'blue',
-        marginRight: 5,
-        marginBottom: 15,
+        marginRight: spacing[1],
+        marginTop: "auto",
+        marginBottom: spacing[5]
     },
     questionMarkContainer: {
-        flexDirection: 'row',
-        marginTop: '20%',
-        marginLeft: 5,
+        flexDirection: flexDirection.row,
     },
     helpText: {
-        fontSize: 20,
+        fontSize: fontSizes.heading.h5,
         color: 'blue',
     },
 });
