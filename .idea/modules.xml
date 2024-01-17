@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ntt_mobile_framework.iml" filepath="$PROJECT_DIR$/.idea/ntt_mobile_framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/elderly-mobile-care.iml" filepath="$PROJECT_DIR$/.idea/elderly-mobile-care.iml" />
     </modules>
   </component>
 </project>
