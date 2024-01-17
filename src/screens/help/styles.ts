@@ -1,32 +1,36 @@
+import { theme } from "common/theme/theme";
+import { widthPercentageToDP } from "helpers/dimension";
 import { StyleSheet } from "react-native";
+
+const { align, borderRadius, borderWidth, fontSizes, fontWeights, justify, spacing, textAlign } = theme.components;
 
 export const styles = StyleSheet.create({
     appInfo: {
-        fontSize: 18,
-        marginBottom: 90,
+        fontSize: fontSizes.heading.h6,
+        marginBottom: spacing[11],
         fontStyle: 'italic',
-        width: '95%',
+        width: widthPercentageToDP('95'),
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: fontSizes.body.b2,
     },
     screen: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: justify.default,
+        alignItems: align.default,
     },
     helpContainer: {
-        alignItems: 'center',
+        alignItems: align.default,
     },
     mic: {
-        marginTop: 20,
+        marginTop: spacing[5],
     },
     helpText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
+        fontSize: fontSizes.body.b2,
+        fontWeight: fontWeights.bold,
+        textAlign: textAlign.center,
     },
     voiceButtons: {
-        marginTop: 30,
+        marginTop: spacing[5],
     }
 });

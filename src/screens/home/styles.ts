@@ -4,12 +4,9 @@ import { StyleSheet } from 'react-native';
 const { justify, align } = theme.components;
 
 export const styles = StyleSheet.create({
-  container: {
+  title: {
+    flex: 1,
     justifyContent: justify.default,
-    alignSelf: align.default,
-    height: '100%',
-  },
-  text: {
-    alignSelf: align.default,
+    alignItems: align.default,
   },
 });
