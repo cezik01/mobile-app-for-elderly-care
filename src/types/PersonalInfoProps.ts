@@ -3,5 +3,4 @@ export interface PersonalInfoProps {
     weight: number;
     height: number;
     bloodType: string;
-    fontSizeValue: number;
 };
