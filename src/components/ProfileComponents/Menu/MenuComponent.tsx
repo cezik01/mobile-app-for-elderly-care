@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { styles } from './styles';
 import { MenuProps } from 'types/MenuProps';
 import { MenuComponentItemProps } from 'types/MenuComponentItemProps';

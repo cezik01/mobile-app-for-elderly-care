@@ -1,6 +1,5 @@
-import { horizontalScale, verticalScale } from 'helpers/dimension/scale';
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { PersonalInfoItemProps } from 'types/PersonalInfoItemProps';
 import { PersonalInfoProps } from 'types/PersonalInfoProps';
 import { styles } from './styles';

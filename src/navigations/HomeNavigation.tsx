@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationProp } from '@react-navigation/native';
-import TabBar from 'components/TabBar/TabBar';
+import TabBar from 'components/TabBar';
 import homeRoutes from 'routes/homeRoutes';
 
 export type ScreenNames = ['Home'];

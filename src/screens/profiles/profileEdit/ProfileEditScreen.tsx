@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Alert, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Alert, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update } from 'firebase/database';

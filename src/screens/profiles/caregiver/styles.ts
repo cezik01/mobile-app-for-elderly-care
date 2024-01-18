@@ -1,30 +1,29 @@
 import { theme } from 'common/theme/theme';
-import { heightPercentageToDP, widthPercentageToDP } from 'helpers/dimension';
+import { heightPercentageToDP } from 'helpers/dimension';
 import { StyleSheet } from 'react-native';
 
-
-const { spacing, colorScheme } = theme.components;
+const { align, borderRadius, borderWidth, fontSizes, fontWeights, spacing, colorScheme, position, justify } = theme.components;
 
 const styles = StyleSheet.create({
     screenContainer: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colorScheme.light.primary.white,
     },
     caregiverSidebar: {
-        height: '300%'
+        height: heightPercentageToDP('100'),
     },
     centeredView: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 15
+        justifyContent: justify.default,
+        alignItems: align.default,
+        marginTop: spacing[4],
     },
     modalView: {
         margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
+        backgroundColor: colorScheme.light.primary.white,
+        borderRadius: borderRadius[4],
+        padding: spacing[6],
+        alignItems: align.default,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -36,25 +35,25 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
+        margin: spacing[3],
+        borderWidth: borderWidth[2],
+        padding: spacing[2],
         width: 200,
     },
     patientProfile: {
-        padding: 20,
-        marginTop: 10,
-        backgroundColor: "#f0f0f0"
+        padding: spacing[4],
+        marginTop: spacing[2],
+        backgroundColor: colorScheme.light.primary.canvas,
     },
     modalContent: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "white",
-        padding: 20,
+        justifyContent: justify.default,
+        alignItems: align.default,
+        backgroundColor: colorScheme.light.primary.white,
+        padding: spacing[4],
     },
     backdrop: {
-        position: 'absolute',
+        position: position.absolute,
         top: 0,
         left: 0,
         right: 0,
@@ -63,28 +62,29 @@ const styles = StyleSheet.create({
     },
     centeredModalView: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 50,
+        justifyContent: justify.default,
+        alignItems: align.default,
+        marginTop: spacing[8],
     },
     selectPatient: {
-        marginVertical: 20,
+        marginVertical: spacing[4],
         color: "blue",
-        fontSize: 16,
-    }, sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginTop: 10,
+        fontSize: fontSizes.body.b2,
+    },
+    sectionTitle: {
+        fontSize: fontSizes.body.b1,
+        fontWeight: fontWeights.bold,
+        marginVertical: spacing[3],
     },
     reminderItem: {
-        marginTop: 5,
-        padding: 10,
+        marginTop: spacing[1],
+        padding: spacing[2],
         backgroundColor: '#f0f0f0',
-        borderRadius: 5,
+        borderRadius: borderRadius[1],
     },
     reminderText: {
-        fontSize: 16,
-        marginBottom: 5,
+        fontSize: fontSizes.body.b2,
+        marginBottom: spacing[1],
     },
 });
 

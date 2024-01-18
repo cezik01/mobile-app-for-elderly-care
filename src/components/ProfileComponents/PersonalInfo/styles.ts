@@ -1,30 +1,33 @@
+import { theme } from "common/theme/theme";
 import { horizontalScale, verticalScale } from "helpers/dimension/scale";
 import { StyleSheet } from "react-native";
 
+const { align, flexDirection, spacing, textAlign, justify } = theme.components;
+
 export const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10
+        flexDirection: flexDirection.row,
+        justifyContent: justify.default,
+        alignItems: align.default,
+        marginTop: spacing[2],
     },
     infoItem: {
-        alignItems: 'center',
+        alignItems: align.default,
         width: horizontalScale(160),
     },
     icon: {
-        width: 30,
-        height: 30,
-        marginBottom: 2,
+        width: horizontalScale(60),
+        height: verticalScale(35),
+        marginBottom: spacing[1],
     },
     infoText: {
-        textAlign: 'center',
-        paddingVertical: 10
+        textAlign: textAlign.center,
+        paddingVertical: spacing[3],
     },
     divider: {
         height: verticalScale(30),
-        width: 1,
+        width: horizontalScale(2),
         backgroundColor: '#000',
-        marginHorizontal: 9,
+        marginHorizontal: spacing[2],
     },
 });

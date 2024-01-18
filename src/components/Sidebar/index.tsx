@@ -31,14 +31,14 @@ export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogo
                         {i18n.t('Help')}
                     </Text>
                 </View>
-                <Text style={styles.helpInfoText}>{i18n.t('HelpInfo')}</Text>
+                <Text style={styles.infoText}>{i18n.t('HelpInfo')}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleFeedbackPress}>
                 <View style={styles.feedbackContainer}>
                     <MaterialIcons name='feedback' style={styles.feedbackIcon} size={25} />
                     <Text style={styles.feedbackText}>{i18n.t('Feedback')}</Text>
                 </View>
-                <Text style={styles.feedbackInfoText}>{i18n.t('FeedbackInfo')}</Text>
+                <Text style={styles.infoText}>{i18n.t('FeedbackInfo')}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
                 handleLogout().then(() => {

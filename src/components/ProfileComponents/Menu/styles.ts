@@ -1,29 +1,33 @@
+import { theme } from "common/theme/theme";
+import { horizontalScale, verticalScale } from "helpers/dimension/scale";
 import { StyleSheet } from "react-native";
+
+const { align, borderWidth, colorScheme, fontSizes, flexDirection, position, spacing, textAlign, justify } = theme.components;
 
 export const styles = StyleSheet.create({
     menuContainer: {
-        position: 'absolute',
+        position: position.absolute,
         bottom: 0,
         left: 0,
         right: 0,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        padding: 10,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
+        flexDirection: flexDirection.row,
+        justifyContent: justify.spaceAround,
+        alignItems: align.default,
+        padding: spacing[2],
+        backgroundColor: colorScheme.light.primary.white,
+        borderTopWidth: borderWidth[2],
         borderTopColor: '#ddd',
     },
     menuItem: {
-        alignItems: 'center',
+        alignItems: align.default,
     },
     menuIcon: {
-        width: 30,
-        height: 30,
+        width: horizontalScale(60),
+        height: verticalScale(40),
     },
     menuText: {
-        fontSize: 20,
-        textAlign: 'center',
-        marginTop: 5,
+        fontSize: fontSizes.heading.h5,
+        textAlign: textAlign.center,
+        marginTop: spacing[1],
     },
 });

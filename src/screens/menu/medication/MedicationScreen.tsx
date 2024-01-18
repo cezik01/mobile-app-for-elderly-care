@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, TouchableOpacity, Alert } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Notification } from 'expo-notifications';
 import { initializeApp } from 'firebase/app';

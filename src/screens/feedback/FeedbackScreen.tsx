@@ -1,6 +1,6 @@
 import i18n from 'common/i18n/i18n';
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Alert } from 'react-native';
 import { HelpScreenProps } from 'types/screen/HelpScreenProps';
 import { Button } from 'react-native-paper';
 import { ref, getDatabase, push } from 'firebase/database';

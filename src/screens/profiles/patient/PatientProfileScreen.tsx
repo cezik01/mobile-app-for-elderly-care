@@ -69,7 +69,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   };
 
   const handleNotificationsPress = () => {
-    navigation.navigate('NotificationsScreen');
+    navigation.navigate('Notifications Screen');
   };
 
   const handleMenuPress = () => {
