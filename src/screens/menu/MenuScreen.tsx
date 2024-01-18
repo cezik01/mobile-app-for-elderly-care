@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import i18n from 'common/i18n/i18n';
 import MenuComponent from 'components/ProfileComponents/Menu/MenuComponent';
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { MenuItemProps } from 'types/MenuItemProps';
 import { MenuScreenProps } from 'types/MenuScreenProps';
 import { styles } from './styles';
@@ -58,11 +58,6 @@ const MenuScreen = ({ navigation }: MenuScreenProps) => {
             icon={require('../../../assets/menu/medicationAppointment.png')}
             text='Medical Appointment'
             onPress={handleAppointmentPress}
-          />
-          <MenuItem
-            icon={require('../../../assets/menu/fontSettings.png')}
-            text='Font Settings'
-            onPress={handleFontSettingsPress}
           />
           <MenuItem
             icon={require('../../../assets/menu/contacts.png')}

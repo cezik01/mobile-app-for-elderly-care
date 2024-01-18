@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Pressable, Image, TouchableOpacity, ScrollView } from 'react-native';
 import ProfileHeader from 'components/ProfileComponents/ProfileHeader/ProfileHeader';
 import PersonalInfo from 'components/ProfileComponents/PersonalInfo/PersonalInfo';
 import MenuComponent from 'components/ProfileComponents/Menu/MenuComponent';
@@ -10,7 +10,6 @@ import i18n from 'common/i18n/i18n';
 import { determineAverageBloodPressureStatus } from 'helpers/bloodPressure';
 import { PatientData } from 'types/PatientData';
 import { determineAverageBloodSugarStatus } from 'helpers/bloodSugar';
-import FontSizeContext from '../../../context/FontSizeContext';
 import { handleLogout } from 'helpers/firebaseAuth/AuthService';
 import { Sidebar } from 'components/Sidebar';
 import styles from './styles';
@@ -19,19 +18,8 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   const [userData, setUserData] = useState<PatientData>({});
   const [bloodPressureStatus, setBloodPressureStatus] = useState('Normal');
   const [bloodSugarStatus, setBloodSugarStatus] = useState('Normal');
-  const { fontSize } = useContext(FontSizeContext);
   const [isSidebarVisible, setSidebarVisible] = useState(false);
-
-  type FontSizeKey = 'small' | 'medium' | 'large';
-
-  const fontSizeMap: { [key in FontSizeKey]: number } = {
-    small: 14,
-    medium: 16,
-    large: 18,
-  };
-
-  const fontSizeValue = fontSizeMap[fontSize as FontSizeKey];
-
+ 
   useEffect(() => {
 
     const auth = getAuth();
@@ -130,20 +118,19 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
             weight={userData.weight || 0}
             height={userData.height || 0}
             bloodType={userData.bloodType || "N/A"}
-            fontSizeValue={fontSizeValue}
           />
           <View style={styles.bloodSugarPressure}>
             <Pressable onPress={handleBloodPressurePress}>
               <Image source={require('../../../../assets/profiles/Graph.png')} style={styles.bloodPressureSugarImage} />
-              <Text style={[styles.bloodPressureSugarTexts, { fontSize: fontSizeValue }]}>{i18n.t('BloodPressureEntrance')}</Text>
-              <Text style={[styles.bloodStatus, { fontSize: fontSizeValue }]}>
+              <Text style={[styles.bloodPressureSugarTexts]}>{i18n.t('BloodPressureEntrance')}</Text>
+              <Text style={[styles.bloodStatus]}>
                 {i18n.t('BloodPressureStatus')}: {bloodPressureStatus}
               </Text>
             </Pressable>
             <Pressable onPress={handleBloodSugarPress} style={styles.bloodSugar}>
               <Image source={require('../../../../assets/profiles/Group.png')} style={styles.bloodPressureSugarImage} />
-              <Text style={[styles.bloodPressureSugarTexts, { fontSize: fontSizeValue }]}>{i18n.t('BloodSugarEntrance')}</Text>
-              <Text style={[styles.bloodStatus, { fontSize: fontSizeValue }]}>{i18n.t('BloodSugarStatus')}: {bloodSugarStatus}</Text>
+              <Text style={[styles.bloodPressureSugarTexts]}>{i18n.t('BloodSugarEntrance')}</Text>
+              <Text style={[styles.bloodStatus]}>{i18n.t('BloodSugarStatus')}: {bloodSugarStatus}</Text>
             </Pressable>
           </View>
 

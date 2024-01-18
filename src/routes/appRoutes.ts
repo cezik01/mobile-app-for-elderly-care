@@ -10,7 +10,7 @@ import AppointmentScreen from 'screens/menu/appointment/AppointmentScreen';
 import MenuScreen from 'screens/menu/MenuScreen'
 import BloodPressureScreen from 'components/ProfileComponents/BloodPressure/BloodPressure';
 import BloodSugarScreen from 'components/ProfileComponents/BloodSuggar/BloodSuggar';
-import FontSettingsScreen from 'screens/features/fontSettings/FontSettingsScreen';
+
 import ContactsScreen from 'screens/features/contacts/ContactsScreen';
 import PasswordReset from 'screens/auth/login/PasswordReset';
 import HelpScreen from 'screens/help/HelpScreen';
@@ -68,10 +68,6 @@ const appRoutes = [
   {
     name: 'Contacts Screen',
     component: ContactsScreen,
-  },
-  {
-    name: 'Font Settings Screen',
-    component: FontSettingsScreen,
   },
   {
     name: 'PasswordReset',

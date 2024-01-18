@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Alert, Modal, Text, TextInput, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { View, Button, Alert, Modal, Text, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import ProfileHeader from '../../../components/ProfileComponents/ProfileHeader/ProfileHeader';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, get } from 'firebase/database';
@@ -15,6 +15,7 @@ import * as Notifications from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from 'config/firebaseConfig';
 import styles from './styles';
+import { Reminder } from 'types/MedicationReminderProps';
 
 const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<CaregiverData>({});
@@ -58,6 +59,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       });
     }
   }, []);
+  
   const registerForPushNotificationsAsync = async () => {
     const { status } = await Notifications.requestPermissionsAsync();
     if (status !== 'granted') {
@@ -80,6 +82,31 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       trigger: notificationTime,
     });
   };
+  const scheduleMedicationReminderNotification = async (reminder: Reminder) => {
+    const reminderTime = new Date(reminder.date);
+    const notificationTime = new Date(reminderTime);
+    notificationTime.setMinutes(notificationTime.getMinutes());
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "İlaç Alma Hatırlatma",
+        body: `İlacınız: ${reminder.name}, Dozaj: ${reminder.dosage}`,
+        data: { reminderId: reminder.notificationId }, 
+        sound: 'default',
+      },
+      trigger: notificationTime,
+    });
+  };
+  
+  useEffect(() => {
+    if (selectedPatientProfile) {
+      const medicationReminders = selectedPatientProfile.medicationReminders;
+      if (medicationReminders && Object.keys(medicationReminders).length > 0) {
+        Object.values(medicationReminders).forEach(reminder => {
+          scheduleMedicationReminderNotification(reminder);
+        });
+      }
+    }
+  }, [selectedPatientProfile?.medicationReminders]);
 
   useEffect(() => {
     if (selectedPatientId) {
@@ -98,6 +125,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
 
       return () => unsubscribe();
     }
+    
   }, [selectedPatientId]);
 
   const fetchPatientData = async (toUserId: string) => {
@@ -112,7 +140,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         const patientProfileWithReminders = {
           ...patientData,
           appointmentReminders: patientData.appointmentReminders || {},
-          medicationReminders: patientData.medicationReminders || {}
+          medicationReminders: patientData.reminders || {}
         };
 
         setSelectedPatientProfile(patientProfileWithReminders);
@@ -126,13 +154,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       Alert.alert("Error", "An error occurred while fetching patient data.");
       setIsProfileModalVisible(false);
     }
-  };
-
-  const filterUpcomingAppointments = (appointments: { [key: string]: AppointmentReminder }) => {
-    const today = new Date();
-    return Object.entries(appointments)
-      .filter(([key, reminder]) => new Date(reminder.date) >= today)
-      .reduce((acc, [key, reminder]) => ({ ...acc, [key]: reminder }), {});
   };
 
 
@@ -210,6 +231,13 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         </View>
       </Modal>
       {invitationSent && <Text>{i18n.t('InvitationSuccess')}</Text>}
+      {patients.length > 0 && (
+        <View>
+          {patients.map((patientId) => (
+            <Button key={patientId} title={`Click here for access Patient Datas with Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} color="blue" />
+          ))}
+        </View>
+      )}
 
       {selectedPatientProfile ? (
         <View style={styles.patientProfile}>
@@ -237,12 +265,10 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
             </View>
           )}
 
-          {selectedPatientProfile.medicationReminders && (
+          {selectedPatientProfile.medicationReminders && Object.keys(selectedPatientProfile.medicationReminders).length > 0 ?  (
             <View>
-
-              <Text style={styles.sectionTitle}>{i18n.t('Medication Reminders')}:</Text>
+              <Text style={styles.sectionTitle}>{i18n.t('MedicationReminders')}:</Text>
               {Object.entries(selectedPatientProfile.medicationReminders).map(([key, reminder]) => (
-
                 <View key={key} style={styles.reminderItem}>
                   <Text>{i18n.t('MedicationName')}: {reminder.name}</Text>
                   <Text>{i18n.t('Dosage')}: {reminder.dosage}</Text>
@@ -251,34 +277,18 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
                 </View>
               ))}
             </View>
+            ) : (
+              <Text>No medication reminders available.</Text>
           )}
         </View>
       ) : (
         <Text style={styles.selectPatient}>{i18n.t('SelectPatient')}</Text>
       )}
-      {patients.length > 0 && (
-        <View>
-          {patients.map((patientId) => (
-            <Button key={patientId} title={`Click here for access Patient Datas with Patient ID: ${patientId}`} onPress={() => onPatientSelect(patientId)} color="blue" />
-          ))}
-        </View>
-      )}
-
+      
 
       {isSidebarVisible && (
         <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='caregiver' />
       )}
-      <FlatList
-        data={reminders}
-        renderItem={({ item }) => (
-          <View style={styles.reminderItem}>
-            <Text style={styles.reminderText}>{i18n.t('Hospital')}: {item.hospitalName}</Text>
-            <Text style={styles.reminderText}>{i18n.t('Doctor')}: {item.doctorName}</Text>
-            <Text style={styles.reminderText}>{i18n.t('DateWithTime')}: {item.date}</Text>
-          </View>
-        )}
-        keyExtractor={item => item.id}
-      />
     </ScrollView>
   );
 };
