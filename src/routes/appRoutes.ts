@@ -10,7 +10,6 @@ import AppointmentScreen from 'screens/menu/appointment/AppointmentScreen';
 import MenuScreen from 'screens/menu/MenuScreen'
 import BloodPressureScreen from 'components/ProfileComponents/BloodPressure/BloodPressure';
 import BloodSugarScreen from 'components/ProfileComponents/BloodSugar/BloodSugar';
-
 import ContactsScreen from 'screens/features/contacts/ContactsScreen';
 import PasswordReset from 'screens/auth/login/PasswordReset';
 import HelpScreen from 'screens/help/HelpScreen';

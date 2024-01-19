@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSizes.body.b2,
   },
   errorText: {
-    color: 'red',
+    color: colorScheme.light.ascent.Error,
     marginBottom: spacing[4],
     marginRight: "auto",
     marginLeft: spacing[2]
