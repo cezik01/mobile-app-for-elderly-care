@@ -1,6 +1,6 @@
 React-Native Expo Mobile App
 
-## Yükleme
+## Upload
 
 ```bash
   1 - git clone https://github.com/xebelge/elderly-care-mobile-app.git
