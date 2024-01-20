@@ -43,6 +43,7 @@
   "Logout": "Logout",
   "MedicationName": "Medication Name",
   "MedicationReminders": "Medication Reminders",
+  "NoMedicationReminders": "No medication reminders available.",
   "MonthlyChart": "Monthly Chart",
   "Name": "Name",
   "Pause": "Pause",

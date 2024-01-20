@@ -59,7 +59,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       });
     }
   }, []);
-  
+
   const registerForPushNotificationsAsync = async () => {
     const { status } = await Notifications.requestPermissionsAsync();
     if (status !== 'granted') {
@@ -90,13 +90,13 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       content: {
         title: "İlaç Alma Hatırlatma",
         body: `İlacınız: ${reminder.name}, Dozaj: ${reminder.dosage}`,
-        data: { reminderId: reminder.notificationId }, 
+        data: { reminderId: reminder.notificationId },
         sound: 'default',
       },
       trigger: notificationTime,
     });
   };
-  
+
   useEffect(() => {
     if (selectedPatientProfile) {
       const medicationReminders = selectedPatientProfile.medicationReminders;
@@ -125,7 +125,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
 
       return () => unsubscribe();
     }
-    
+
   }, [selectedPatientId]);
 
   const fetchPatientData = async (toUserId: string) => {
@@ -156,22 +156,17 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     }
   };
 
-
   const onPatientSelect = (patientId: string) => {
     setSelectedPatientId(patientId);
     fetchPatientData(patientId);
   };
 
-  const handleEditPress = () => {
-    navigation.navigate('Profile Edit Screen');
-  };
-
-  const handleNotificationsPress = () => {
-    console.log('Notifications button pressed');
-  };
-
   const handleMenuPress = () => {
     toggleSidebar();
+  };
+
+  const handleEditPress = () => {
+    navigation.navigate('Profile Edit Screen', { role: 'caregiver' })
   };
 
   const handleSendInvitation = () => {
@@ -204,7 +199,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
         name={userData.name || "Name"}
         surname={userData.surname || "Surname"}
         city={userData.city || "City"}
-        onEditPress={() => navigation.navigate('Profile Edit Screen')}
+        onEditPress={handleEditPress}
         onNotificationsPress={() => navigation.navigate('Notifications Screen')}
         onMenuPress={handleMenuPress}
       />
@@ -264,7 +259,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
             </View>
           )}
 
-          {selectedPatientProfile.medicationReminders && Object.keys(selectedPatientProfile.medicationReminders).length > 0 ?  (
+          {selectedPatientProfile.medicationReminders && Object.keys(selectedPatientProfile.medicationReminders).length > 0 ? (
             <View>
               <Text style={styles.sectionTitle}>{i18n.t('MedicationReminders')}:</Text>
               {Object.entries(selectedPatientProfile.medicationReminders).map(([key, reminder]) => (
@@ -276,14 +271,13 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
                 </View>
               ))}
             </View>
-            ) : (
-              <Text>No medication reminders available.</Text>
+          ) : (
+            <Text>{i18n.t('NoMedicationReminders')}</Text>
           )}
         </View>
       ) : (
         <Text style={styles.selectPatient}>{i18n.t('SelectPatient')}</Text>
       )}
-      
 
       {isSidebarVisible && (
         <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='caregiver' />

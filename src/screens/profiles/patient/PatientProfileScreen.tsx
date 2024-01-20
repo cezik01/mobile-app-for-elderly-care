@@ -64,7 +64,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   }, []);
 
   const handleEditPress = () => {
-    navigation.navigate('Profile Edit Screen');
+    navigation.navigate('Profile Edit Screen', { role: 'patient' })
   };
 
   const handleNotificationsPress = () => {

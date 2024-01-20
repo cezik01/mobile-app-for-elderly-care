@@ -43,6 +43,7 @@
   "Logout": "Çıkış Yap",
   "MedicationName": "İlaç Adı",
   "MedicationReminders": "İlaç Hatırlatıcıları",
+  "NoMedicationReminders": "İlaç hatırlatıcısı bulunmamaktadır.",
   "MonthlyChart": "Aylık Grafik",
   "Name": "İsim",
   "Pause": "Duraklat",

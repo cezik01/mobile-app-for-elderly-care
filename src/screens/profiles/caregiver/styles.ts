@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     },
     selectPatient: {
         marginVertical: spacing[4],
-        color: "blue",
         fontSize: fontSizes.body.b2,
     },
     sectionTitle: {

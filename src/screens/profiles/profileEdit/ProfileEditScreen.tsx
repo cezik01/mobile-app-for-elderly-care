@@ -8,8 +8,11 @@ import { Menu, Provider } from 'react-native-paper';
 import i18n from 'common/i18n/i18n';
 import styles from './styles';
 import { ScrollView } from 'native-base';
+import { ProfileEditProps } from 'types/ProfileEditProps';
+import { ProfileEditScreenProps } from 'types/screen/ProfileEditScreenProps';
 
-const ProfileEditScreen = () => {
+const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
+  const { role } = route?.params;
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'];
   const navigation = useNavigation();
   const [name, setName] = useState('');
