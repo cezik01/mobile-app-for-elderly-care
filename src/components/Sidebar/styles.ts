@@ -1,4 +1,5 @@
 import { theme } from 'common/theme/theme';
+import { heightPercentageToDP } from 'helpers/dimension';
 import { horizontalScale, moderateScale, verticalScale } from 'helpers/dimension/scale';
 import { StyleSheet } from 'react-native';
 
@@ -11,7 +12,6 @@ export const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         width: horizontalScale(360),
-        minHeight: verticalScale(915),
         backgroundColor: '#004d99',
         opacity: 0.95,
         zIndex: 2,
