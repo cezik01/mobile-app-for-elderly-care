@@ -23,8 +23,7 @@ export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogo
             <TouchableOpacity onPress={() => setSidebarVisible(false)} style={styles.menuIconContainer}>
                 <Image source={require('../../../assets/profiles/Menu.png')} style={styles.menuIcon} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleHelpPress}
-            >
+            <TouchableOpacity onPress={handleHelpPress}>
                 <View style={styles.questionMarkContainer}>
                     <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
                     <Text style={styles.helpText}>

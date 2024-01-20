@@ -7,17 +7,21 @@ import { signUp } from 'helpers/firebaseAuth/AuthService';
 import { FirebaseError } from 'firebase/app';
 import { useState } from 'react';
 import { Button, Menu } from 'react-native-paper';
-
 import i18n from 'common/i18n/i18n';
 
 const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
-  const [role, setRole] = useState('patient');
+  const [role, setRole] = useState('');
   const [visible, setVisible] = useState(false);
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
   const handleRegistration = async (values: { email: string; password: string }) => {
+    if (!role) {
+      Alert.alert('Registration Error', 'Please select your Role to continue.');
+      return;
+    }
+
     try {
       await signUp(values.email, values.password, role);
       navigation.navigate('Login');
@@ -34,7 +38,6 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
           case 'auth/weak-password':
             errorMessage = 'Password should be at least 6 characters.';
             break;
-
           default:
             errorMessage = 'An error occurred during registration. Please try again.';
         }
@@ -46,7 +49,7 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
   };
 
   return (
-    <AuthForm onSubmit={handleRegistration} buttonTitle="SignUp" showForgotPassword={false}>
+    <AuthForm onSubmit={handleRegistration} buttonTitle="SignUp">
       <View style={styles.pickerContainer}>
         <Menu
           visible={visible}
@@ -56,8 +59,16 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
               {role ? role : i18n.t('SelectYourRole')}
             </Button>
           }>
-          <Menu.Item onPress={() => { setRole('Patient'); closeMenu(); }} title={i18n.t('Patient')} />
-          <Menu.Item onPress={() => { setRole('Caregiver'); closeMenu(); }} title={i18n.t('Caregiver')} />
+          <Menu.Item onPress={() => {
+            setRole('Patient');
+            closeMenu();
+          }}
+            title={i18n.t('Patient')} />
+          <Menu.Item onPress={() => {
+            setRole('Caregiver');
+            closeMenu();
+          }}
+            title={i18n.t('Caregiver')} />
         </Menu>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>

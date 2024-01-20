@@ -172,8 +172,7 @@ const BloodSugarScreen = ({ navigation }: BloodEntryProps) => {
             />
           </>
         )}
-        <TouchableOpacity onPress={handleHelpPress}
-        >
+        <TouchableOpacity onPress={handleHelpPress} style={styles.helpContainer}>
           <View style={styles.questionMarkContainer}>
             <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
             <Text style={styles.helpText}>

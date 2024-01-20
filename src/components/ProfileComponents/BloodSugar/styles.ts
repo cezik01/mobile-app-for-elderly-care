@@ -43,7 +43,6 @@ export const styles = StyleSheet.create({
     questionMarkIcon: {
         color: 'blue',
         marginRight: spacing[1],
-        marginBottom: spacing[3],
     },
     questionMarkContainer: {
         flexDirection: flexDirection.row,
@@ -53,4 +52,8 @@ export const styles = StyleSheet.create({
         fontSize: fontSizes.heading.h5,
         color: 'blue',
     },
+    helpContainer: {
+        marginTop: "auto",
+        marginBottom: spacing[5],
+    }
 });

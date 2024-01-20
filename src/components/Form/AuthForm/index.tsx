@@ -50,7 +50,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, buttonTitle, showForgotPa
             onBlur={handleBlur('email')}
             value={values.email}
           />
-          {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+          {touched.email && errors.email &&
+            <Text style={styles.errorText}>{errors.email}</Text>
+          }
 
           <View style={styles.passwordContainer}>
             <TextInput
@@ -69,7 +71,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, buttonTitle, showForgotPa
               />
             </TouchableOpacity>
           </View>
-          {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+          {touched.password && errors.password &&
+            <Text style={styles.errorText}>{errors.password}</Text>
+          }
 
           <TouchableOpacity
             style={styles.button}
@@ -88,7 +92,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, buttonTitle, showForgotPa
             <View>
               <TextInput
                 style={[styles.textInput, styles.forgotPasswordTextInput]}
-                placeholder="Enter your email for password reset"
+                placeholder="Enter your Email for Password Reset"
                 onChangeText={setResetEmail}
                 value={resetEmail}
               />

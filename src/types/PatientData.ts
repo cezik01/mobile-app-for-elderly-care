@@ -11,5 +11,4 @@ export interface PatientData {
     bloodType?: string;
     appointmentReminders?: { [key: string]: AppointmentReminder };
     medicationReminders?: {[key: string]: Reminder};
-    
 }

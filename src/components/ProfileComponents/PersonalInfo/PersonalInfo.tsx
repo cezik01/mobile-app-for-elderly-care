@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import { PersonalInfoItemProps } from 'types/PersonalInfoItemProps';
+import { View } from 'react-native';
 import { PersonalInfoProps } from 'types/PersonalInfoProps';
 import { styles } from './styles';
+import PersonalInfoItem from './PersonalInfoItem';
 
 const PersonalInfo = ({ age, weight, height, bloodType }: PersonalInfoProps) => {
   return (
@@ -14,15 +14,6 @@ const PersonalInfo = ({ age, weight, height, bloodType }: PersonalInfoProps) => 
       <PersonalInfoItem icon={require('../../../../assets/profiles/Height.png')} label={`Height: ${height.toString()}`} />
       <View style={styles.divider} />
       <PersonalInfoItem icon={require('../../../../assets/profiles/BloodType.png')} label={`Blood Type: ${bloodType}`} />
-    </View>
-  );
-};
-
-const PersonalInfoItem = ({ icon, label }: PersonalInfoItemProps) => {
-  return (
-    <View style={styles.infoItem}>
-      <Image source={icon} style={styles.icon} resizeMode="contain" />
-      <Text style={styles.infoText}>{label}</Text>
     </View>
   );
 };

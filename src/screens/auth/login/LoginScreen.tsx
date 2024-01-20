@@ -19,6 +19,8 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         navigation.navigate('Caregiver Profile');
       } else if (role === 'patient') {
         navigation.navigate('Patient Profile');
+      } else {
+        Alert.alert('Login Error', 'Role not found.');
       }
     } catch (error) {
       let errorMessage = '';

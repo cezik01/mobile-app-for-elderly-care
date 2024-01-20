@@ -197,7 +197,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     <TouchableOpacity style={styles.backdrop} onPress={() => setSidebarVisible(false)} />
   );
 
-
   return (
     <ScrollView style={styles.screenContainer}>
       {isSidebarVisible && <Backdrop />}

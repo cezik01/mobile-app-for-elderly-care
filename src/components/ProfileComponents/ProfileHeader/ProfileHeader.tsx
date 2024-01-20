@@ -9,17 +9,16 @@ const ProfileHeader = ({ name, surname, city, onEditPress, onNotificationsPress,
   const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const pickImage = async () => {
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
       alert('Need permission to access photos');
       return;
     }
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    const pickerResult = await ImagePicker.launchImageLibraryAsync();
     if (!pickerResult.canceled) {
       setProfileImage((pickerResult as any).uri);
     };
   };
-  
 
   return (
     <View style={styles.headerContainer}>

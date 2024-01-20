@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Menu, Provider } from 'react-native-paper';
 import i18n from 'common/i18n/i18n';
 import styles from './styles';
+import { ScrollView } from 'native-base';
 
 const ProfileEditScreen = () => {
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'];
@@ -62,95 +63,97 @@ const ProfileEditScreen = () => {
 
   return (
     <Provider>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>{i18n.t('Name')}:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your name"
-            value={name}
-            onChangeText={setName}
-          />
-        </View>
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>{i18n.t('Name')}:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your name"
+              value={name}
+              onChangeText={setName}
+            />
+          </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>{i18n.t('Surname')}:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your surname"
-            value={surname}
-            onChangeText={setSurname}
-          />
-        </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>{i18n.t('Surname')}:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your surname"
+              value={surname}
+              onChangeText={setSurname}
+            />
+          </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>{i18n.t('City')}:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your city"
-            value={city}
-            onChangeText={setCity}
-          />
-        </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>{i18n.t('City')}:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your city"
+              value={city}
+              onChangeText={setCity}
+            />
+          </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>{i18n.t('Age')}:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your age"
-            value={age === '' ? '' : age.toString()}
-            onChangeText={text => setAge(text ? parseInt(text, 10) : '')}
-            keyboardType="numeric"
-          />
-        </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>{i18n.t('Age')}:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your age"
+              value={age === '' ? '' : age.toString()}
+              onChangeText={text => setAge(text ? parseInt(text, 10) : '')}
+              keyboardType="numeric"
+            />
+          </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>{i18n.t('Height')}:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your height in cm"
-            value={height === '' ? '' : height.toString()}
-            onChangeText={text => setHeight(text ? parseInt(text, 10) : '')}
-            keyboardType="numeric"
-          />
-        </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>{i18n.t('Height')}:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your height in cm"
+              value={height === '' ? '' : height.toString()}
+              onChangeText={text => setHeight(text ? parseInt(text, 10) : '')}
+              keyboardType="numeric"
+            />
+          </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>{i18n.t('Weight')}:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your weight in kg"
-            value={weight === '' ? '' : weight.toString()}
-            onChangeText={text => setWeight(text ? parseInt(text, 10) : '')}
-            keyboardType="numeric"
-          />
-        </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>{i18n.t('Weight')}:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your weight in kg"
+              value={weight === '' ? '' : weight.toString()}
+              onChangeText={text => setWeight(text ? parseInt(text, 10) : '')}
+              keyboardType="numeric"
+            />
+          </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>{i18n.t('BloodType')}:</Text>
-          <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={
-              <Text onPress={openMenu} style={styles.dropdownAnchor}>
-                {bloodType || "Select Blood Type"}
-              </Text>
-            }>
-            {bloodTypes.map((type, index) => (
-              <Menu.Item
-                key={index}
-                title={type}
-                onPress={() => {
-                  setBloodType(type);
-                  closeMenu();
-                }}
-              />
-            ))}
-          </Menu>
-        </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>{i18n.t('BloodType')}:</Text>
+            <Menu
+              visible={visible}
+              onDismiss={closeMenu}
+              anchor={
+                <Text onPress={openMenu} style={styles.dropdownAnchor}>
+                  {bloodType || "Select Blood Type"}
+                </Text>
+              }>
+              {bloodTypes.map((type, index) => (
+                <Menu.Item
+                  key={index}
+                  title={type}
+                  onPress={() => {
+                    setBloodType(type);
+                    closeMenu();
+                  }}
+                />
+              ))}
+            </Menu>
+          </View>
 
-        <Button onPress={handleSave} labelStyle={styles.buttonText}>{i18n.t('Save')}</Button>
-      </View>
+          <Button onPress={handleSave} labelStyle={styles.buttonText}>{i18n.t('Save')}</Button>
+        </View>
+      </ScrollView>
     </Provider>
   );
 };

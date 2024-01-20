@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import firebaseConfig from 'config/firebaseConfig';
 import { getDatabase, ref, get, set } from 'firebase/database';
 
@@ -28,12 +28,9 @@ export const signUp = async (email: string, password: string, role: string): Pro
 };
 
 export const signIn = async (email: string, password: string): Promise<{ role: string, uid: string }> => {
-  const auth = getAuth();
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const uid = userCredential.user.uid;
-
-    const db = getDatabase();
     const userRef = ref(db, `users/${uid}/role`);
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
@@ -49,7 +46,6 @@ export const signIn = async (email: string, password: string): Promise<{ role: s
 };
 
 export const handleLogout = (): Promise<void> => {
-  const auth = getAuth();
   return auth.signOut();
 };
 

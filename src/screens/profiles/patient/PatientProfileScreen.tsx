@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, Pressable, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import ProfileHeader from 'components/ProfileComponents/ProfileHeader/ProfileHeader';
 import PersonalInfo from 'components/ProfileComponents/PersonalInfo/PersonalInfo';
 import MenuComponent from 'components/ProfileComponents/Menu/MenuComponent';
@@ -19,9 +19,8 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   const [bloodPressureStatus, setBloodPressureStatus] = useState('Normal');
   const [bloodSugarStatus, setBloodSugarStatus] = useState('Normal');
   const [isSidebarVisible, setSidebarVisible] = useState(false);
- 
-  useEffect(() => {
 
+  useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
     const db = getDatabase();
@@ -117,26 +116,26 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
             age={userData.age || 0}
             weight={userData.weight || 0}
             height={userData.height || 0}
-            bloodType={userData.bloodType || "N/A"}
+            bloodType={userData.bloodType || "-"}
           />
           <View style={styles.bloodSugarPressure}>
-            <Pressable onPress={handleBloodPressurePress}>
+            <TouchableOpacity onPress={handleBloodPressurePress}>
               <Image source={require('../../../../assets/profiles/Graph.png')} style={styles.bloodPressureSugarImage} />
               <Text style={[styles.bloodPressureSugarTexts]}>{i18n.t('BloodPressureEntrance')}</Text>
               <Text style={[styles.bloodStatus]}>
                 {i18n.t('BloodPressureStatus')}: {bloodPressureStatus}
               </Text>
-            </Pressable>
-            <Pressable onPress={handleBloodSugarPress} style={styles.bloodSugar}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleBloodSugarPress} style={styles.bloodSugar}>
               <Image source={require('../../../../assets/profiles/Group.png')} style={styles.bloodPressureSugarImage} />
               <Text style={[styles.bloodPressureSugarTexts]}>{i18n.t('BloodSugarEntrance')}</Text>
               <Text style={[styles.bloodStatus]}>{i18n.t('BloodSugarStatus')}: {bloodSugarStatus}</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
-
           {isSidebarVisible && <Sidebar setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='patient' />}
         </View>
       </ScrollView>
+
       <MenuComponent
         onMedicationPress={handleMedicationPress}
         onMenuPress={handleMenuIconPress}
