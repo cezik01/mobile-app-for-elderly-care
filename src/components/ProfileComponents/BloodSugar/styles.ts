@@ -1,5 +1,6 @@
 import { theme } from 'common/theme/theme';
 import { widthPercentageToDP, heightPercentageToDP } from 'helpers/dimension';
+import { verticalScale } from 'helpers/dimension/scale';
 import { StyleSheet } from 'react-native';
 
 const { align, borderRadius, borderWidth, colorScheme, fontSizes, flexDirection, fontWeights, spacing, textAlign } = theme.components;
@@ -21,7 +22,7 @@ export const styles = StyleSheet.create({
     },
     input: {
         width: widthPercentageToDP('70'),
-        height: heightPercentageToDP('4'),
+        height: spacing[7],
         borderColor: '#6495ED',
         borderWidth: borderWidth[2],
         borderRadius: borderRadius[1],

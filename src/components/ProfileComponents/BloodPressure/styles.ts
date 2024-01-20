@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     },
     input: {
         width: widthPercentageToDP('70'),
-        height: heightPercentageToDP('4'),
+        height: spacing[7],
         borderColor: '#6495ED',
         borderWidth: borderWidth[2],
         borderRadius: borderRadius[1],
