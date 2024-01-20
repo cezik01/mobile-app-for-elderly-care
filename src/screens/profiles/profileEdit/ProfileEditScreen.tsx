@@ -8,11 +8,10 @@ import { Menu, Provider } from 'react-native-paper';
 import i18n from 'common/i18n/i18n';
 import styles from './styles';
 import { ScrollView } from 'native-base';
-import { ProfileEditProps } from 'types/ProfileEditProps';
 import { ProfileEditScreenProps } from 'types/screen/ProfileEditScreenProps';
 
 const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
-  const { role } = route?.params;
+  const { role } = route.params;
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'];
   const navigation = useNavigation();
   const [name, setName] = useState('');
@@ -23,6 +22,8 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
   const [weight, setWeight] = useState<number | ''>('');
   const [bloodType, setBloodType] = useState('');
   const [visible, setVisible] = useState(false);
+
+  const isPatient = role === 'patient';
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -36,24 +37,31 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
         setName(data.name || '');
         setSurname(data.surname || '');
         setCity(data.city || '');
-        setAge(data.age || '');
-        setHeight(data.height || '');
-        setWeight(data.weight || '');
-        setBloodType(data.bloodType || '');
+        if (isPatient) {
+          setAge(data.age || '');
+          setHeight(data.height || '');
+          setWeight(data.weight || '');
+          setBloodType(data.bloodType || '');
+        }
       });
     }
-  }, []);
+  }, [user, isPatient]);
 
   const handleSave = async () => {
     if (user) {
       const updates: { [key: string]: any } = {};
       updates['/users/' + user.uid + '/name'] = name;
       updates['/users/' + user.uid + '/surname'] = surname;
-      updates['/users/' + user.uid + '/city'] = city;
-      updates['/users/' + user.uid + '/age' || 0] = age;
-      updates['/users/' + user.uid + '/height' || 0] = height;
-      updates['/users/' + user.uid + '/weight' || 0] = weight;
-      updates['/users/' + user.uid + '/bloodType'] = bloodType;
+
+      if (isPatient) {
+        updates['/users/' + user.uid + '/city'] = city;
+        updates['/users/' + user.uid + '/age'] = age;
+        updates['/users/' + user.uid + '/height'] = height;
+        updates['/users/' + user.uid + '/weight'] = weight;
+        updates['/users/' + user.uid + '/bloodType'] = bloodType;
+      } else {
+        updates['/users/' + user.uid + '/city'] = city;
+      }
 
       await update(ref(db), updates);
       Alert.alert('Profile Updated', 'Your profile has been updated successfully.', [
@@ -61,13 +69,15 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
       ]);
     }
   };
+
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
   return (
     <Provider>
-      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator>
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
+          {/* Name and Surname Input Fields */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>{i18n.t('Name')}:</Text>
             <TextInput
@@ -77,7 +87,6 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
               onChangeText={setName}
             />
           </View>
-
           <View style={styles.inputContainer}>
             <Text style={styles.label}>{i18n.t('Surname')}:</Text>
             <TextInput
@@ -88,6 +97,65 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
             />
           </View>
 
+          {/* Patient-specific Input Fields */}
+          {isPatient && (
+            <>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>{i18n.t('Age')}:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your age"
+                  value={age === '' ? '' : age.toString()}
+                  onChangeText={text => setAge(text ? parseInt(text, 10) : '')}
+                  keyboardType="numeric"
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>{i18n.t('Height')}:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your height in cm"
+                  value={height === '' ? '' : height.toString()}
+                  onChangeText={text => setHeight(text ? parseInt(text, 10) : '')}
+                  keyboardType="numeric"
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>{i18n.t('Weight')}:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your weight in kg"
+                  value={weight === '' ? '' : weight.toString()}
+                  onChangeText={text => setWeight(text ? parseInt(text, 10) : '')}
+                  keyboardType="numeric"
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>{i18n.t('BloodType')}:</Text>
+                <Menu
+                  visible={visible}
+                  onDismiss={closeMenu}
+                  anchor={
+                    <Text onPress={openMenu} style={styles.dropdownAnchor}>
+                      {bloodType || "Select Blood Type"}
+                    </Text>
+                  }>
+                  {bloodTypes.map((type, index) => (
+                    <Menu.Item
+                      key={index}
+                      title={type}
+                      onPress={() => {
+                        setBloodType(type);
+                        closeMenu();
+                      }}
+                    />
+                  ))}
+                </Menu>
+              </View>
+            </>
+          )}
+
+          {/* City Input Field - common for both roles */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>{i18n.t('City')}:</Text>
             <TextInput
@@ -98,62 +166,7 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
             />
           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>{i18n.t('Age')}:</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your age"
-              value={age === '' ? '' : age.toString()}
-              onChangeText={text => setAge(text ? parseInt(text, 10) : '')}
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>{i18n.t('Height')}:</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your height in cm"
-              value={height === '' ? '' : height.toString()}
-              onChangeText={text => setHeight(text ? parseInt(text, 10) : '')}
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>{i18n.t('Weight')}:</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your weight in kg"
-              value={weight === '' ? '' : weight.toString()}
-              onChangeText={text => setWeight(text ? parseInt(text, 10) : '')}
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>{i18n.t('BloodType')}:</Text>
-            <Menu
-              visible={visible}
-              onDismiss={closeMenu}
-              anchor={
-                <Text onPress={openMenu} style={styles.dropdownAnchor}>
-                  {bloodType || "Select Blood Type"}
-                </Text>
-              }>
-              {bloodTypes.map((type, index) => (
-                <Menu.Item
-                  key={index}
-                  title={type}
-                  onPress={() => {
-                    setBloodType(type);
-                    closeMenu();
-                  }}
-                />
-              ))}
-            </Menu>
-          </View>
-
+          {/* Save Button */}
           <Button onPress={handleSave} labelStyle={styles.buttonText}>{i18n.t('Save')}</Button>
         </View>
       </ScrollView>
