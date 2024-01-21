@@ -31,7 +31,7 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
   const closeDepartmentMenu = () => setDepartmentMenuVisible(false);
 
 
-  const departments = ['Cardiology', 'Dermatology', 'Neurology', 'Oncology', 'Pediatrics'];
+  const departments = ['Cardiology', 'Dermatology', 'Neurology', 'Oncology', 'Pediatrics','Obstetrics and Gynecology (OB/GYN)','Ophthalmology','ENT (Ear, Nose, and Throat)','Urology','Psychiatry','Endocrinology','Pathology','Physical Therapy'];
 
   useEffect(() => {
 
@@ -49,6 +49,7 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
     };
 
   }, []);
+
   useEffect(() => {
     const authStateChanged = onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
@@ -166,82 +167,74 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
   }
   const [reminderAdvance, setReminderAdvance] = useState(1);
 
-
-
-
   const handleHelpPress = () => {
     navigation.navigate('Help Screen')
   };
 
+  const renderDepartmentMenu = () => {
+    return (
+      <Menu
+        visible={departmentMenuVisible}
+        onDismiss={closeDepartmentMenu}
+        anchor={
+          <PaperButton onPress={openDepartmentMenu}>
+            {department || "Select Department"}
+          </PaperButton>
+        }>
+        {departments.map((dept, index) => (
+          <Menu.Item key={index} onPress={() => { setDepartment(dept); closeDepartmentMenu(); }} title={dept} />
+        ))}
+      </Menu>
+    );
+  };
+
   return (
     <PaperProvider>
-     <View style={styles.container}>
-      <Text style={styles.title}>{i18n.t('AddAppointmentReminder')}</Text>
-      <TextInput
-        style={styles.input}
-        value={hospitalName}
-        onChangeText={setHospitalName}
-        placeholder="Enter hospital's name"
-      />
-      <Picker
-        selectedValue={department}
-        onValueChange={(itemValue) => setDepartment(itemValue)}
-        style={styles.picker}
-      >
-        {departments.map((dept, index) => (
-          <Picker.Item key={index} label={dept} value={dept} />
-        ))}
-      </Picker>
-      <TextInput
-        style={styles.input}
-        value={doctorName}
-        onChangeText={setDoctorName}
-        placeholder="Enter doctor's name"
-      />
-      <CustomDatePicker
-        onDateChange={(newDate) => setSelectedDate(newDate)}
-        onTimeChange={(newTime) => setSelectedTime(newTime)}
-      />
-      <Picker
-        selectedValue={reminderAdvance}
-        onValueChange={(itemValue) => setReminderAdvance(itemValue)}
-        style={styles.picker}
-      >
-        <Picker.Item label="1 hour before" value={1} />
-        <Picker.Item label="2 hours before" value={2} />
-      </Picker>
-
-      <Button title="Add Reminder" onPress={addAppointmentReminder} />
-      <FlatList
-        data={reminders}
-        renderItem={({ item }) => (
-          <View style={styles.reminderItem}>
-            <Text style={styles.reminderText}>{i18n.t('Hospital')}: {item.hospitalName}</Text>
-            <Text style={styles.reminderText}>{i18n.t('Department')}: {item.department}</Text>
-            <Text style={styles.reminderText}>{i18n.t('Doctor')}: {item.doctorName}</Text>
-            <Text style={styles.reminderText}>{i18n.t('DateWithTime')}: {item.date}</Text>
-            <Text style={styles.reminderText}>{i18n.t('Hour')}: {item.hour}</Text>
-            <TouchableOpacity onPress={() => deleteAppointmentReminder(item.id, item.notificationId)}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{i18n.t('AddAppointmentReminder')}</Text>
+        <TextInput
+          style={styles.input}
+          value={hospitalName}
+          onChangeText={setHospitalName}
+          placeholder="Enter hospital's name"
+        />
+        <TextInput
+          style={styles.input}
+          value={doctorName}
+          onChangeText={setDoctorName}
+          placeholder="Enter doctor's name"
+        />
+        {renderDepartmentMenu()}
+        <CustomDatePicker
+          onDateChange={(newDate) => setSelectedDate(newDate)}
+          onTimeChange={(newTime) => setSelectedTime(newTime)}
+        />
+        <Button title="Add Reminder" onPress={addAppointmentReminder} />
+        <FlatList
+          data={reminders}
+          renderItem={({ item }) => (
+            <View style={styles.reminderItem}>
+              <Text style={styles.reminderText}>{i18n.t('Hospital')}: {item.hospitalName}</Text>
+              <Text style={styles.reminderText}>{i18n.t('Department')}: {item.department}</Text>
+              <Text style={styles.reminderText}>{i18n.t('Doctor')}: {item.doctorName}</Text>
+              <Text style={styles.reminderText}>{i18n.t('DateWithTime')}: {item.date}</Text>
+              <Text style={styles.reminderText}>{i18n.t('Hour')}: {item.hour}</Text>
+              <TouchableOpacity onPress={() => deleteAppointmentReminder(item.id, item.notificationId)}>
                 <Text style={styles.deleteText}>{i18n.t('Delete')}</Text>
               </TouchableOpacity>
-            
-
-
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        />
+        <TouchableOpacity onPress={handleHelpPress}>
+          <View style={styles.questionMarkContainer}>
+            <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
+            <Text style={styles.helpText}>
+              {i18n.t('Help')}
+            </Text>
           </View>
-          
-        )}
-        keyExtractor={item => item.id}
-      />
-      <TouchableOpacity onPress={handleHelpPress}
-      >
-        <View style={styles.questionMarkContainer}>
-          <MaterialIcons name='help' style={styles.questionMarkIcon} size={25} />
-          <Text style={styles.helpText}>
-            {i18n.t('Help')}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+        </TouchableOpacity>
+      </View>
     </PaperProvider>
   );
 };

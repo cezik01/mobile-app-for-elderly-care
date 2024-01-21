@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         marginBottom: spacing[5],
     },
     reminderItem: {
-        backgroundColor: '#f9f9f9',
+        backgroundColor: colorScheme.light.primary.greyblue,
         padding: spacing[3],
         marginVertical: spacing[2],
         marginHorizontal: spacing[4],
@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
         color: 'blue',
     },
     deleteText: {
-        color: '#dc3545',
+        color: colorScheme.light.ascent.Error,
         fontWeight: fontWeights.bold,
         marginTop: spacing[3],
     }
