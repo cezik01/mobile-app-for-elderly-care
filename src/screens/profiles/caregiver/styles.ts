@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f0f0',
         borderRadius: borderRadius[1],
     },
-    bloodPressureItem:{
+    bloodPressureItem: {
         marginTop: spacing[1],
         padding: spacing[2],
         backgroundColor: '#f0f0f0',
@@ -91,6 +91,12 @@ const styles = StyleSheet.create({
         fontSize: fontSizes.body.b2,
         marginBottom: spacing[1],
     },
+    appointmentReminders: {
+        marginTop: spacing[5],
+    },
+    nonExistData: {
+        color: colorScheme.light.ascent.Error,
+    }
 });
 
 export default styles;

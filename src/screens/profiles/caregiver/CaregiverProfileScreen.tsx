@@ -284,10 +284,9 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           <Text>{i18n.t('Height')}: {selectedPatientProfile.height}</Text>
           <Text>{i18n.t('BloodType')}: {selectedPatientProfile.bloodType}</Text>
 
-
-          {selectedPatientProfile.appointmentReminders && (
+          {selectedPatientProfile.appointmentReminders && Object.keys(selectedPatientProfile.appointmentReminders).length > 0 ? (
             <View>
-              <Text style={styles.sectionTitle}>{i18n.t('AppointmentReminders')}:</Text>
+              <Text style={[styles.sectionTitle, styles.appointmentReminders]}>{i18n.t('AppointmentReminders')}:</Text>
               {Object.entries(selectedPatientProfile.appointmentReminders).map(([key, reminder]) => (
                 <View key={key} style={styles.item}>
                   <Text>{i18n.t('HospitalName')}: {reminder.hospitalName}</Text>
@@ -298,6 +297,8 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
                 </View>
               ))}
             </View>
+          ) : (
+            <Text style={[styles.sectionTitle, styles.nonExistData]}>{i18n.t('NoAppointmentReminders')}</Text>
           )}
 
           {selectedPatientProfile.medicationReminders && Object.keys(selectedPatientProfile.medicationReminders).length > 0 ? (
@@ -313,7 +314,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
               ))}
             </View>
           ) : (
-            <Text>{i18n.t('NoMedicationReminders')}</Text>
+            <Text style={[styles.sectionTitle, styles.nonExistData]}>{i18n.t('NoMedicationReminders')}</Text>
           )}
 
           {bloodPressureData && bloodPressureData.length > 0 ? (
@@ -327,7 +328,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
               ))}
             </View>
           ) : (
-            <Text>{i18n.t('NoBloodPressureDatas')}</Text>
+            <Text style={[styles.sectionTitle, styles.nonExistData]}>{i18n.t('NoBloodPressureDatas')}</Text>
           )}
 
           {bloodSugarData && bloodSugarData.length > 0 ? (
@@ -340,7 +341,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
               ))}
             </View>
           ) : (
-            <Text>{i18n.t('NoBloodSugarDatas')}</Text>
+            <Text style={[styles.sectionTitle, styles.nonExistData]}>{i18n.t('NoBloodSugarDatas')}</Text>
           )}
 
         </View>
