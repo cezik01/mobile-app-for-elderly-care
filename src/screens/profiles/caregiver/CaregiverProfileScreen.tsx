@@ -5,7 +5,7 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, get } from 'firebase/database';
 import { NavigationProp } from '@react-navigation/native';
 import { sendInvitation } from 'helpers/firebaseInvitaitons/FirebaseInvitations';
-import { CaregiverData } from 'types/CaregiverData';
+import { CaregiverProps } from 'types/CaregiverProps';
 import { PatientData } from 'types/PatientData';
 import { Sidebar } from 'components/Sidebar';
 import { handleLogout } from 'helpers/firebaseAuth/AuthService';
@@ -18,7 +18,7 @@ import styles from './styles';
 import { Reminder } from 'types/MedicationReminderProps';
 
 const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
-  const [userData, setUserData] = useState<CaregiverData>({});
+  const [userData, setUserData] = useState<CaregiverProps>({});
   const [selectedPatientId, setSelectedPatientId] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [patientId, setPatientId] = useState('');

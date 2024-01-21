@@ -1,4 +1,4 @@
-export interface CaregiverData {
+export interface CaregiverProps {
     name?: string;
     surname?: string;
     city?: string;

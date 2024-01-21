@@ -21,7 +21,6 @@ export const styles = StyleSheet.create({
   },
   changeSwitch: {
     fontSize: fontSizes.body.b2,
-    color: colorScheme.light.ascent.Info,
   }
 });
 
