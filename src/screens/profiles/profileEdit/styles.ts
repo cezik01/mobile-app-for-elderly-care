@@ -2,7 +2,7 @@ import { theme } from 'common/theme/theme';
 import { heightPercentageToDP } from 'helpers/dimension';
 import { StyleSheet } from 'react-native';
 
-const { align, borderRadius, borderWidth, fontSizes, fontWeights, spacing, justify } = theme.components;
+const { align, borderRadius, borderWidth, colorScheme, fontSizes, fontWeights, spacing, justify } = theme.components;
 
 const styles = StyleSheet.create({
     container: {
@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
         padding: spacing[4],
         justifyContent: justify.default,
         alignItems: align.stretch,
+        backgroundColor: colorScheme.light.primary.beige,
     },
     inputContainer: {
         marginBottom: spacing[5],
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
         padding: spacing[3],
         borderRadius: borderRadius[1],
         marginBottom: spacing[3],
+        borderColor: colorScheme.light.primary.lighblue,
     },
     label: {
         fontWeight: fontWeights.bold,
@@ -33,6 +35,7 @@ const styles = StyleSheet.create({
         padding: spacing[3],
         borderRadius: borderRadius[1],
         marginBottom: spacing[3],
+        borderColor: colorScheme.light.primary.lighblue,
     },
     scrollContainer: {
         maxHeight: heightPercentageToDP('85'),
