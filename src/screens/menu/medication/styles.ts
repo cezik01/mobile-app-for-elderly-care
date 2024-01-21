@@ -8,7 +8,7 @@ const { colorScheme, borderRadius, fontSizes, fontWeights, align, flexDirection,
 export const styles = StyleSheet.create({
     itemContainer: {
         flexDirection: flexDirection.row,
-        marginBottom: spacing[5],
+        marginVertical: spacing[2],
     },
     title: {
         fontSize: fontSizes.heading.h5,
@@ -19,11 +19,11 @@ export const styles = StyleSheet.create({
         justifyContent: justify.default,
         alignItems: align.default,
         padding: spacing[5],
-        backgroundColor: '#f5f5f5',
+        backgroundColor: colorScheme.light.primary.beige,
     },
     input: {
         height: verticalScale(50),
-        borderColor: '#007bff',
+        borderColor: colorScheme.light.primary.lighblue,
         borderWidth: borderWidth[2],
         marginBottom: spacing[5],
         width: widthPercentageToDP('80'),
@@ -31,20 +31,22 @@ export const styles = StyleSheet.create({
         borderRadius: borderRadius[1],
     },
     reminderItem: {
-        flexDirection: flexDirection.row,
         borderBottomWidth: borderWidth[2],
         borderBottomColor: colorScheme.light.primary.canvas,
         marginRight: spacing[3],
         width: widthPercentageToDP('75'),
-        backgroundColor: colorScheme.light.primary.white,
-        height: verticalScale(50),
+        padding: spacing[3],
+        backgroundColor: colorScheme.light.primary.greyblue,
+        height: verticalScale(100),
         justifyContent: justify.default,
-        borderRadius: borderRadius[1],
+        borderRadius: borderRadius[3],
     },
     deleteText: {
-        color: '#dc3545',
+        color: colorScheme.light.ascent.Error,
         fontWeight: fontWeights.bold,
-        marginTop: spacing[3],
+        fontSize: fontSizes.body.b2,
+        marginTop: "auto",
+        marginBottom: spacing[5],
     },
     warningText: {
         color: colorScheme.light.ascent.Error,
@@ -61,14 +63,18 @@ export const styles = StyleSheet.create({
     iconScheduleContainer: {
         flexDirection: flexDirection.row,
         alignItems: align.default,
-        marginBottom: spacing[5],
+        marginBottom: spacing[6],
     },
     checkIcon: {
-        color: '#28a745',
+        color: colorScheme.light.ascent.Success,
+        marginTop: "auto",
+        marginBottom: spacing[6],
     },
     closeIcon: {
         marginRight: spacing[2],
-        color: '#dc3545',
+        color: colorScheme.light.ascent.Error,
+        marginTop: "auto",
+        marginBottom: spacing[6],
     },
     questionMarkIcon: {
         color: 'blue',
@@ -83,4 +89,7 @@ export const styles = StyleSheet.create({
         fontSize: fontSizes.heading.h5,
         color: 'blue',
     },
+    medicationInfo: {
+        fontSize: fontSizes.body.b2,
+    }
 });

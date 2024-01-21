@@ -13,7 +13,6 @@ import i18n from 'common/i18n/i18n';
 import { ReminderScreensProps } from 'types/ReminderScreensProps';
 import { styles } from './styles';
 
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);

@@ -37,15 +37,15 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
 
             if (result && result.length > 0 && result[0].predictions && result[0].predictions.length > 0) {
                 const sentiment = result[0].predictions[0].prediction;
+                const probability = result[0].predictions[0].probability;
 
-                return sentiment;
+                return { probability, sentiment };
 
             } else {
                 throw new Error('Unexpected response format');
             }
 
         } catch (error) {
-            console.error('Error analyzing sentiment:', error);
             Alert.alert('Error', 'Could not analyze feedback due to network or server issue.');
         }
     };
@@ -55,17 +55,18 @@ const FeedbackScreen: React.FC<HelpScreenProps> = () => {
 
         if (sentimentAnalysis) {
             const { sentiment, probability } = sentimentAnalysis;
+
             const db = getDatabase();
             const feedbacksRef = ref(db, 'feedbacks');
 
             if (probability > 0.8) {
-                if (sentiment === 'Positive') {
+                if (sentiment === 'positive') {
                     const newFeedbackRef = push(feedbacksRef, {
                         text: feedback,
                         sentiment: 'Positive',
                     });
                     Alert.alert('Thank you!', 'We appreciate your positive feedback!');
-                } else if (sentiment === 'Negative') {
+                } else if (sentiment === 'negative') {
                     const newFeedbackRef = push(feedbacksRef, {
                         text: feedback,
                         sentiment: 'Negative',

@@ -1,15 +1,16 @@
 import { theme } from "common/theme/theme";
-import { heightPercentageToDP } from "helpers/dimension";
+import { heightPercentageToDP, widthPercentageToDP } from "helpers/dimension";
 import { verticalScale } from "helpers/dimension/scale";
 import { StyleSheet } from "react-native";
 
-const { borderRadius, fontSizes, fontWeights, align, flexDirection, spacing, borderWidth } = theme.components;
+const { borderRadius, colorScheme, fontSizes, fontWeights, align, flexDirection, spacing, borderWidth } = theme.components;
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: spacing[4],
         alignItems: align.default,
+        backgroundColor: colorScheme.light.primary.beige,
     },
     title: {
         fontSize: fontSizes.heading.h5,
@@ -17,10 +18,12 @@ export const styles = StyleSheet.create({
         marginBottom: spacing[5],
     },
     input: {
-        height: heightPercentageToDP('5'),
+        height: verticalScale(50),
+        borderColor: colorScheme.light.primary.lighblue,
         borderWidth: borderWidth[2],
-        marginBottom: spacing[6],
-        padding: spacing[3],
+        marginBottom: spacing[5],
+        width: widthPercentageToDP('80'),
+        paddingHorizontal: spacing[2],
         borderRadius: borderRadius[1],
     },
     picker: {
@@ -40,7 +43,7 @@ export const styles = StyleSheet.create({
     },
     questionMarkIcon: {
         color: 'blue',
-        marginBottom: 15,
+        marginBottom: spacing[4],
     },
     questionMarkContainer: {
         flexDirection: flexDirection.row,

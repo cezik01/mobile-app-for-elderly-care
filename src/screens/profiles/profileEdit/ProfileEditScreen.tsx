@@ -96,7 +96,6 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
             />
           </View>
 
-          {/* Patient-specific Input Fields */}
           {isPatient && (
             <>
               <View style={styles.inputContainer}>
@@ -154,7 +153,6 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
             </>
           )}
 
-          {/* City Input Field - common for both roles */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>{i18n.t('City')}:</Text>
             <TextInput
@@ -165,7 +163,6 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
             />
           </View>
 
-          {/* Save Button */}
           <Button onPress={handleSave} labelStyle={styles.buttonText}>{i18n.t('Save')}</Button>
         </View>
       </ScrollView>

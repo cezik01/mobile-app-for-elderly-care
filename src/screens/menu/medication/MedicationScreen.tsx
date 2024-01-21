@@ -19,7 +19,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-
 const MedicationScreen = ({ navigation }: ReminderScreensProps) => {
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [date, setDate] = useState(new Date());
@@ -278,10 +277,12 @@ const MedicationScreen = ({ navigation }: ReminderScreensProps) => {
         data={reminders}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
+            {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
+            {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
             <View style={styles.reminderItem}>
-              {item.status === 'accepted' && <MaterialIcons name="check" size={20} style={styles.checkIcon} />}
-              {item.status === 'dismissed' && <MaterialIcons name="close" size={20} style={styles.closeIcon} />}
-              <Text>{i18n.t('MedicationName')}: {item.name} - {i18n.t('DateWithTime')}: {new Date(item.date).toLocaleString()} - {i18n.t('Dosage')}: {item.dosage}</Text>
+              <Text style={styles.medicationInfo}>{i18n.t('MedicationName')}: {item.name}</Text>
+              <Text style={styles.medicationInfo}>{i18n.t('DateWithTime')}: {new Date(item.date).toLocaleString()}</Text>
+              <Text style={styles.medicationInfo}>{i18n.t('Dosage')}: {item.dosage}</Text>
             </View>
             <TouchableOpacity onPress={() => deleteReminder(item.id, item.notificationId)}>
               <Text style={styles.deleteText}>{i18n.t('Delete')}</Text>

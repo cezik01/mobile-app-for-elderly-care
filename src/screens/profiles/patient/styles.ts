@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     screenContainer: {
         flex: 1,
         zIndex: 1,
-        backgroundColor:colorScheme.light.primary.dark[0]
+        backgroundColor: colorScheme.light.primary.beige,
     },
     bloodStatus: {
         marginVertical: spacing[2],

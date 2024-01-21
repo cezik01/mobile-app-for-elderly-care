@@ -1,7 +1,7 @@
 import { theme } from "common/theme/theme";
 import { StyleSheet } from "react-native";
 
-const { align, borderRadius, borderWidth, fontSizes, justify, spacing } = theme.components;
+const { align, borderRadius, borderWidth, colorScheme, fontSizes, justify, spacing } = theme.components;
 
 export const styles = StyleSheet.create({
     screen: {
@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
         justifyContent: justify.default,
         alignItems: align.default,
         padding: spacing[5],
+        backgroundColor: colorScheme.light.primary.beige,
     },
     buttonText: {
         fontSize: fontSizes.body.b2,

@@ -2,7 +2,7 @@ import { theme } from "common/theme/theme";
 import { widthPercentageToDP } from "helpers/dimension";
 import { StyleSheet } from "react-native";
 
-const { align, borderRadius, borderWidth, fontSizes, fontWeights, justify, spacing, textAlign } = theme.components;
+const { align, colorScheme, fontSizes, fontWeights, justify, spacing, textAlign } = theme.components;
 
 export const styles = StyleSheet.create({
     appInfo: {
@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: justify.default,
         alignItems: align.default,
+        backgroundColor: colorScheme.light.primary.beige,
     },
     helpContainer: {
         alignItems: align.default,
