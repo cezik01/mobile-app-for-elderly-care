@@ -92,7 +92,9 @@ export const theme = {
           white: '#FFFFFF',
           bright: '#F5F9FC',
           camel: "#F1F0E8",
-          navyblue: "#004d99"
+          navyblue: "#004d99",
+          lightpink: "#F8D7E4",
+          cream: "#FFF1E6",
         },
         secondary: {
           SunBright: '#FAE019',
@@ -112,7 +114,7 @@ export const theme = {
           LightPurple: 'rgba(112, 69, 237, 0.14)',
         },
       },
-      dark: {},
+      dark: "#000000",
     },
     textAlign: {
       auto: 'auto' as TextStyle['textAlign'],
