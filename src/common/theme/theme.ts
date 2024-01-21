@@ -93,13 +93,8 @@ export const theme = {
           bright: '#F5F9FC',
         },
         secondary: {
-          Bubblegum: '#EA93BE',
           SunBright: '#FAE019',
           AshyGrey: '#DBDCD6',
-        },
-        tertiary: {
-          Pistachio: '#7045ED',
-          Violetta: '#5D1787',
         },
         ascent: {
           Info: '#0AC9C9',

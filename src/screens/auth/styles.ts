@@ -2,7 +2,7 @@ import { theme } from 'common/theme/theme';
 import { heightPercentageToDP, widthPercentageToDP } from 'helpers/dimension';
 import { StyleSheet } from 'react-native';
 
-const { spacing, colorScheme } = theme.components;
+const { fontSizes, spacing, colorScheme } = theme.components;
 
 export const styles = StyleSheet.create({
   linkText: {
@@ -15,8 +15,13 @@ export const styles = StyleSheet.create({
     marginVertical: spacing[2],
     padding: 10,
   },
-  switchContainer:{
+  switchContainer: {
     marginTop: spacing[7],
+    width: widthPercentageToDP('85'),
+  },
+  changeSwitch: {
+    fontSize: fontSizes.body.b2,
+    color: colorScheme.light.ascent.Info,
   }
 });
 

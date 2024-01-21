@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         zIndex: 1,
+        color: colorScheme.light.transparent.OverlayBackground,
     },
     menuIconContainer: {
         top: spacing[3],
@@ -46,7 +47,7 @@ export const styles = StyleSheet.create({
         marginRight: spacing[3],
     },
     questionMarkIcon: {
-        color: '#fff',
+        color: colorScheme.light.primary.white,
         marginRight: spacing[1],
     },
     questionMarkContainer: {

@@ -76,7 +76,7 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
         <Text style={styles.linkText}>{i18n.t('LoginClick')}</Text>
       </TouchableOpacity>
       <View style={styles.switchContainer}>
-        <Text>{i18n.t('ChangeLanguageSwitch')}:</Text>
+        <Text style={styles.changeSwitch}>{i18n.t('ChangeLanguageSwitch')}:</Text>
         <LanguageSwitch />
       </View>
     </AuthForm>
