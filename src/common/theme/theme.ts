@@ -77,6 +77,7 @@ export const theme = {
             100: '#2AE2A6',
           },
           dark: {
+            0: "#f5F5F5",
             10: '#e6e6e6',
             20: '#cccccc',
             30: '#b3b3b3',

@@ -5,15 +5,15 @@ import { StyleSheet } from 'react-native';
 const { align, fontSizes, flexDirection, spacing, colorScheme, position, justify } = theme.components;
 
 const styles = StyleSheet.create({
+    screenContainer: {
+        flex: 1,
+        zIndex: 1,
+        backgroundColor:colorScheme.light.primary.dark[0]
+    },
     bloodStatus: {
         marginVertical: spacing[2],
         color: colorScheme.light.ascent.Error,
         fontSize: fontSizes.body.b1,
-    },
-    screenContainer: {
-        flex: 1,
-        backgroundColor: colorScheme.light.primary.white,
-        zIndex: 1,
     },
     scrollView: {
         maxHeight: heightPercentageToDP('80'),

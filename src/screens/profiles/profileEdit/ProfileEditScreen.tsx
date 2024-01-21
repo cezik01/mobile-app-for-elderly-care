@@ -77,7 +77,6 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
     <Provider>
       <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          {/* Name and Surname Input Fields */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>{i18n.t('Name')}:</Text>
             <TextInput

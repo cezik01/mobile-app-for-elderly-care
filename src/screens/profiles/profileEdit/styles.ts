@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     label: {
         fontWeight: fontWeights.bold,
         marginBottom: spacing[2],
+        fontSize: fontSizes.body.b2,
     },
     dropdownAnchor: {
         borderWidth: borderWidth[2],
