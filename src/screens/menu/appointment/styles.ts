@@ -54,4 +54,9 @@ export const styles = StyleSheet.create({
         fontSize: fontSizes.heading.h5,
         color: 'blue',
     },
+    deleteText: {
+        color: '#dc3545',
+        fontWeight: fontWeights.bold,
+        marginTop: spacing[3],
+    }
 });

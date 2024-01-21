@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, Alert, FlatList, TouchableOpacity } from
 import * as Notifications from 'expo-notifications';
 import { initializeApp } from 'firebase/app';
 import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, push, onValue, update } from 'firebase/database';
+import { getDatabase, ref, push, onValue, update, remove } from 'firebase/database';
 import firebaseConfig from 'config/firebaseConfig';
 import CustomDatePicker from 'components/Modal/DateTimePicker/DateTimePicker';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -12,6 +12,8 @@ import { AppointmentReminder } from 'types/AppointmentReminderProps';
 import i18n from 'common/i18n/i18n';
 import { ReminderScreensProps } from 'types/ReminderScreensProps';
 import { styles } from './styles';
+import { Menu, Button as PaperButton, Provider as PaperProvider } from 'react-native-paper';
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -24,7 +26,9 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
   const [hospitalName, setHospitalName] = useState('');
   const [department, setDepartment] = useState('');
   const [doctorName, setDoctorName] = useState('');
-  const [hour, setHour] = useState('');
+  const [departmentMenuVisible, setDepartmentMenuVisible] = useState(false);
+  const openDepartmentMenu = () => setDepartmentMenuVisible(true);
+  const closeDepartmentMenu = () => setDepartmentMenuVisible(false);
 
 
   const departments = ['Cardiology', 'Dermatology', 'Neurology', 'Oncology', 'Pediatrics'];
@@ -134,6 +138,15 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
 
 
   const deleteAppointmentReminder = async (id: string, notificationId?: string) => {
+    if (!auth.currentUser) {
+      console.log('No user logged in');
+      return;
+    }
+    const uid = auth.currentUser.uid;
+    remove(ref(db, `users/${uid}/appointmentReminders/${id}`));
+    if (notificationId) {
+      await Notifications.cancelScheduledNotificationAsync(notificationId);
+    }
 
   };
 
@@ -161,7 +174,8 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <PaperProvider>
+     <View style={styles.container}>
       <Text style={styles.title}>{i18n.t('AddAppointmentReminder')}</Text>
       <TextInput
         style={styles.input}
@@ -207,8 +221,14 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
             <Text style={styles.reminderText}>{i18n.t('Doctor')}: {item.doctorName}</Text>
             <Text style={styles.reminderText}>{i18n.t('DateWithTime')}: {item.date}</Text>
             <Text style={styles.reminderText}>{i18n.t('Hour')}: {item.hour}</Text>
+            <TouchableOpacity onPress={() => deleteAppointmentReminder(item.id, item.notificationId)}>
+                <Text style={styles.deleteText}>{i18n.t('Delete')}</Text>
+              </TouchableOpacity>
+            
+
 
           </View>
+          
         )}
         keyExtractor={item => item.id}
       />
@@ -222,6 +242,7 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
         </View>
       </TouchableOpacity>
     </View>
+    </PaperProvider>
   );
 };
 

@@ -7,7 +7,7 @@ const { align, borderRadius, borderWidth, fontSizes, fontWeights, spacing, color
 const styles = StyleSheet.create({
     screenContainer: {
         flex: 1,
-        backgroundColor: colorScheme.light.primary.white,
+        backgroundColor: colorScheme.light.primary.beige,
     },
     caregiverSidebar: {
         height: heightPercentageToDP('100'),
