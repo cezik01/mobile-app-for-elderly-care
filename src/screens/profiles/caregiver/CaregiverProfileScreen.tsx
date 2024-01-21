@@ -17,6 +17,7 @@ import firebaseConfig from 'config/firebaseConfig';
 import styles from './styles';
 import { Reminder } from 'types/MedicationReminderProps';
 import { BloodPressureData } from 'types/BloodPressureData';
+import { BloodSugarData } from 'types/BloodSugarData';
 
 const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<CaregiverProps>({});
@@ -30,6 +31,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const [isSidebarVisible, setSidebarVisible] = useState(false);
   const [reminders, setReminders] = useState<AppointmentReminder[]>([]);
   const [bloodPressureData, setBloodPressureData] = useState<BloodPressureData[]>([]);
+  const [bloodSugarData, setBloodSugarData] = useState<BloodSugarData[]>([]);
 
   const fetchBloodPressureData = async (patientId: string) => {
     const bpRef = ref(db, `bloodPressure/${patientId}`);
@@ -51,7 +53,25 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     }
   }, [selectedPatientId]);
 
+  const fetchBloodSugarData = async (patientId: string) => {
+    const bpRef = ref(db, `bloodSugar/${patientId}`);
+    try {
+      const snapshot = await get(bpRef);
+      if (snapshot.exists()) {
+        setBloodSugarData(Object.entries(snapshot.val() as Record<string, BloodSugarData>).map(([key, value]) => ({ ...value, id: key })));
+      } else {
+        setBloodSugarData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching blood sugar data:", error);
+    }
+  };
 
+  useEffect(() => {
+    if (selectedPatientId) {
+      fetchBloodSugarData(selectedPatientId);
+    }
+  }, [selectedPatientId]);
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
@@ -269,7 +289,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
             <View>
               <Text style={styles.sectionTitle}>{i18n.t('AppointmentReminders')}:</Text>
               {Object.entries(selectedPatientProfile.appointmentReminders).map(([key, reminder]) => (
-                <View key={key} style={styles.reminderItem}>
+                <View key={key} style={styles.item}>
                   <Text>{i18n.t('HospitalName')}: {reminder.hospitalName}</Text>
                   <Text>{i18n.t('Department')}: {reminder.department}</Text>
                   <Text>{i18n.t('DoctorName')}: {reminder.doctorName}</Text>
@@ -284,7 +304,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
             <View>
               <Text style={styles.sectionTitle}>{i18n.t('MedicationReminders')}:</Text>
               {Object.entries(selectedPatientProfile.medicationReminders).map(([key, reminder]) => (
-                <View key={key} style={styles.reminderItem}>
+                <View key={key} style={styles.item}>
                   <Text>{i18n.t('MedicationName')}: {reminder.name}</Text>
                   <Text>{i18n.t('Dosage')}: {reminder.dosage}</Text>
                   <Text>{i18n.t('Date')}: {reminder.date}</Text>
@@ -300,14 +320,27 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
             <View>
               <Text style={styles.sectionTitle}>{i18n.t('BloodPressureDatas')}:</Text>
               {bloodPressureData.map((bp, index) => (
-                <View key={index} style={styles.reminderItem}>
+                <View key={index} style={styles.item}>
                   <Text>{i18n.t('Systolic')}: {bp.systolic}</Text>
                   <Text>{i18n.t('Diastolic')}: {bp.diastolic}</Text>
                 </View>
               ))}
             </View>
           ) : (
-            <Text>{i18n.t('NoBloodPressureData')}</Text>
+            <Text>{i18n.t('NoBloodPressureDatas')}</Text>
+          )}
+
+          {bloodSugarData && bloodSugarData.length > 0 ? (
+            <View>
+              <Text style={styles.sectionTitle}>{i18n.t('BloodSugarDatas')}:</Text>
+              {bloodSugarData.map((bp, index) => (
+                <View key={index} style={styles.item}>
+                  <Text>{i18n.t('Level')}: {bp.level}</Text>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <Text>{i18n.t('NoBloodSugarDatas')}</Text>
           )}
 
         </View>

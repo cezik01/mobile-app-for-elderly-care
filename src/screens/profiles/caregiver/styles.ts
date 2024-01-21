@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         fontWeight: fontWeights.bold,
         marginVertical: spacing[3],
     },
-    reminderItem: {
+    item: {
         marginTop: spacing[1],
         padding: spacing[2],
         backgroundColor: '#f0f0f0',
