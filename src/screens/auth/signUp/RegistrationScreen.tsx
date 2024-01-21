@@ -8,6 +8,7 @@ import { FirebaseError } from 'firebase/app';
 import { useState } from 'react';
 import { Button, Menu } from 'react-native-paper';
 import i18n from 'common/i18n/i18n';
+import LanguageSwitch from 'components/CustomDrawer/LanguageSwitch';
 
 const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [role, setRole] = useState('');
@@ -74,6 +75,7 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.linkText}>{i18n.t('LoginClick')}</Text>
       </TouchableOpacity>
+      <LanguageSwitch />
     </AuthForm>
   );
 };

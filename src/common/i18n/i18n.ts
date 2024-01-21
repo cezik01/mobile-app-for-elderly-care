@@ -1,27 +1,35 @@
-import i18n from 'i18next';
+import i18n, { LanguageDetectorAsyncModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import translationEN from './en/translation.json';
-import translationTR from './tr/translation.json';
+import { save } from 'helpers/storage';
+import { getLastSelectedLanguage } from 'helpers/language';
+import { languageResources } from 'helpers/languageResources';
+import { Languages } from 'common/constants/languages';
 
-const resources = {
-  en: {
-    translation: translationEN,
+const languageDetector: LanguageDetectorAsyncModule = {
+  type: 'languageDetector',
+  async: true,
+  detect: (callback: (lang: string) => void) => {
+    const lastSelectedLang = getLastSelectedLanguage();
+    callback(lastSelectedLang);
   },
-  tr: {
-    translation: translationTR,
+  init: () => { },
+  cacheUserLanguage: (lng: string) => {
+    save('language', lng);
   },
-  ar: {},
 };
 
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(languageDetector)
+  .use(initReactI18next)
   .init({
     compatibilityJSON: 'v3',
-    resources,
-    lng: 'tr',
-
+    react: {
+      useSuspense: false,
+    },
+    resources: languageResources,
+    fallbackLng: Languages.en,
     interpolation: {
-      escapeValue: false, // react already safes from xss
+      escapeValue: false,
     },
   });
 

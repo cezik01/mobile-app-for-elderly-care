@@ -1,6 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
-import { HOME_NAV } from 'common/constants/constants';
+import { HOME_NAV } from 'common/constants/navigations';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
