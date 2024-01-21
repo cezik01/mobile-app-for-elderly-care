@@ -15,6 +15,9 @@ export const styles = StyleSheet.create({
     marginVertical: spacing[2],
     padding: 10,
   },
+  switchContainer:{
+    marginTop: spacing[7],
+  }
 });
 
 export default styles;
