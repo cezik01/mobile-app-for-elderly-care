@@ -38,7 +38,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       if (snapshot.exists()) {
         setBloodPressureData(Object.entries(snapshot.val() as Record<string, BloodPressureData>).map(([key, value]) => ({ ...value, id: key })));
       } else {
-        console.log("No blood pressure data available");
         setBloodPressureData([]);
       }
     } catch (error) {
@@ -213,9 +212,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const Backdrop = () => (
     <TouchableOpacity style={styles.backdrop} onPress={() => setSidebarVisible(false)} />
   );
-
-  console.log(bloodPressureData);
-
 
   return (
     <ScrollView style={styles.screenContainer}>
