@@ -95,7 +95,7 @@ export const theme = {
           bright: '#F5F9FC',
           camel: "#F1F0E8",
           navyblue: "#004d99",
-          lighblue: "#007bff",
+          lightblue: "#007bff",
           lightpink: "#F8D7E4",
           greyblue: "#D2E9E9",
           cream: "#FFF1E6",

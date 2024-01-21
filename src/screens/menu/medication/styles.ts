@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     },
     input: {
         height: verticalScale(50),
-        borderColor: colorScheme.light.primary.lighblue,
+        borderColor: colorScheme.light.primary.lightblue,
         borderWidth: borderWidth[2],
         marginBottom: spacing[5],
         width: widthPercentageToDP('80'),

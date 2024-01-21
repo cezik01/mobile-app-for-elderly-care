@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         padding: spacing[3],
         borderRadius: borderRadius[1],
         marginBottom: spacing[3],
-        borderColor: colorScheme.light.primary.lighblue,
+        borderColor: colorScheme.light.primary.lightblue,
     },
     label: {
         fontWeight: fontWeights.bold,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         padding: spacing[3],
         borderRadius: borderRadius[1],
         marginBottom: spacing[3],
-        borderColor: colorScheme.light.primary.lighblue,
+        borderColor: colorScheme.light.primary.lightblue,
     },
     scrollContainer: {
         maxHeight: heightPercentageToDP('85'),
