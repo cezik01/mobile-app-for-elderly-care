@@ -16,6 +16,7 @@ import { initializeApp } from 'firebase/app';
 import firebaseConfig from 'config/firebaseConfig';
 import styles from './styles';
 import { Reminder } from 'types/MedicationReminderProps';
+import { BloodPressureData } from 'types/BloodPressureData';
 
 const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userData, setUserData] = useState<CaregiverProps>({});
@@ -28,6 +29,30 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
   const [isSidebarVisible, setSidebarVisible] = useState(false);
   const [reminders, setReminders] = useState<AppointmentReminder[]>([]);
+  const [bloodPressureData, setBloodPressureData] = useState<BloodPressureData[]>([]);
+
+  const fetchBloodPressureData = async (patientId: string) => {
+    const bpRef = ref(db, `bloodPressure/${patientId}`);
+    try {
+      const snapshot = await get(bpRef);
+      if (snapshot.exists()) {
+        setBloodPressureData(Object.entries(snapshot.val() as Record<string, BloodPressureData>).map(([key, value]) => ({ ...value, id: key })));
+      } else {
+        console.log("No blood pressure data available");
+        setBloodPressureData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching blood pressure data:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedPatientId) {
+      fetchBloodPressureData(selectedPatientId);
+    }
+  }, [selectedPatientId]);
+
+
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
@@ -37,9 +62,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   const db = getDatabase(app);
 
   useEffect(() => {
-
     const user = auth.currentUser;
-
 
     if (user) {
       const userRef = ref(db, `users/${user.uid}`);
@@ -48,7 +71,6 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           setUserData(snapshot.val());
         }
       });
-
       registerForPushNotificationsAsync();
 
       const accessControlRef = ref(db, `accessControl/${user.uid}`);
@@ -192,6 +214,9 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
     <TouchableOpacity style={styles.backdrop} onPress={() => setSidebarVisible(false)} />
   );
 
+  console.log(bloodPressureData);
+
+
   return (
     <ScrollView style={styles.screenContainer}>
       {isSidebarVisible && <Backdrop />}
@@ -274,6 +299,21 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
           ) : (
             <Text>{i18n.t('NoMedicationReminders')}</Text>
           )}
+
+          {bloodPressureData && bloodPressureData.length > 0 ? (
+            <View>
+              <Text style={styles.sectionTitle}>{i18n.t('BloodPressureData')}:</Text>
+              {bloodPressureData.map((bp, index) => (
+                <View key={index} style={styles.reminderItem}>
+                  <Text>{i18n.t('Systolic')}: {bp.systolic}</Text>
+                  <Text>{i18n.t('Diastolic')}: {bp.diastolic}</Text>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <Text>{i18n.t('NoBloodPressureData')}</Text>
+          )}
+
         </View>
       ) : (
         <Text style={styles.selectPatient}>{i18n.t('SelectPatient')}</Text>
