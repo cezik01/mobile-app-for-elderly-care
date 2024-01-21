@@ -19,14 +19,14 @@ function LanguageSwitch() {
 
     return (
         <View style={styles.switchContainer}>
-            <Text>TR</Text>
+            <Text>{i18n.t('TR')}</Text>
             <Switch
                 value={isSwitchOn}
                 onChange={onChange}
 
                 style={styles.switch}
             />
-            <Text>EN</Text>
+            <Text>{i18n.t('EN')}</Text>
         </View>
     );
 }
