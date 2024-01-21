@@ -27,7 +27,7 @@ i18n
       useSuspense: false,
     },
     resources: languageResources,
-    fallbackLng: Languages.en,
+    fallbackLng: Languages.tr,
     interpolation: {
       escapeValue: false,
     },

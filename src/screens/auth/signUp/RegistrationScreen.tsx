@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert, TouchableOpacity, Text, View } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import styles from '../styles';
@@ -16,6 +16,20 @@ const RegistrationScreen = ({ navigation }: { navigation: NavigationProp<any> })
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
+
+  const [language, setLanguage] = useState(i18n.language);  
+
+  useEffect(() => {
+    const handleLanguageChange = (lng: string) => {
+      setLanguage(lng);
+    };
+
+    i18n.on('languageChanged', handleLanguageChange);
+
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    };
+  }, []);
 
   const handleRegistration = async (values: { email: string; password: string }) => {
     if (!role) {
