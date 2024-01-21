@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         width: horizontalScale(360),
-        backgroundColor: '#004d99',
+        backgroundColor: colorScheme.light.primary.navyblue,
         opacity: 0.95,
         zIndex: 2,
     },

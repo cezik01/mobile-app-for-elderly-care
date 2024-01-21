@@ -91,6 +91,8 @@ export const theme = {
           canvas: '#F7F7F7',
           white: '#FFFFFF',
           bright: '#F5F9FC',
+          camel: "#F1F0E8",
+          navyblue: "#004d99"
         },
         secondary: {
           SunBright: '#FAE019',

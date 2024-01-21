@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
     justifyContent: justify.default,
     alignItems: align.default,
     padding: spacing[7],
+    backgroundColor: colorScheme.light.primary.camel,
   },
   textInput: {
     height: heightPercentageToDP('5'),
