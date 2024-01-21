@@ -276,24 +276,24 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
 
       {selectedPatientProfile ? (
         <View style={styles.patientProfile}>
-          <Text>{i18n.t('Name')}: {selectedPatientProfile.name}</Text>
-          <Text>{i18n.t('Surname')}: {selectedPatientProfile.surname}</Text>
-          <Text>{i18n.t('City')}: {selectedPatientProfile.city}</Text>
-          <Text>{i18n.t('Age')}: {selectedPatientProfile.age}</Text>
-          <Text>{i18n.t('Weight')}: {selectedPatientProfile.weight}</Text>
-          <Text>{i18n.t('Height')}: {selectedPatientProfile.height}</Text>
-          <Text>{i18n.t('BloodType')}: {selectedPatientProfile.bloodType}</Text>
+          <Text style={styles.itemText}>{i18n.t('Name')}: {selectedPatientProfile.name}</Text>
+          <Text style={styles.itemText}>{i18n.t('Surname')}: {selectedPatientProfile.surname}</Text>
+          <Text style={styles.itemText}>{i18n.t('City')}: {selectedPatientProfile.city}</Text>
+          <Text style={styles.itemText}>{i18n.t('Age')}: {selectedPatientProfile.age}</Text>
+          <Text style={styles.itemText}>{i18n.t('Weight')}: {selectedPatientProfile.weight}</Text>
+          <Text style={styles.itemText}>{i18n.t('Height')}: {selectedPatientProfile.height}</Text>
+          <Text style={styles.itemText}>{i18n.t('BloodType')}: {selectedPatientProfile.bloodType}</Text>
 
           {selectedPatientProfile.appointmentReminders && Object.keys(selectedPatientProfile.appointmentReminders).length > 0 ? (
             <View>
               <Text style={[styles.sectionTitle, styles.appointmentReminders]}>{i18n.t('AppointmentReminders')}:</Text>
               {Object.entries(selectedPatientProfile.appointmentReminders).map(([key, reminder]) => (
                 <View key={key} style={styles.item}>
-                  <Text>{i18n.t('HospitalName')}: {reminder.hospitalName}</Text>
-                  <Text>{i18n.t('Department')}: {reminder.department}</Text>
-                  <Text>{i18n.t('DoctorName')}: {reminder.doctorName}</Text>
-                  <Text>{i18n.t('Date')}: {reminder.date}</Text>
-                  <Text>{i18n.t('Hour')}: {reminder.hour}</Text>
+                  <Text style={styles.itemText}>{i18n.t('HospitalName')}: {reminder.hospitalName}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Department')}: {reminder.department}</Text>
+                  <Text style={styles.itemText}>{i18n.t('DoctorName')}: {reminder.doctorName}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Date')}: {reminder.date}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Hour')}: {reminder.hour}</Text>
                 </View>
               ))}
             </View>
@@ -306,10 +306,10 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
               <Text style={styles.sectionTitle}>{i18n.t('MedicationReminders')}:</Text>
               {Object.entries(selectedPatientProfile.medicationReminders).map(([key, reminder]) => (
                 <View key={key} style={styles.item}>
-                  <Text>{i18n.t('MedicationName')}: {reminder.name}</Text>
-                  <Text>{i18n.t('Dosage')}: {reminder.dosage}</Text>
-                  <Text>{i18n.t('Date')}: {reminder.date}</Text>
-                  <Text>{i18n.t('Status')}: {reminder.status}</Text>
+                  <Text style={styles.itemText}>{i18n.t('MedicationName')}: {reminder.name}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Dosage')}: {reminder.dosage}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Date')}: {reminder.date}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Status')}: {reminder.status}</Text>
                 </View>
               ))}
             </View>
@@ -322,8 +322,8 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
               <Text style={styles.sectionTitle}>{i18n.t('BloodPressureDatas')}:</Text>
               {bloodPressureData.map((bp, index) => (
                 <View key={index} style={styles.item}>
-                  <Text>{i18n.t('Systolic')}: {bp.systolic}</Text>
-                  <Text>{i18n.t('Diastolic')}: {bp.diastolic}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Systolic')}: {bp.systolic}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Diastolic')}: {bp.diastolic}</Text>
                 </View>
               ))}
             </View>
@@ -336,7 +336,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
               <Text style={styles.sectionTitle}>{i18n.t('BloodSugarDatas')}:</Text>
               {bloodSugarData.map((bp, index) => (
                 <View key={index} style={styles.item}>
-                  <Text>{i18n.t('Level')}: {bp.level}</Text>
+                  <Text style={styles.itemText}>{i18n.t('Level')}: {bp.level}</Text>
                 </View>
               ))}
             </View>

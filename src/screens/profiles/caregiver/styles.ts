@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colorScheme.light.primary.beige,
     },
+    itemText: {
+        fontSize: fontSizes.body.b2,
+    },
     caregiverSidebar: {
         height: heightPercentageToDP('100'),
     },
@@ -43,14 +46,7 @@ const styles = StyleSheet.create({
     patientProfile: {
         padding: spacing[4],
         marginTop: spacing[2],
-        backgroundColor: colorScheme.light.primary.canvas,
-    },
-    modalContent: {
-        flex: 1,
-        justifyContent: justify.default,
-        alignItems: align.default,
-        backgroundColor: colorScheme.light.primary.white,
-        padding: spacing[4],
+        backgroundColor: colorScheme.light.primary.beige,
     },
     backdrop: {
         position: position.absolute,
@@ -59,12 +55,6 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         zIndex: 1,
-    },
-    centeredModalView: {
-        flex: 1,
-        justifyContent: justify.default,
-        alignItems: align.default,
-        marginTop: spacing[8],
     },
     selectPatient: {
         marginVertical: spacing[4],
@@ -78,13 +68,7 @@ const styles = StyleSheet.create({
     item: {
         marginTop: spacing[1],
         padding: spacing[2],
-        backgroundColor: '#f0f0f0',
-        borderRadius: borderRadius[1],
-    },
-    bloodPressureItem: {
-        marginTop: spacing[1],
-        padding: spacing[2],
-        backgroundColor: '#f0f0f0',
+        backgroundColor: colorScheme.light.primary.greyblue,
         borderRadius: borderRadius[1],
     },
     reminderText: {
