@@ -6,7 +6,7 @@ const { fontSizes, spacing, colorScheme } = theme.components;
 
 export const styles = StyleSheet.create({
   linkText: {
-    color: colorScheme.light.primary.purple[100],
+    color: "blue",
     marginTop: spacing[5],
   },
   pickerContainer: {

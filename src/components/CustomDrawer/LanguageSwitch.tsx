@@ -23,7 +23,6 @@ function LanguageSwitch() {
             <Switch
                 value={isSwitchOn}
                 onChange={onChange}
-
                 style={styles.switch}
             />
             <Text>{i18n.t('EN')}</Text>
