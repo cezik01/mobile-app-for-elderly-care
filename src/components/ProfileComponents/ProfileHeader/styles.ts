@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     name: {
         fontSize: fontSizes.heading.h5,
         fontWeight: fontWeights.bold,
-        color: 'black',
+        color: colorScheme.dark,
         marginBottom: spacing[2],
     },
     city: {

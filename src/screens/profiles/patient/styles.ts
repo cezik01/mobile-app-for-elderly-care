@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     bloodStatus: {
         marginVertical: spacing[2],
         color: colorScheme.light.ascent.Error,
-        fontSize: fontSizes.body.b2,
+        fontSize: fontSizes.body.b1,
     },
     screenContainer: {
         flex: 1,
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     bloodPressureSugarTexts: {
         marginTop: spacing[5],
         color: 'blue',
+        fontSize: fontSizes.body.b1,
     },
     backdrop: {
         position: position.absolute,

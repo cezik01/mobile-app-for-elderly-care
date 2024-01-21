@@ -121,15 +121,15 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
           <View style={styles.bloodSugarPressure}>
             <TouchableOpacity onPress={handleBloodPressurePress}>
               <Image source={require('../../../../assets/profiles/Graph.png')} style={styles.bloodPressureSugarImage} />
-              <Text style={[styles.bloodPressureSugarTexts]}>{i18n.t('BloodPressureEntrance')}</Text>
-              <Text style={[styles.bloodStatus]}>
+              <Text style={styles.bloodPressureSugarTexts}>{i18n.t('BloodPressureEntrance')}</Text>
+              <Text style={styles.bloodStatus}>
                 {i18n.t('BloodPressureStatus')}: {bloodPressureStatus}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleBloodSugarPress} style={styles.bloodSugar}>
               <Image source={require('../../../../assets/profiles/Group.png')} style={styles.bloodPressureSugarImage} />
-              <Text style={[styles.bloodPressureSugarTexts]}>{i18n.t('BloodSugarEntrance')}</Text>
-              <Text style={[styles.bloodStatus]}>{i18n.t('BloodSugarStatus')}: {bloodSugarStatus}</Text>
+              <Text style={styles.bloodPressureSugarTexts}>{i18n.t('BloodSugarEntrance')}</Text>
+              <Text style={styles.bloodStatus}>{i18n.t('BloodSugarStatus')}: {bloodSugarStatus}</Text>
             </TouchableOpacity>
           </View>
           {isSidebarVisible && <Sidebar setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='patient' />}

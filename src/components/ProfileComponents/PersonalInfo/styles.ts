@@ -2,7 +2,7 @@ import { theme } from "common/theme/theme";
 import { horizontalScale, verticalScale } from "helpers/dimension/scale";
 import { StyleSheet } from "react-native";
 
-const { align, flexDirection, spacing, textAlign, justify } = theme.components;
+const { align, flexDirection, fontSizes, spacing, textAlign, justify } = theme.components;
 
 export const styles = StyleSheet.create({
     container: {
@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     infoText: {
         textAlign: textAlign.center,
         paddingVertical: spacing[3],
+        fontSize: fontSizes.body.b1,
     },
     divider: {
         height: verticalScale(30),
