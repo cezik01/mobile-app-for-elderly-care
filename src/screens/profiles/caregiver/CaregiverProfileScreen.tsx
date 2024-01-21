@@ -302,7 +302,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
 
           {bloodPressureData && bloodPressureData.length > 0 ? (
             <View>
-              <Text style={styles.sectionTitle}>{i18n.t('BloodPressureData')}:</Text>
+              <Text style={styles.sectionTitle}>{i18n.t('BloodPressureDatas')}:</Text>
               {bloodPressureData.map((bp, index) => (
                 <View key={index} style={styles.reminderItem}>
                   <Text>{i18n.t('Systolic')}: {bp.systolic}</Text>
