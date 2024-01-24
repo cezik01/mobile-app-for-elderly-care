@@ -9,9 +9,9 @@ export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogo
 
     const handleHelpPress = () => {
         if (role === 'Caregiver')
-            navigation.navigate('Help Screen', { role: 'caregiver' })
+            navigation.navigate('Help Screen', { role: 'Caregiver' })
         else if (role === 'Patient')
-            navigation.navigate('Help Screen', { role: 'patient' })
+            navigation.navigate('Help Screen', { role: 'Patient' })
     };
 
     const handleFeedbackPress = () => {
