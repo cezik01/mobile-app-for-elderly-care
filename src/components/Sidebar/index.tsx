@@ -13,8 +13,6 @@ export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogo
         else if (role === 'Patient')
             navigation.navigate('Help Screen', { role: 'Patient' })
     };
-    console.log(role);
-    
 
     const handleFeedbackPress = () => {
         navigation.navigate('Feedback Screen')

@@ -15,7 +15,6 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     try {
       const { role, uid } = await signIn(values.email, values.password);
       updateUser({ role, uid });
-      console.log(role);
       
       if (role === 'Caregiver') {
         navigation.navigate('Caregiver Profile');
