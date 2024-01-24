@@ -143,7 +143,7 @@ const BloodPressureScreen = ({ navigation }: BloodEntryProps) => {
   );
 
   const handleHelpPress = () => {
-    navigation.navigate('Help Screen')
+    navigation.navigate('Help Screen', { role: 'Patient' })
   };
 
   return (

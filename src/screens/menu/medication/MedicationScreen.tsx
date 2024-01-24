@@ -243,7 +243,7 @@ const MedicationScreen = ({ navigation }: ReminderScreensProps) => {
   });
 
   const handleHelpPress = () => {
-    navigation.navigate('Help Screen')
+    navigation.navigate('Help Screen', { role: 'Patient' })
   };
 
   return (

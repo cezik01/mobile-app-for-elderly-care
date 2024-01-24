@@ -74,7 +74,7 @@ const ContactsScreen = ({ navigation }: ContactsScreenProps) => {
   };
 
   const handleHelpPress = () => {
-    navigation.navigate('Help Screen')
+    navigation.navigate('Help Screen', { role: 'Patient' })
   };
 
   return (

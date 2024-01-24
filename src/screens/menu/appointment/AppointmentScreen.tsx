@@ -168,7 +168,7 @@ const AppointmentScreen = ({ navigation }: ReminderScreensProps) => {
   const [reminderAdvance, setReminderAdvance] = useState(1);
 
   const handleHelpPress = () => {
-    navigation.navigate('Help Screen')
+    navigation.navigate('Help Screen', { role: 'Patient' })
   };
 
   const renderDepartmentMenu = () => {
