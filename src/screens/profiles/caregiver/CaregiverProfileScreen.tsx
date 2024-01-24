@@ -207,7 +207,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
   };
 
   const handleEditPress = () => {
-    navigation.navigate('Profile Edit Screen', { role: 'caregiver' })
+    navigation.navigate('Profile Edit Screen', { role: 'Caregiver' })
   };
 
   const handleSendInvitation = () => {
@@ -350,7 +350,7 @@ const CaregiverProfileScreen = ({ navigation }: { navigation: NavigationProp<any
       )}
 
       {isSidebarVisible && (
-        <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='caregiver' />
+        <Sidebar style={styles.caregiverSidebar} setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='Caregiver' />
       )}
     </ScrollView>
   );

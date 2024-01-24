@@ -11,6 +11,7 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
     const { role } = route?.params;
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+console.log(role);
 
     return (
         <View style={styles.screen}>
