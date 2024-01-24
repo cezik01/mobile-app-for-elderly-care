@@ -15,9 +15,9 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     try {
       const { role, uid } = await signIn(values.email, values.password);
       updateUser({ role, uid });
-      if (role === 'caregiver') {
+      if (role === 'Caregiver') {
         navigation.navigate('Caregiver Profile');
-      } else if (role === 'patient') {
+      } else if (role === 'Patient') {
         navigation.navigate('Patient Profile');
       } else {
         Alert.alert('Login Error', 'Role not found.');
