@@ -23,7 +23,7 @@ const ProfileEditScreen: React.FC<ProfileEditScreenProps> = ({ route }) => {
   const [bloodType, setBloodType] = useState('');
   const [visible, setVisible] = useState(false);
 
-  const isPatient = role === 'patient';
+  const isPatient = role === 'Patient';
 
   const auth = getAuth();
   const user = auth.currentUser;

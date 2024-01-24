@@ -8,9 +8,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 export const Sidebar = ({ role, style, setSidebarVisible, navigation, handleLogout }: SidebarProps) => {
 
     const handleHelpPress = () => {
-        if (role === 'caregiver')
+        if (role === 'Caregiver')
             navigation.navigate('Help Screen', { role: 'caregiver' })
-        else if (role === 'patient')
+        else if (role === 'Patient')
             navigation.navigate('Help Screen', { role: 'patient' })
     };
 

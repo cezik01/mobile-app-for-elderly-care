@@ -14,10 +14,10 @@ const HelpScreen: React.FC<HelpScreenProps> = ({ route }) => {
 
     return (
         <View style={styles.screen}>
-            {role === 'patient' && (
+            {role === 'Patient' && (
                 <Text style={styles.appInfo}>{i18n.t('AppInfoForPatient')}</Text>
             )}
-            {role === 'caregiver' && (
+            {role === 'Caregiver' && (
                 <Text style={styles.appInfo}>{i18n.t('AppInfoForCaregiver')}</Text>
             )}
 
