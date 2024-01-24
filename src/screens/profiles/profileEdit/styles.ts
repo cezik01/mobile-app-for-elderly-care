@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         borderColor: colorScheme.light.primary.lightblue,
     },
     scrollContainer: {
-        maxHeight: heightPercentageToDP('85'),
+        flexGrow: 1,
+        backgroundColor: colorScheme.light.primary.beige,
     }
 });
 
