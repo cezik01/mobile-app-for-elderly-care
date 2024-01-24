@@ -18,23 +18,23 @@ const MenuItem = ({ onPress, icon, text }: MenuItemProps) => (
 
 const MenuScreen = ({ navigation }: MenuScreenProps) => {
   const handleProfilePress = () => {
-    navigation.navigate('Patient Profile');
+    navigation.navigate('Patient Profile', { role: 'Patient' });
   };
 
   const handleMedicationPress = () => {
-    navigation.navigate('Medication Screen');
+    navigation.navigate('Medication Screen', { role: 'Patient' });
   };
 
   const handleAppointmentPress = () => {
-    navigation.navigate('Appointment Screen');
+    navigation.navigate('Appointment Screen', { role: 'Patient' });
   };
 
   const handleContactsPress = () => {
-    navigation.navigate('Contacts Screen');
+    navigation.navigate('Contacts Screen', { role: 'Patient' });
   };
 
   const handleHelpPress = () => {
-    navigation.navigate('Help Screen')
+    navigation.navigate('Help Screen', { role: 'Patient' })
   };
 
   return (

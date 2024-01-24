@@ -64,7 +64,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
   }, []);
 
   const handleEditPress = () => {
-    navigation.navigate('Profile Edit Screen', { role: 'patient' })
+    navigation.navigate('Profile Edit Screen', { role: 'Patient' })
   };
 
   const handleNotificationsPress = () => {
@@ -132,7 +132,7 @@ const PatientProfileScreen = ({ navigation }: { navigation: NavigationProp<any> 
               <Text style={styles.bloodStatus}>{i18n.t('BloodSugarStatus')}: {bloodSugarStatus}</Text>
             </TouchableOpacity>
           </View>
-          {isSidebarVisible && <Sidebar setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='patient' />}
+          {isSidebarVisible && <Sidebar setSidebarVisible={setSidebarVisible} navigation={navigation} handleLogout={handleLogout} role='Patient' />}
         </View>
       </ScrollView>
 
